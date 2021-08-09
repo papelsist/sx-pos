@@ -1,0 +1,41 @@
+ <form [formGroup] = "loginForm" >
+
+  <md-list>
+    <md-list-item >
+      <md-icon md-list-avatar>account_box</md-icon>
+      <md-form-field mdLine class="fill-width" >
+        <input mdInput type="text" 
+               formControlName="username"
+               placeholder="Usuario"
+               #userField
+               autofocus="true">
+        <md-hint align="end">{{userField.value.length}} / 30</md-hint>
+        <md-error *ngIf="formErrors.username">
+          {{ formErrors.username }}
+        </md-error>
+      </md-form-field>
+      
+    </md-list-item>
+
+    <md-list-item>
+      <md-icon md-list-avatar>lock</md-icon>
+      <md-form-field md-line class="fill-width">
+        <input type="password"
+               formControlName="password"
+               mdInput
+               placeholder="Password">
+        <md-error *ngIf="formErrors.password">
+          {{ formErrors.password }}
+        </md-error>
+      </md-form-field>
+
+    </md-list-item>
+
+  </md-list>
+
+  
+  <div class="row">
+    <button md-raised-button color="accent" [disabled]="loginForm.invalid" (click)="doLogin()">Login</button>
+  </div>
+</form>
+

@@ -1,0 +1,29 @@
+<form [formGroup]="form" novalidate (ngSubmit)="doAccept()" [style.width.px]="400">
+  <h4 md-dialog-title>
+    {{title}}
+  </h4>
+
+  <div layout ="column">
+    <md-form-field class="fill">
+      <input type="text" mdInput placeholder="Solicita" formControlName="solicito" sxToUpperCase>
+    </md-form-field>
+    <sx-usuario-sec-field placeholder="Usuario" 
+      (usuarioFound)="setUsuario($event)">
+    </sx-usuario-sec-field>
+    <md-form-field class="fill">
+      <input type="text" mdInput placeholder="" 
+        value="{{form.get('usuario').value?.username}}" 
+        [disabled]="true">
+    </md-form-field>
+    <md-form-field class="fill">
+      <input type="text" mdInput placeholder="Motivo" formControlName="motivo" sxToUpperCase>
+    </md-form-field>
+  </div>
+
+
+  <md-dialog-actions>
+    <button md-button class="accent" type="submit" [disabled]="form.invalid" >Aceptar</button>
+    <button md-button type="button" (click)="close()" >Cancelar</button>
+  </md-dialog-actions>
+
+</form>

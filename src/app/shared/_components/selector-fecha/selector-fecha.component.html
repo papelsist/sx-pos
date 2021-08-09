@@ -1,0 +1,17 @@
+<h3 md-dialog-title>Cambio de fecha</h3>
+
+<md-dialog-content>
+
+  <div layout="row">
+    <md-form-field flex>
+      <input mdInput [mdDatepicker]="picker" placeholder="Fecha" [formControl]="control">
+      <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+      <md-datepicker #picker></md-datepicker>
+    </md-form-field>
+  </div>
+</md-dialog-content>
+
+<md-dialog-actions>
+  <button md-button type="button" (click)="cancelar()"  >Cancelar</button>
+  <button md-button type="button" (click)="aceptar()" >Aceptar</button>
+</md-dialog-actions>

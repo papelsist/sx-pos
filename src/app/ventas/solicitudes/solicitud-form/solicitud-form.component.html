@@ -1,0 +1,96 @@
+<form novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+  <md-card>
+    <div layout="row" layout-align="start center" layout-padding class="pad-left-sm pad-right-sm">
+      <span class="md-title">Solicitud de autorización de depósito</span>
+      <span flex></span>
+    </div>
+
+    <md-divider></md-divider>
+    <md-card-content>
+
+      <div layout class="pad-left-sm pad-right-sm">
+        <md-form-field>
+          <input type="text" mdInput value="{{fecha | date:'dd/MM/yyyy'}}" placeholder="Fecha" [disabled]="true">
+        </md-form-field>
+        <md-form-field>
+          <input type="text" mdInput value="{{sucursal.nombre}}" placeholder="Sucursal" [disabled]="true">
+        </md-form-field>
+        <md-form-field flex>
+          <input type="text" mdInput value="{{banco?.nombre}}" placeholder="Banco" [disabled]="true">
+        </md-form-field>
+        <md-form-field flex>
+          <input type="text" mdInput value="{{cuenta?.descripcion}}" placeholder="Destino" [disabled]="true">
+        </md-form-field>
+      </div>
+
+      <div layout class="pad-left-sm pad-right-sm">
+        <sx-cliente-field formControlName="cliente" flex></sx-cliente-field>
+      </div>
+
+      <div layout class="pad-left-sm pad-right-sm">
+        <md-form-field flex>
+          <input type="text" mdInput formControlName="efectivo" placeholder="Efectivo" sxOnlyNumbers>
+        </md-form-field>
+        <md-form-field flex>
+          <input type="text" mdInput formControlName="cheque" placeholder="Cheque">
+        </md-form-field>
+        <md-form-field flex>
+          <input type="text" mdInput formControlName="transferencia" placeholder="Transferencia">
+        </md-form-field>
+      </div>
+
+      <div layout class="pad">
+        <sx-banco-field [parent]="form" flex="50" class="pad-right"></sx-banco-field>
+        <sx-cuenta-field [parent]="form" flex="50"></sx-cuenta-field>
+      </div>
+
+      <div layout class="pad-left-sm pad-right-sm">
+        <md-form-field flex>
+          <input mdInput [mdDatepicker]="picker" placeholder="Fecha deposito" formControlName="fechaDeposito">
+          <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+          <md-datepicker #picker></md-datepicker>
+        </md-form-field>
+        <md-form-field flex>
+          <input type="text" mdInput formControlName="referencia" placeholder="Referencia">
+        </md-form-field>
+      </div>
+     <!--  <div layout class="pad-left-sm pad-right-sm">
+        <md-form-field flex>
+          <input type="text" mdInput formControlName="dato1" placeholder="Dato1">
+        </md-form-field>
+        <md-form-field flex>
+          <input type="text" mdInput formControlName="dato2" placeholder="Dato2">
+        </md-form-field>
+        <md-form-field flex>
+          <input type="text" mdInput formControlName="dato3" placeholder="Dato3">
+        </md-form-field>
+      </div> -->
+
+      <div layout class="pad-left-sm pad-right-sm">
+        <sx-usuario-sec-field flex (usuarioFound)="setAtendio($event)" placeholder="Solicita">
+        </sx-usuario-sec-field>
+        <span class="text-center tc-indigo-600" flex>
+          {{solicita?.nombre}}
+        </span>
+      </div>
+
+      <td-message *ngIf="(obs$ | async) && duplicate " label="Posible duplicada con:" sublabel="Sol: {{duplicada?.folio}} - {{duplicada?.sucursal.nombre}}  Solicitó: {{duplicada?.updateUser}}"
+        color="warn" icon="error">
+      </td-message>
+
+      <div layout class="pad-left-sm pad-right-sm">
+        <sx-comentario-field flex [parent]="form" rows="1"></sx-comentario-field>
+      </div>
+
+    </md-card-content>
+
+
+    <md-divider></md-divider>
+    <md-card-actions>
+      <button type="submit" md-button [disabled]="form.invalid" *ngIf="isEditable()"> Salvar </button>
+      <a md-button [routerLink]="['/ventas/pedidos/solicitudes']"> Cancelar </a>
+    </md-card-actions>
+
+  </md-card>
+
+</form>

@@ -1,0 +1,48 @@
+
+<ng-template tdLoading [tdLoadingUntil]="!loading" tdLoadingStrategy="overlay">
+
+
+<div class="disponible-form" >
+  <span layout md-dialog-title>
+      <h3>Disponibles de : {{cliente.nombre}}</h3>
+      <span flex></span>
+      <span>Por Cobrar: {{porCobrar | currency: 'USD': 1.2-2}}</span>
+  </span>
+  
+  <md-divider></md-divider>
+  <md-dialog-content>
+
+    <td-data-table
+      #dataTable
+      [data]="filteredData"
+      [columns]="columns"
+      selectable="true"
+      multiple="false"
+      sortable="false"
+      [(ngModel)]="selectedRows"
+      [style.height.px]="400">
+      <ng-template tdDataTableTemplate="folio" let-value="value" let-row="row">
+        <span *ngIf="row.transferencia">{{row.transferencia.folio}}</span>
+        <span *ngIf="row.deposito">{{row.deposito.folio}}</span>
+      </ng-template>
+      <ng-template tdDataTableTemplate="disponible" let-value="value" let-row="row">
+        {{value | currency: 'USD': 1.2-2}}
+      </ng-template>
+      <ng-template tdDataTableTemplate="importe" let-value="value" let-row="row">
+          {{value | currency: 'USD': 1.2-2}}
+        </ng-template>
+        <ng-template tdDataTableTemplate="aplicado" let-value="value" let-row="row">
+            {{value | currency: 'USD': 1.2-2}}
+          </ng-template>
+    </td-data-table>
+
+
+  </md-dialog-content>
+
+  <md-dialog-actions>
+    <button md-button type="button" (click)="cancelar()"  >Cancelar</button>
+    <button md-button type="button" (click)="aceptar()" [disabled]="selectedRows.length === 0" >Aceptar</button>
+  </md-dialog-actions>
+</div>
+
+</ng-template>

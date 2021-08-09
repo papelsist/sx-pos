@@ -1,0 +1,23 @@
+<form novalidate (ngSubmit)="doAccept()" [formGroup]="form" class="selector-form">
+  <h4 md-dialog-title>
+    <span>Devolución de compra</span>
+  </h4>
+
+  <div layout  >
+    <sx-producto-prov-field [proveedor]="proveedor" formControlName="producto" [excludes]="selected"
+       flex></sx-producto-prov-field>
+  </div>
+  <div layout  >
+      <md-form-field flex>
+        <input type="text" mdInput formControlName="cantidad" sxOnlyNumbers placeholder="Cantidad">
+      </md-form-field>
+      
+    </div>
+
+  <md-divider></md-divider>
+  <md-dialog-actions>
+    <button md-button class="accent" type="button" [disabled]="form.invalid" (click)="doAccept()">Aceptar</button>
+    <button md-button type="button" (click)="close()" >Cancelar</button>
+  </md-dialog-actions>
+
+</form>

@@ -1,0 +1,31 @@
+<td-layout #layout mode="over" opened="false" sidenavWidth="250px" >
+  
+    <div td-sidenav-content></div>
+  
+    <td-navigation-drawer
+      color="accent"
+      logo="assets:siipap-rx2"
+      navigationRoute= "/"
+      name="SX Contabilidad"
+      email="admin@gmail.com" flex>
+  
+      <md-nav-list dense>
+        <a md-list-item *ngFor="let item of navigation"
+          [routerLink]="[item.path]"
+          (click)="layout.close()">
+          <md-icon>{{item.icon}}</md-icon>{{item.nombre}}
+        </a>
+      </md-nav-list>
+  
+      <div td-navigation-drawer-menu>
+        <sx-global-user-nav-list></sx-global-user-nav-list>
+      </div>
+
+    </td-navigation-drawer>
+  
+    <router-outlet> </router-outlet>
+  
+  
+  
+  </td-layout>
+  

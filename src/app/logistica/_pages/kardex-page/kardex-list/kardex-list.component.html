@@ -1,0 +1,20 @@
+<td-data-table
+#dataTable
+[data]="movimientos"
+[columns]="columns"
+[selectable]="false"
+[clickable]="false"
+[multiple]="false"
+[sortable]="false" >
+
+  <ng-template tdDataTableTemplate="producto.clave" let-value="value" let-row="row">
+    <a md-button [routerLink]="['show', row.id]" >
+      <span flex class="tc-pink-800">{{value?.clave}}</span>
+    </a>
+  </ng-template>
+
+  <ng-template tdDataTableTemplate="fecha" let-value="value" let-row="row">
+    {{value | date: 'dd/MM/yyyy: hh:mm'}}
+  </ng-template>
+</td-data-table>
+

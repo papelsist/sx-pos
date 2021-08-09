@@ -1,0 +1,99 @@
+<!-- <md-list >
+  <md-list-item>
+    <span md-line >
+      <span layout >
+        <span  flex class="tc-indigo-700 "> TPS/SOL</span>
+        <span  flex="20">Fecha</span>
+        <span  flex>Comentario</span>
+        <span flex class="tc-pink-500"  > Solicita</span>
+        <span flex>Inventariado</span>
+        <span flex> CFDI</span>
+      </span>
+    </span>
+    
+  </md-list-item>
+  <md-divider></md-divider>
+  <td-virtual-scroll-container #virtualScroll [style.height.px]="600" [data]="salidas">
+    <ng-template let-row="row" let-last="last" tdVirtualScrollRow>
+      <md-list-item >
+        <span md-line >
+          <span layout >
+            <span  flex="10" class="tc-indigo-700" [routerLink]="['show', row.id]">
+                {{row.documento}} 
+            </span>
+            <span flex="10" >{{ row.solicitudDeTraslado.documento}}</span>
+            <span flex="10" >{{ row.fecha | date:'dd/MM/yyyy'}}</span>
+            <span flex="30">{{row.comentario}}</span>
+            <span class=" tc-blue-500" flex="20" > 
+              {{row.solicitudDeTraslado?.sucursalSolicita?.nombre}}
+            </span>
+            <span >{{row.fechaInventario | date: 'dd/MM/yyyy'}}</span>
+            <span flex class="text-md ">
+              <span *ngIf="row.cfdi">
+                  <md-icon class="tc-green-700">verified_user</md-icon>
+              </span>
+              <span class="tc-pink-500" *ngIf="!row.cfdi"> PENDIENTE </span>
+            </span>
+          </span>
+        </span>
+        <span flex></span>
+        <span>
+          <button md-icon-button (click)="print.emit(row)"><md-icon>print</md-icon></button>
+        </span>
+        <span >
+          <button md-icon-button [md-menu-trigger-for]="menu"  >
+          <md-icon [ngClass]="{'tc-blue-600':odd }">more_vert</md-icon>
+          </button>
+          <md-menu x-position="before" #menu="mdMenu">
+            <a [routerLink]="['show', row.id]" md-menu-item >
+                <md-icon>info</md-icon> Consultar
+            </a>
+          </md-menu>
+        </span>
+      </md-list-item>
+      <md-divider *ngIf="!last" ></md-divider>
+    </ng-template>
+  </td-virtual-scroll-container>
+</md-list> -->
+<td-data-table
+#dataTable
+[data]="data"
+[columns]="columns"
+[selectable]="selectable"
+[clickable]="false"
+[multiple]="true"
+[sortable]="true"
+[sortBy]="sortBy"
+[(ngModel)]="selectedRows"
+[sortOrder]="sortOrder"
+(sortChange)="sort($event)"
+[style.height.px]="550">
+<ng-template tdDataTableTemplate="documento" let-value="value" let-row="row">
+  <a [routerLink]="['show', row.id]" md-menu-item >
+      {{row.documento}} 
+  </a>
+</ng-template>
+<ng-template tdDataTableTemplate="atiende2" let-value="value" let-row="row">
+   {{ row.solicitudDeTraslado?.sucursalAtiende?.nombre}}
+ </ng-template>
+<ng-template tdDataTableTemplate="fecha" let-value="value">
+  {{ value | date: 'dd/MM/yyyy'}}
+</ng-template>
+<ng-template tdDataTableTemplate="fechaInventario" let-value="value">
+  {{ value | date: 'dd/MM/yyyy HH:mm'}}
+</ng-template>
+<ng-template tdDataTableTemplate="solicita" let-value="value" let-row="row">
+   {{ row.solicitudDeTraslado?.updateUser}}
+ </ng-template>
+
+ <ng-template tdDataTableTemplate="print" let-value="value" let-row="row">
+   <button md-icon-button (click)="print.emit(row)"><md-icon>print</md-icon></button>
+ </ng-template>
+
+ <ng-template tdDataTableTemplate="timbrado" let-value="value" let-row="row">
+    <md-icon class="tc-green-700">verified_user</md-icon>
+  </ng-template>
+
+ 
+
+</td-data-table>

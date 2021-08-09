@@ -1,0 +1,79 @@
+<div layout="column">
+
+  <div layout class="row1 ">
+    <span class="md-title" flex="50">
+      {{cliente.nombre}}
+    </span>
+    <span layout="column">
+      <span layout>
+        <span >Factura:</span>
+        <span class="pad-left tc-pink-800" flex>
+        {{venta.cuentaPorCobrar.tipo}} {{venta.cuentaPorCobrar.documento}}
+        </span>
+      </span>
+      <span layout>
+        <span >Pedido:</span>
+        <span class="pad-left tc-pink-800" flex>{{venta.documento}}</span>
+      </span>
+    </span>
+    <span layout class="pad-left">
+      <span flex>Fecha:</span>
+      <span class="pad-left text-right tc-pink-800" flex>
+      {{venta.fecha | date: 'dd/MM/yyyy'}}
+      </span>
+    </span>
+    <div  layout-align="center center" class="pad-left" *ngIf="cliente">
+      <span class="text-right pad-left text-md"
+        *ngIf="cliente.credito && cliente.credito.postfechado" >Postfechado</span>
+      <span flex></span>
+    </div>
+    <span flex></span>
+    <div >
+     <button md-icon-button [md-menu-trigger-for]="menu"  >
+     <md-icon >more_vert</md-icon>
+     </button>
+     <md-menu x-position="before" #menu="mdMenu">
+       <button   md-menu-item type="button" (click)="mostrarXml.emit(venta)" *ngIf="venta?.cuentaPorCobrar?.cfdi">
+         <md-icon>dvr</md-icon>  Ver XML
+       </button>
+       <button md-menu-item type="button" color="warn" (click)="cancelar.emit(venta)" mdTooltip="Cancelar factura">
+         <md-icon>cancel</md-icon> Cancelar
+       </button>
+     </md-menu>
+
+   </div>
+  </div>
+
+  <div layout class="row2">
+    <div #col1 layout="column" flex>
+      <address *ngIf="cliente?.direccion; let direccion" class="text-sm">
+        {{direccion.calle}} {{direccion.numeroExterior}}<br>
+        {{direccion.colonia}}<br>
+        {{direccion.estado}} / {{direccion.pais}}<br>
+        {{direccion.codigoPostal}}<br>
+      </address>
+    </div>
+
+    <div #col2 layout="column"  >
+      
+    </div>
+
+    <div #col3 layout="column" flex>
+      <span layout>
+        <span>RFC:</span>
+        <span class=" pad-left" flex>{{venta?.cliente?.rfc}}</span>
+      </span>
+      <span layout class="pad-top-sm pad-bottom-sm">
+        <span> F.Pago: </span>
+        <span class="pad-left tc-indigo-800" flex> {{venta.formaDePago}}</span>
+      </span>
+      <span>CFDI: <span class="pad-left tc-indigo-700">{{venta?.cuentaPorCobrar?.cfdi?.uuid}}</span> </span>
+      <span>Mail: <span class="pad-left tc-indigo-700">{{cliente?.cfdiMail}} </span>  </span>
+    </div>
+  </div>
+
+  <div layout class="row2" *ngIf="venta?.comentario">
+    <span class="">Comentario: </span>
+    <span class="pad-left tc-indigo-800">{{venta?.comentario}}</span>
+  </div>
+</div>

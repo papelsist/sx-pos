@@ -1,0 +1,34 @@
+<form novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <md-card>
+        <div layout="row" layout-align="start center" layout-padding class="pad-left-sm pad-right-sm">
+
+
+            <span class="md-title" flex></span> Compra: {{compra.folio}}
+            <span class="md-title" flex></span> {{compra.proveedor}}
+        </div>
+
+        <md-divider></md-divider>
+
+        <div layout layout-margin>
+            <md-form-field flex="40">
+                <input type="text" mdInput formControlName="remision" placeholder="Remisión">
+            </md-form-field>
+
+            <md-form-field flex="40">
+                <input mdInput [mdDatepicker]="picker" placeholder="R. Fecha" formControlName="fechaRemision">
+                <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+                <md-datepicker #picker></md-datepicker>
+            </md-form-field>
+
+            <sx-comentario-field flex [parent]="form" rows="1"></sx-comentario-field>
+        </div>
+
+        <md-divider></md-divider>
+        <md-card-actions>
+            <button type="submit" md-button [disabled]="form.invalid"> Salvar </button>
+            <a md-button (click)="cancelar()">Cancelar </a>
+        </md-card-actions>
+
+    </md-card>
+
+</form>

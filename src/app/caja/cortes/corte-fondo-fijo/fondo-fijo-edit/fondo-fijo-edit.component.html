@@ -1,0 +1,35 @@
+<div layout layout-align="center center">
+  <md-card flex="70">
+    <md-card-title> Mantenimiento de gasto </md-card-title>
+    <md-divider></md-divider>
+    <form novalidate (ngSubmit)="onSubmit()" [formGroup]="form" class="efectivo-form"> 
+      <ng-template tdLoading [tdLoadingUntil]="!procesando" tdLoadingStrategy="overlay" tdLoadingType="linear">
+        <md-card-content *ngIf="gasto">
+          <div layout>
+            <md-form-field flex>
+              <input type="text" mdInput placeholder="Documento" formControlName="documento">
+            </md-form-field>
+            <md-form-field flex>
+                <input type="text" mdInput placeholder="Importe" formControlName="importe" sxOnlyNumbers>
+              </md-form-field>
+          </div>
+          <div layout>
+            <md-form-field flex>
+              <input type="text" 
+                mdInput placeholder="Descripción" formControlName="descripcion">
+            </md-form-field>
+            <md-form-field flex>
+              <input type="text" 
+                  mdInput placeholder="Comentario" formControlName="comentario">
+            </md-form-field>
+          </div>
+        </md-card-content>
+      </ng-template>
+      <md-card-actions>
+        <button md-button type="button" (click)="cancelar()"  >Cancelar</button>
+        <button md-button type="submit" [disabled]="form.invalid || form.pristine" >Salvar</button>
+      </md-card-actions>
+    </form>
+  </md-card>
+  
+</div>

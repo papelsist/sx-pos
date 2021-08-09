@@ -1,0 +1,21 @@
+<div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
+    
+      <md-card flex-gt-sm >
+        <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm "  >
+          <span  class="push-left-sm" flex>
+              <span class="md-title">{{title}}</span>
+          </span>
+          <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm"
+                         placeholder="Sector " (searchDebounce)="search($event)" flex>
+          </td-search-box>
+        </div>
+    
+        <md-divider></md-divider>
+        <md-card-content class="page-grid"
+                         *tdLoading="let loading until !(loading$ | async); color: 'accent' strategy:'overlay';">
+          <!-- <sx-captura-grid [conteos]="conteos$ | async"></sx-captura-grid> -->
+        </md-card-content>
+      </md-card>
+    
+    </div>
+    

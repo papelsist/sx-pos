@@ -1,0 +1,36 @@
+<div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+    <span *ngIf="!searchBox.searchVisible" class="push-left-sm">
+      <span *ngIf="(selectable && !selectedRows.length) || !selectable" 
+        class="md-subhead tc-pink-400" >Seleccione las partidas a ingresar</span>
+      <span *ngIf="selectedRows.length && selectable" class="md-body-1">{{selectedRows.length}} partida(s) seleccionada(s)</span>
+    </span>
+    <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" 
+      placeholder="Filtrar" (searchDebounce)="search($event)" flex>
+    </td-search-box>
+  </div>
+  <md-divider></md-divider>
+  <td-data-table
+    #dataTable
+    [data]="filteredData"
+    [columns]="columns"
+    [selectable]="selectable"
+    [clickable]="true"
+    [multiple]="true"
+    [sortable]="true"
+    [(ngModel)]="selectedRows"
+    [sortOrder]="sortOrder"
+    (sortChange)="sort($event)"
+    [style.height.px]="400">
+  </td-data-table>
+  <div class="md-padding" *ngIf="!dataTable.hasData" layout="row" layout-align="center center">
+    <h3>Compra sin partidas disponibles para recepción.</h3>
+  </div>
+  <td-paging-bar #pagingBar [pageSize]="pageSize" [total]="filteredTotal" (change)="page($event)">
+    <span hide-xs>Partidas por página:</span>
+    <md-select [style.width.px]="50" [(ngModel)]="pageSize">
+      <md-option *ngFor="let size of [5,10,15,20,50,filteredTotal]" [value]="size">
+        {{size}}
+      </md-option>
+    </md-select>
+    {{pagingBar.range}} <span hide-xs>of {{pagingBar.total}}</span>
+  </td-paging-bar>

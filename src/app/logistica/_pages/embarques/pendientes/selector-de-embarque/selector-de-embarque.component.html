@@ -1,0 +1,31 @@
+<md-toolbar md-dialog-title>
+        Embarques disponibles para asignar a {{facturas.length}}
+        factura(s) seleccionadas
+</md-toolbar>
+
+<!-- <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm text-md">
+  <td-search-box #searchBox backIcon="arrow_back" 
+    class="push-right-sm" placeholder="Documento" flex>
+  </td-search-box>
+</div> -->
+
+<div layout="column" class="selector-form">
+    <td-data-table
+    #dataTable
+    [data]="embarques"
+    [columns]="columns"
+    [selectable]="true"
+    [clickable]="false"
+    [multiple]="false"
+    [sortable]="true"
+    [sortBy]="sortBy"
+    [(ngModel)]="selectedRows"
+    [sortOrder]="sortOrder"
+    [style.height.px]="350">
+  </td-data-table>
+</div>
+
+<md-dialog-actions>
+  <button md-button class="accent" type="button" [disabled]="selectedRows.length===0" (click)="doAccept()">Aceptar</button>
+  <button md-button type="button" (click)="close()" >Cancelar</button>
+</md-dialog-actions>

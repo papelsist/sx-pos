@@ -1,0 +1,40 @@
+<md-card >
+  <!-- <md-card-title>
+    Movimientos de fondo fijo
+  </md-card-title> -->
+  <div layout="row" layout-align="start center" layout-margin >
+    <span class="md-title ">Movimientos de fondo fijo </span>
+    <button md-button (click)="cambiarFecha(fecha)" color="primary" [disabled]="pendienteBox.checked"> 
+      {{fecha | date: 'dd/MM/yyyy'}}
+    </button>
+    <span flex></span>
+    <md-checkbox [(ngModel)]="pendientes" #pendienteBox>Pendientes</md-checkbox>
+    <button md-button type="button" color="primary" (click)="solicitar()"
+      [disabled]="hasSelection()">Solicitar
+    </button>
+
+    
+    <span >
+      <button md-icon-button [md-menu-trigger-for]="menu"  >
+        <md-icon >more_vert</md-icon>
+      </button>
+      <md-menu x-position="before" #menu="mdMenu">
+        <button   md-menu-item (click)="load()" ><md-icon>refresh</md-icon> Refrescar</button>
+        <button   md-menu-item (click)="rembolso()"><md-icon>attach_money</md-icon> Rembolso</button>
+        <button   md-menu-item (click)="gasto()"><md-icon>account_balance_wallet</md-icon> Gasto</button>
+      </md-menu>
+    </span>
+  </div>
+    
+  <md-divider></md-divider>
+  <md-card-content class="facturas-panel">
+      <ng-template tdLoading [tdLoadingUntil]="!procesando" tdLoadingStrategy="overlay" tdLoadingType="linear">  
+        <sx-fondo-fijo-list [movimientos]="movimientos" [selectedRows]="selected" (edit)="onEdit($event)">
+        </sx-fondo-fijo-list>
+      </ng-template>
+  </md-card-content>
+
+  
+</md-card>
+ 
+    

@@ -1,0 +1,68 @@
+<div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
+    <md-card flex>
+        <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+            <span class="push-left-sm" flex>
+              <span class="md-title">Productos puestos</span>
+            <span class="pad-left">
+                    {{filtro.periodo}}
+                 </span>
+            </span>
+            <sx-periodo-picker [periodo]="filtro.periodo" (change)="cambiarPeriodo($event)" #periodoPicker></sx-periodo-picker>
+            <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Clave o Documento  " (searchDebounce)="search($event)" flex>
+            </td-search-box>
+
+            <span>
+              <button md-icon-button [mdMenuTriggerFor]="toolbarMenu"><md-icon>more_vert</md-icon></button>
+              <md-menu #toolbarMenu="mdMenu">
+                <button md-menu-item (click)="load()">
+                  <md-icon>refresh</md-icon>
+                  <span>Cargar</span>
+            </button>
+            </md-menu>
+            </span>
+
+        </div>
+
+        <ng-template tdLoading [tdLoadingUntil]="!procesando" tdLoadingStrategy="overlay" tdLoadingType="linear">
+            <md-divider></md-divider>
+        </ng-template>
+
+        <md-card-content class="page-grid">
+
+            <md-list>
+                <md-list-item>
+                    <div flex-gt-xs="20">Documento </div>
+                    <div flex-gt-xs="20">Fecha </div>
+                    <div flex-gt-xs="30">Clave</div>
+                    <div flex-gt-xs="50">Descripcion </div>
+                    <div flex-gt-xs="20">Cantidad </div>
+
+                </md-list-item>
+                <md-divider></md-divider>
+                <td-virtual-scroll-container #virtualScroll [style.height.px]="400" [data]="puestos">
+                    <ng-template let-row="row" let-last="last" tdVirtualScrollRow>
+                        <md-list-item>
+                            <div flex-gt-xs="20">
+                                <span>{{ row.venta.documento | number}}</span>
+                            </div>
+                            <div flex-gt-xs="20">
+                                <span>{{ row.venta.fecha | date:'dd/MM/yyyy'}}</span>
+                            </div>
+                            <div flex-gt-xs="30">
+                                <span>{{ row.producto.clave}}</span>
+                            </div>
+                            <div flex-gt-xs="50">
+                                <span>{{ row.producto.descripcion}}</span>
+                            </div>
+                            <div flex-gt-xs="20">
+                                <span>{{ row.cantidad | number}}</span>
+                            </div>
+                        </md-list-item>
+                        <md-divider *ngIf="!last" md-inset></md-divider>
+                    </ng-template>
+                </td-virtual-scroll-container>
+            </md-list>
+
+        </md-card-content>
+    </md-card>
+</div>

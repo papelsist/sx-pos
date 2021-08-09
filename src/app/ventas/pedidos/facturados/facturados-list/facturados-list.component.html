@@ -1,0 +1,56 @@
+<td-data-table #dataTable [data]="facturas" [columns]="columns" [selectable]="true" [clickable]="false" [multiple]="true"
+  [sortable]="false" class="fill" [(ngModel)]="selectedRows">
+  <ng-template tdDataTableTemplate="documento" let-value="value" let-row="row">
+    <a [routerLink]="['show', row.id]" [ngClass]="{'tc-pink-700':row.cod,'tc-indigo-700':!row.cod} " class="cursor-pointer">
+      <span flex>{{row.cuentaPorCobrar.documento}} </span>
+    </a>
+  </ng-template>
+  <ng-template tdDataTableTemplate="pedido" let-value="value" let-row="row">
+    <span flex>{{row.documento}}</span>
+  </ng-template>
+  <ng-template tdDataTableTemplate="fecha" let-value="value" let-row="row">
+    {{row.cuentaPorCobrar.fecha | date: 'dd/MM/yyyy'}}
+  </ng-template>
+  <ng-template tdDataTableTemplate="total" let-value="value" let-row="row">
+    <span>{{value | currency: 'USD': 1.2-2}}</span>
+    <span *ngIf="row.moneda === 'USD'"> USD</span>
+  </ng-template>
+
+  <ng-template tdDataTableTemplate="saldo" let-value="value" let-row="row">
+    <span>{{row.cuentaPorCobrar.saldo | currency: 'USD': 1.2-2}}</span>
+  </ng-template>
+
+  <ng-template tdDataTableTemplate="cuentaPorCobrar" let-value="value" let-row="row">
+    <span *ngIf="value?.cfdi?.uuid " layout mdTooltip="{{mailStatus(row)}}">
+      <md-icon [ngClass]="{'tc-green-700':row.enviado, 'tc-yellow:600': !row.enviado}">verified_user</md-icon>
+    </span>
+  </ng-template>
+
+  <ng-template tdDataTableTemplate="formaDePago" let-value="value" let-row="row">
+    {{getFormaDePago(row)}}
+  </ng-template>
+
+  <ng-template tdDataTableTemplate="envio" let-value="value" let-row="row">
+    <button md-icon-button type="button" (click)="envio.emit(row)">
+      <md-icon [ngClass]="{'tc-green-500': (row.envio)}">flight_takeoff</md-icon>
+    </button>
+  </ng-template>
+
+  <ng-template tdDataTableTemplate="print" let-value="value" let-row="row">
+    <span layout>
+      <button md-icon-button (click)="print.emit(row)">
+        <md-icon class="tc-pink-700">print</md-icon>
+      </button>
+      <button md-icon-button type="button" (click)="envio.emit(row)">
+        <md-icon [ngClass]="{'tc-green-500': (row.envio)}">flight_takeoff</md-icon>
+      </button>
+      <button md-icon-button type="button" (click)="cancelarEnvio.emit(row)" *ngIf="row.envio">
+        <md-icon [ngClass]="{'tc-red-500': (row.envio)}">flight_takeoff</md-icon>
+      </button>
+    </span>
+  </ng-template>
+
+
+
+
+</td-data-table>

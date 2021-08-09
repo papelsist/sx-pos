@@ -1,0 +1,44 @@
+<div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
+
+  <md-card flex-gt-sm class="facturas-card">
+    <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+      <span class="push-left-sm">
+        <span class="md-title">Facturas </span>
+      </span>
+
+      <span class="pad-left">
+        {{filtro.periodo}}
+      </span>
+      <sx-periodo-picker [periodo]="filtro.periodo" (change)="cambiarPeriodo($event)" #periodoPicker></sx-periodo-picker>
+      <span flex></span>
+      <div layout flex layout-padding>
+        <td-search-input placeholder="Factura" debounce="1000" showUnderline="true" (searchDebounce)="buscarPorFolio($event)" flex></td-search-input>
+        <td-search-input placeholder="Cliente" debounce="1000" showUnderline="true" (searchDebounce)="buscarPorCliente($event)" flex></td-search-input>
+        <td-search-input placeholder="Usuario" debounce="1000" showUnderline="true" (searchDebounce)="buscarPorUsuario($event)" flex></td-search-input>
+      </div>
+
+      <span>
+        <button md-icon-button [md-menu-trigger-for]="menu">
+          <md-icon>more_vert</md-icon>
+        </button>
+        <md-menu x-position="before" #menu="mdMenu">
+          <button (click)="load()" md-menu-item>
+            <md-icon>refresh</md-icon> Refrescar
+          </button>
+          <button (click)="envioBatch()" md-menu-item [disabled]="selectedRows.length===0">
+            <md-icon>mail</md-icon> Envio batch</button>
+        </md-menu>
+
+      </span>
+    </div>
+
+    <md-divider></md-divider>
+    <div class="facturas-panel" *tdLoading="'saving'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'accent'">
+      <ng-template tdLoading [tdLoadingUntil]="!procesando" tdLoadingStrategy="overlay" tdLoadingType="linear">
+        <sx-facturados-list [facturas]="facturas$ | async" [selectedRows]="selectedRows" (print)="print($event)" (envio)="asignarEnvio($event)"
+          (cancelarEnvio)="cancelarEnvio($event)">
+        </sx-facturados-list>
+      </ng-template>
+    </div>
+  </md-card>
+</div>

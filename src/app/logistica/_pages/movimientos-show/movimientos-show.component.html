@@ -1,0 +1,41 @@
+<div layout>
+
+    <md-card flex *tdLoading="let working until !(loading$ | async); type:'circular'; color:'primary' strategy:'overlay';">
+        <ng-container *ngIf="movimiento$ | async; let mov">
+            <md-card-title>
+                <span layout>
+          <span>{{ mov.tipo }}:</span>
+                <span>{{mov.documento}} </span>
+                <span flex></span>
+                <span> Fecha: {{mov.fecha | date: 'dd/MM/yyyy'}}</span>
+                </span>
+            </md-card-title>
+            <md-card-subtitle>
+                <span layout>
+          <span>{{mov.comentario}}</span>
+                <span flex></span>
+                <span>Usuario: {{mov.createUser}}</span>
+                </span>
+            </md-card-subtitle>
+
+            <md-divider></md-divider>
+            <div class="will-load">
+                <sx-movimientodet-grid [partidas]="mov.partidas"></sx-movimientodet-grid>
+            </div>
+            <md-divider></md-divider>
+            <md-card-actions>
+                <a md-button [routerLink]="['../../']">
+                    <md-icon>keyboard_backspace</md-icon> Regresar </a>
+                <button md-icon-button (click)="print(mov)" mdTooltip="Imprimir documento">
+          <md-icon>print</md-icon>
+        </button>
+                <button md-button color="accent" *ngIf="mov.fechaInventario === undefined && !mov.cancelado " mdTooltip="Mandar al inventario" (click)="inventariar(mov)">
+          <md-icon>send</md-icon> Mandar a inventario</button>
+                <!-- <button md-button color="warn"
+      *ngIf="mov.fechaInventario == null"
+       mdTooltip="Eliminar documento" (click)="onDelete(mov)" >  <md-icon >delete</md-icon> Eliminar</button> -->
+            </md-card-actions>
+
+        </ng-container>
+
+    </md-card>

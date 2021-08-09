@@ -1,0 +1,9 @@
+<ng-container [formGroup]="parent">
+
+    <md-select placeholder="Forma de pago" [formControlName]="propertyName" class="fill">
+        <md-option *ngFor="let tipo of tipos" [value]="tipo">
+            {{tipo}}
+        </md-option>
+    </md-select>
+
+</ng-container>

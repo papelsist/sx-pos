@@ -1,0 +1,17 @@
+<h4 md-dialog-title>Descuento especial </h4>
+<md-dialog-content>
+  <div layout>
+    <md-form-field flex>    
+      <input type="text" [formControl]="control" mdInput sxOnlyNumbers>
+    </md-form-field>
+  </div>
+</md-dialog-content>
+
+<md-dialog-actions>
+  <button md-button type="button"  (click)="doAccept()" class="accent" [disabled]="control.invalid" >Aceptar</button>
+  <button md-button type="button" (click)="close()" >Cancelar</button>
+</md-dialog-actions>
+  
+  
+  
+  

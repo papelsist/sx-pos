@@ -1,0 +1,44 @@
+<td-layout-nav toolbarTitle="Sistema de administración SIIPAP Rx"       color="primary" navigationRoute="/">
+
+  <button md-icon-button td-menu-button tdLayoutToggle>
+    <md-icon>menu</md-icon>
+  </button>
+
+
+   <div td-toolbar-content layout="row" layout-align="start center" flex>
+    <span hide-xs></span>
+    <span flex ></span>
+     <span>
+      <button md-icon-button [mdMenuTriggerFor]="toolbarMenu"><md-icon>more_vert</md-icon></button>
+      <md-menu #toolbarMenu="mdMenu">
+        <button md-menu-item>
+          <md-icon>settings</md-icon>
+          <span>Configuración</span>
+        </button>
+        <a md-menu-item routerLink="/security">
+          <md-icon>tune</md-icon>
+          <span>Sistemas</span>
+        </a>
+      </md-menu>
+    </span>
+  </div>
+
+  <div layout="row" layout-align="center start" >
+
+    <md-card >
+       <img md-card-image  src="/assets/images/pexels-under-construction-1.jpg" class="home-images"> 
+      <md-card-title>Módulo u opción del sistema esta en construcción</md-card-title>
+      <md-card-actions>
+        <a md-button  (click)="goBack()" color="warn">
+            <md-icon>arrow_back</md-icon> Regresar 
+        </a>
+
+      </md-card-actions>
+    </md-card>
+  </div>
+
+
+   <td-layout-footer color="primary">
+     <sx-page-footer></sx-page-footer>
+  </td-layout-footer>
+</td-layout-nav>

@@ -1,0 +1,20 @@
+<td-data-table [data]="anticipos" [columns]="columns" [style.height.px]="400">
+  <ng-template tdDataTableTemplate="fecha" let-value="value" let-row="row">
+    <span>{{value | date: 'dd/MM/yyyy'}}</span>
+  </ng-template>
+
+  <ng-template tdDataTableTemplate="tipo" let-value="value" let-row="row">
+    <span (click)="select.emit(row)" class="cursor-pointer" flex>{{value}}</span>
+  </ng-template>
+
+  <ng-template tdDataTableTemplate="cliente.nombre" let-value="value" let-row="row">
+    <span (click)="select.emit(row)" class="cursor-pointer" flex>{{value}}</span>
+  </ng-template>
+
+  <ng-template tdDataTableTemplate="disponible" let-value="value" let-row="row">
+    <span (click)="select.emit(row)" class="cursor-pointer" [ngClass]="{'tc-indigo-800':value > 0}" flex>
+      {{value | currency: 'USD': 1.2-2}}
+    </span>
+  </ng-template>
+
+</td-data-table>

@@ -1,0 +1,95 @@
+<form novalidate [formGroup]="form">
+    <md-card class="form-card" layout flex tabindex="0">
+        <md-card-title color="accent"> Alta Cotizacion Caja </md-card-title>
+        <md-divider></md-divider>
+        <span flex></span>
+        <div layout class="pad-left-sm pad-right-sm cotizacion-form">
+            <sx-producto-field class="field" flex="70" formControlName="producto" #productField></sx-producto-field>
+            <md-form-field class="field" flex>
+                <input type="number" mdInput placeholder="Metros Lin." formControlName="metrosLineales">
+            </md-form-field>
+        </div>
+        <div layout class="pad-left-sm pad-right-sm cotizacion-form " *ngIf="producto">
+            <md-form-field class="field">
+                <input type="text" mdInput placeholder="Precio Contado" value="{{producto.precioContado | currency:'USD': true: '1.2-2'}}" disabled>
+            </md-form-field>
+            <md-form-field>
+                <input type="text" mdInput placeholder="Precio Crédito" value="{{producto.precioCredito | currency:'USD': true: '1.2-2'}}" disabled>
+            </md-form-field>
+        </div>
+        <div layout class="pad-left-sm pad-right-sm cotizacion-form ">
+            <md-form-field class="field">
+                <input type="text" mdInput placeholder="Ancho cm." formControlName="ancho">
+            </md-form-field>
+            <md-form-field class="field">
+                <input type="text" mdInput placeholder="Largo cm." formControlName="largo">
+            </md-form-field>
+            <md-form-field class="field">
+                <input type="text" mdInput placeholder="Alto cm." formControlName="altura">
+            </md-form-field>
+        </div>
+        <div layout class="pad-left-sm pad-right-sm cotizacion-form ">
+            <md-form-field class="field">
+                <input type="text" mdInput placeholder="ECT" formControlName="resistenciaECT">
+            </md-form-field>
+            <md-form-field class="field">
+                <input type="text" mdInput placeholder="Flauta" formControlName="flauta">
+            </md-form-field>
+            <md-form-field class="field">
+                <input type="number" mdInput placeholder="Kilos" formControlName="kilos">
+            </md-form-field>
+            <md-form-field class="field">
+                <input type="number" mdInput placeholder="Gramos" formControlName="gramos">
+            </md-form-field>
+        </div>
+        <div layout class="pad-left-sm pad-right-sm cotizacion-form ">
+            <md-form-field class="field">
+                <input type="text" class="uppercase" mdInput placeholder="Clave Caja" formControlName="claveCaja">
+            </md-form-field>
+            <md-form-field flex="70" class="field">
+                <input type="text" class="uppercase" mdInput placeholder="Descripcion Caja" formControlName="descripcionCaja">
+            </md-form-field>
+            <md-form-field class="field">
+                <input type="number" mdInput placeholder="Piezas" formControlName="piezas">
+            </md-form-field>
+        </div>
+        <div layout class="pad-left-sm pad-right-sm cotizacion-form ">
+            <md-form-field class="field">
+                <input type="text" mdInput placeholder="Precio Pieza Contado" formControlName="precioPiezaContado">
+            </md-form-field>
+            <md-form-field class="field">
+                <input type="text" mdInput placeholder="Precio Pieza Crédito" formControlName="precioPiezaCredito">
+            </md-form-field>
+            <md-form-field class="field">
+                <input type="number" mdInput placeholder="Precio Contado Especial" formControlName="precioPiezaConEsp">
+            </md-form-field>
+            <md-form-field class="field">
+                <input type="number" mdInput placeholder="Precio Crédito Especial" formControlName="precioPiezaCreEsp">
+            </md-form-field>
+        </div>
+
+        <md-card-actions>
+            <a md-button [routerLink]="['../']">
+                <md-icon>keyboard_backspace</md-icon> Regresar </a>
+            <button type="button" class="field" [disabled]="formInvalid" md-button (click)="onSubmit()">Salvar</button>
+            <!--    <button md-icon-button mdTooltip="Imprimir documento" (click)="print(trs)"><md-icon>print</md-icon></button>
+            <button md-button color="accent" *ngIf="trs.fechaInventario === undefined && !trs.cancelado"
+              mdTooltip="Mandar al inventario" (click)="inventariar(trs)">
+            <md-icon >send</md-icon> Mandar al inventario</button> -->
+            <!--
+            <button md-button color="warn"
+              *ngIf="trs.fechaInventario == null"
+              mdTooltip="Eliminar documento" (click)="onDelete(trs)" >  <md-icon >delete</md-icon> Eliminar
+            </button>
+              -->
+        </md-card-actions>
+        <md-card-footer>
+            <div layout class="pad-left-sm pad-right-sm cotizacion-form ">
+
+                <!--  <button type="button" class="field" md-button (click)="calcular()"> Calcular</button> -->
+                <!--  <button type="button" class="field" md-button (click)="onCerrar()"> Cerrar</button> -->
+
+            </div>
+        </md-card-footer>
+    </md-card>
+</form>

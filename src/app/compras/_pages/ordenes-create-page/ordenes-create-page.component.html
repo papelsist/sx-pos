@@ -1,0 +1,6 @@
+<sx-nav-layout header="Ordenes de compra" modulo="Compras" >
+  <div layout *tdLoading="'savingCompra'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'accent'">
+    <sx-orden-form flex="80" (save)="onSave($event)">
+    </sx-orden-form>
+  </div>
+</sx-nav-layout>

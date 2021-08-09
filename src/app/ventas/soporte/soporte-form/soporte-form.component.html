@@ -1,0 +1,57 @@
+<form novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+  <md-card>
+    <div layout="row" layout-align="start center" layout-padding class="pad-left-sm pad-right-sm">
+      <span class="md-title">Solicitud de Modificacion</span>
+      <span flex></span>
+    </div>
+    <div layout class="pad-left-sm pad-right-sm">
+      <md-form-field>
+        <input type="text" mdInput value="{{fecha | date:'dd/MM/yyyy'}}" placeholder="Fecha" [disabled]="true">
+      </md-form-field>
+      <md-form-field>
+          <input type="text" mdInput value="{{sucursal.nombre}}" formControlName="sucursal" placeholder="Sucursal" >
+      </md-form-field>
+      <md-select placeholder="Modulo" formControlName="modulo" class="fill">
+        <md-option *ngFor="let modulo of modulos" 
+          [value]="modulo">{{ modulo }}
+        </md-option>
+      </md-select>
+      <md-select placeholder="Tipo" formControlName="tipo" class="fill">
+        <md-option *ngFor="let tipo of (tipos$ | async)" 
+          [value]="tipo">{{ tipo }}
+        </md-option>
+      </md-select>
+      <md-form-field>
+          <input type="number" mdInput  formControlName="documento" placeholder="Documento">
+      </md-form-field>
+      <md-form-field>
+        <input type="text" mdInput  formControlName="fechaDocumento" placeholder="Fecha Documento">
+    </md-form-field>
+    </div>
+
+    <div layout class="pad-left-sm pad-right-sm">
+        <md-form-field class="full-width">
+          <textarea mdInput formControlName="descripcion" placeholder="Descripcion"></textarea>
+        </md-form-field>
+    </div>
+    <div layout class="pad-left-sm pad-right-sm">
+      <md-form-field class="full-width">
+        <textarea mdInput formControlName="comentario" placeholder="Comentario"></textarea>
+      </md-form-field>
+    </div> 
+
+    <div layout class="pad-left-sm pad-right-sm">
+      <sx-usuario-sec-field flex (usuarioFound)="setAtendio($event)" placeholder="Solicita">
+      </sx-usuario-sec-field>
+      <span class="text-center tc-indigo-600" flex>
+        {{solicita?.nombre}}
+      </span>
+    </div>
+
+    <md-divider></md-divider>
+    <md-card-actions>
+        <button type="submit" md-button [disabled]="form.invalid" *ngIf="isEditable()"> Salvar </button>
+      <a md-button [routerLink]="['/ventas/pedidos/soporte']"> Cancelar </a>
+    </md-card-actions>
+  </md-card>
+</form>

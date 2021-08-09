@@ -1,0 +1,76 @@
+<td-layout-nav logo="assets:siipap-rx2" toolbarTitle="Punto de venta " color="primary" navigationRoute="/">
+
+  <button md-icon-button td-menu-button tdLayoutToggle>
+    <md-icon>menu</md-icon>
+  </button>
+
+
+  <div td-toolbar-content layout="row" layout-align="start center" flex>
+    <span hide-xs></span>
+    <span flex></span>
+    <!--
+    <ng-template sxHasRole="ROLE_CAJA">
+      <sx-sucursal-label></sx-sucursal-label>
+    </ng-template>
+    -->
+    <sx-sucursal-label></sx-sucursal-label>
+    <sx-logout></sx-logout>
+  </div>
+
+  <div layout="row" layout-align="center start" *ngIf="application$ | async;  let application">
+
+    <md-card flex>
+
+      <img md-card-image src="{{application.image}}" class="home-images">
+      <md-card-title>{{application.nombre}}</md-card-title>
+      <md-card-subtitle>{{application.descripcion}}</md-card-subtitle>
+      <md-card-actions>
+        <div layout="row" class="tc-grey-600" layout-align="start">
+          <a md-button *ngFor="let modulo of modulos$ | async" color="warn" [routerLink]="resolveLink(modulo)">
+            {{modulo.nombre}}
+            <md-icon>{{modulo.icon}}</md-icon>
+
+          </a>
+        </div>
+
+      </md-card-actions>
+    </md-card>
+
+    <div layout="column">
+      <md-card>
+        <md-card-title>Módulos</md-card-title>
+        <md-divider></md-divider>
+        <md-nav-list>
+          <md-list-item *ngFor="let modulo of modulos$ | async" [routerLink]="modulo.path" md-list-item>
+
+            <md-icon mdListAvatar class="bgc-amber-800">{{modulo.icon}}</md-icon>
+            <h4 mdLine>{{modulo.nombre}}</h4>
+            <p mdLine>{{modulo.descripcion}}</p>
+
+          </md-list-item>
+
+
+        </md-nav-list>
+      </md-card>
+
+      <md-card>
+        <md-card-title>Favoritos</md-card-title>
+        <md-divider></md-divider>
+        <md-nav-list>
+          <!-- <md-icon md-list-avatar>account_box</md-icon> -->
+          <a md-list-item [routerLink]="['/ventas/pedidos']">
+
+            <span md-line>Pedidos</span>
+            <md-icon mdListIcon>arrow_forward</md-icon>
+          </a>
+        </md-nav-list>
+      </md-card>
+    </div>
+
+  </div>
+
+
+  <td-layout-footer color="primary">
+    <sx-page-footer></sx-page-footer>
+  </td-layout-footer>
+</td-layout-nav>

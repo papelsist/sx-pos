@@ -1,0 +1,51 @@
+.example-fab {
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
+}
+.table {
+  table-layout: fixed;
+  width: 100%;
+  overflow-y: auto;
+  // vertical-align: baseline
+}
+th.producto {
+  width: 450px; 
+}
+td.producto {
+  font-size: 12px;
+}
+th.cantidad, th.precio, th.importe, th.descuento, th.subtotal, th.operaciones {
+  min-width: 70px;
+}
+/*
+.example-fab {
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
+}
+.table {
+  table-layout: fixed;
+  overflow: auto;
+}
+th.renglon {
+  width: 40px;
+  font-size: 10px;
+}
+th.producto {
+  width: 450px; 
+}
+td.producto {
+  font-size: 12px;
+}
+th.cantidad, th.precio, th.importe, th.descuento, th.subtotal, th.operaciones {
+  min-width: 70px;
+}
+td {
+  ::ng-deep {
+    div.td-data-table-cell-content-wrapper {
+      padding-left: 0px;
+    }
+  }
+}
+*/

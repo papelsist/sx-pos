@@ -1,0 +1,27 @@
+<form [formGroup]="form" novalidate (ngSubmit)="doAccept()" [style.width.px]="600">
+    <h4 md-dialog-title>
+      Cambio de cliente pedido: 
+    </h4>
+    <div layout ="column">
+      <!-- <sx-cliente-field  formControlName="cliente"></sx-cliente-field> -->
+      <sx-cliente-field  formControlName="cliente"></sx-cliente-field>
+      
+      <sx-usuario-sec-field placeholder="Usuario" 
+        (usuarioFound)="setUsuario($event)">
+      </sx-usuario-sec-field>
+      
+      <md-form-field class="fill">
+        <input type="text" mdInput placeholder="" 
+          value="{{form.get('usuario').value?.username}}" 
+          [disabled]="true">
+      </md-form-field>
+    </div>
+  
+  
+    <md-dialog-actions>
+      <button md-button class="accent" type="submit" [disabled]="form.invalid" >Aceptar</button>
+      <button md-button type="button" (click)="close()" >Cancelar</button>
+    </md-dialog-actions>
+  
+  </form>
+  

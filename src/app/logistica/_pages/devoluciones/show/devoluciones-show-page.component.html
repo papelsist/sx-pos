@@ -1,0 +1,60 @@
+<div layout>
+
+  <md-card flex>
+    <ng-container *ngIf="devolucion$ | async; let trs">
+      <md-card-title>
+        <span layout>
+          <span>{{ trs.tipo }}</span>
+          <span>RMD: {{trs.documento}} ({{trs.fecha | date: 'dd/MM/yyyy'}})</span>
+          <span flex></span>
+          <span>Venta: {{trs.venta.tipo}} - {{trs.venta.documento}} ({{trs.venta.fecha | date: 'dd/MM/yyyy'}})</span>
+          <span flex></span>
+
+        </span>
+      </md-card-title>
+      <md-card-subtitle>
+        <span layout>
+          <span>{{trs.venta.cliente.nombre}} </span>
+          <span flex></span>
+          <span>{{trs.comentario}}</span>
+          <span *ngIf="trs.fechaInventario" class="tc-pink-500">INVENTARIADO: {{trs.fechaInventario | date:'dd/MM/yyyy HH:mm'}}</span>
+          <span flex></span>
+          <span>Usuario: {{trs.createUser}}</span>
+        </span>
+      </md-card-subtitle>
+
+      <md-divider></md-divider>
+      <sx-devoluciondet-grid [partidas]="trs.partidas"></sx-devoluciondet-grid>
+      <md-divider></md-divider>
+      <md-card-actions>
+        <a md-button [routerLink]="['/logistica/inventarios/devoluciones']">
+          <md-icon>keyboard_backspace</md-icon> Regresar </a>
+        <button md-icon-button (click)="print(trs)" mdTooltip="Imprimir documento">
+          <md-icon>print</md-icon>
+        </button>
+        <button md-button color="accent" *ngIf="trs.fechaInventario === undefined" mdTooltip="Mandar al inventario" (click)="inventariar(trs)">
+          <md-icon>send</md-icon> Mandar al inventario</button>
+        <!-- <button md-button color="warn"
+          *ngIf="trs.fechaInventario == null"
+          mdTooltip="Eliminar documento" (click)="onDelete(trs)" >  <md-icon >delete</md-icon> Eliminar</button> -->
+      </md-card-actions>
+
+    </ng-container>
+
+  </md-card>
+
+  <ng-template #loadingPanel>
+    <md-card>
+      <md-card-title>Devolución de venta</md-card-title>
+      <md-card-content *tdLoading="'overlayStarSyntax'; let loading until !(loading$ | async); color: 'accent' strategy:'overlay';"
+        class="will-load">
+
+      </md-card-content>
+    </md-card>
+
+  </ng-template>
+
+</div>
+
+<!-- <td-json-formatter [data]="devolucion$ | async" [levelsOpen]="1">
+</td-json-formatter> -->

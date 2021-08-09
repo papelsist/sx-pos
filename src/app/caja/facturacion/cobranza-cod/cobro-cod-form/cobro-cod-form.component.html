@@ -1,0 +1,108 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="form" novalidate layout>
+  <md-card flex="80">
+    <md-card-title class="md-title">
+      <div layout>
+        <span>Cobro de Fac COD:</span>
+        <span class="pad-left tc-indigo-600">
+          {{venta.cuentaPorCobrar.documento}}
+        </span>
+        <span class="pad-left">{{venta.nombre}}</span>
+        <span flex></span>
+        <sx-bonificacion-mc-add [bonificaciones]="bonificaciones" [importe]="porCobrar" (aplicar)="onAplicar($event)"></sx-bonificacion-mc-add>
+      </div>
+    </md-card-title>
+    <md-divider></md-divider>
+    <md-card-content>
+      <div layout layout-align="center center" layout-margin>
+        <md-select placeholder="Forma de pago" formControlName="formaDePago" flex>
+          <md-option *ngFor="let tipo of formasDePago" [value]="tipo">
+            {{tipo}}
+          </md-option>
+        </md-select>
+
+        <md-form-field flex>
+          <input type="text" mdInput value="{{venta?.fecha | date: 'dd/MM/yyyy'}}" placeholder="Fecha" [disabled]="true">
+        </md-form-field>
+
+      </div>
+
+      <div layout layout-align="center center" layout-padding>
+        <md-form-field flex>
+          <input type="text" mdInput value="{{venta?.total | currency: 'USD': 1.2-2}}" placeholder="Total pedido" [disabled]="true">
+        </md-form-field>
+
+        <md-form-field flex>
+          <input type="text" mdInput value="{{venta?.cuentaPorCobrar.pagos | currency: 'USD': 1.2-2}}" placeholder="Pagos" [disabled]="true">
+        </md-form-field>
+
+        <md-form-field flex>
+          <input type="text" mdInput value="{{totalParciales | currency: 'USD': 1.2-2}}" placeholder="Parciales" [disabled]="true">
+        </md-form-field>
+
+        <md-form-field flex>
+          <input type="text" mdInput value="{{pendiente | currency: 'USD': 1.2-2}}" placeholder="Por Cobrar" [disabled]="true">
+          <md-error>Importe invalido</md-error>
+        </md-form-field>
+
+
+
+      </div>
+
+      <div layout layout-align="center center" layout-padding>
+        <section>
+          <button type="button" md-button color="accent" (click)="saldar()" [disabled]="porCobrar <= 0"> Aplicar: {{pendiente | currency: 'USD': 1.2-2}}</button>
+        </section>
+        <md-form-field flex>
+          <input type="text" mdInput placeholder="Cobrado" formControlName="importe" sxOnlyNumbers>
+          <md-error>Importe incorrecto</md-error>
+        </md-form-field>
+
+        <md-form-field flex>
+          <input type="text" mdInput placeholder="Diferencia" formControlName="cambio">
+        </md-form-field>
+        <section>
+          <button type="button" md-button color="accent" (click)="agregarCobro()" [disabled]="!permitirMasCobros"> Agregar otra F.P</button>
+        </section>
+      </div>
+
+    </md-card-content>
+    <td-message *ngIf="form.hasError('permiteCheque') " label="Error!" sublabel="No se permite cheque a este cliente" color="warn"
+      icon="error"></td-message>
+    <md-divider></md-divider>
+    <md-card-actions>
+      <button md-button color="primary" class="text-upper" [disabled]="form.invalid">
+        Cobrar
+      </button>
+      <button md-button type="button" (click)="buscarDisponible()" [disabled]="porCobrar <= 0" color="primary" class="text-upper">Disponibles
+      </button>
+      <button md-button class="text-upper" (click)="cancelar.emit()" type="button">Cancelar</button>
+    </md-card-actions>
+  </md-card>
+
+  <md-card flex="30">
+    <md-card-title class="md-title">
+      <span layout>
+        <span>Cobros parciales</span>
+        <span flex></span>
+        <span>{{totalParciales | currency: 'USD': 1.2-2}}</span>
+      </span>
+    </md-card-title>
+    <md-divider></md-divider>
+    <md-list>
+      <ng-template let-item let-last="last" let-index="index" ngFor [ngForOf]="parciales">
+        <md-list-item>
+          <md-icon mdListAvatar>{{getItemIcon(item)}}</md-icon>
+          <h4 mdLine>{{item.formaDePago}} </h4>
+          <p mdLine>
+            <span *ngIf="item.id">Disponible: </span>{{item.disponible | currency: 'USD': 1.2-2}}
+          </p>
+          <p mdLine *ngIf="item.id"> Por Aplicar: {{item.porAplicar | currency: 'USD': 1.2-2}}</p>
+          <button md-icon-button type="button" (click)="quitarCobro(index)">
+            <md-icon>delete</md-icon>
+          </button>
+        </md-list-item>
+      </ng-template>
+    </md-list>
+  </md-card>
+
+</form>

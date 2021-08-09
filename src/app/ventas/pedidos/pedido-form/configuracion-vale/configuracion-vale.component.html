@@ -1,0 +1,26 @@
+<td-expansion-panel [formGroup]="parent" [disabled]="disabled">
+
+  <ng-template td-expansion-panel-label>
+    <div >
+      <md-icon>swap_horiz</md-icon>
+      <span > Vale</span>
+    </div>
+  </ng-template>
+      
+  <md-list>
+
+    <md-list-item>
+      <md-select placeholder="Vale" formControlName="clasificacionVale" floatPlaceholder="never" flex>
+        <md-option *ngFor="let tipo of tipos" [value]="tipo">{{ tipo }}</md-option>
+      </md-select>
+      <sx-almacenes-field [parent]="parent" sucursalProperty="sucursalVale" flex> </sx-almacenes-field>
+    </md-list-item>
+
+    <!-- <md-list-item>
+      <sx-almacenes-field [parent]="parent" flex> </sx-almacenes-field>
+    </md-list-item> -->
+
+  </md-list>
+    
+</td-expansion-panel>
+    

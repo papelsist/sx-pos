@@ -1,0 +1,39 @@
+<sx-nav-layout [header]="'Recepciones de compras (COMS)'" [modulo]="'Compras'">
+
+    <md-card layout [style.height.%]="100">
+        <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+            <span class="push-left-sm" flex>
+        <span class="md-title">Recepciones </span>
+            </span>
+            <span flex></span>
+            <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Documento  " (searchDebounce)="search($event)" flex>
+            </td-search-box>
+            <span>
+            <md-checkbox [(ngModel)]="pendientes">Pendientes</md-checkbox>
+
+           
+        <button md-icon-button [mdMenuTriggerFor]="toolbarMenu">
+          <md-icon>more_vert</md-icon>
+        </button>
+        <md-menu #toolbarMenu="mdMenu">
+          <button (click)="load()" md-menu-item>
+            <md-icon>refresh</md-icon> Refrescar</button>
+          <button (click)="recepcionDeMercancia()" md-menu-item>
+            <md-icon>blur_linear</md-icon> Rec Mercancía
+          </button>
+        </md-menu>
+      </span>
+        </div>
+
+        <md-divider></md-divider>
+        <div>
+            <ng-template tdLoading [tdLoadingUntil]="!procesando" tdLoadingStrategy="overlay" tdLoadingType="linear">
+                <sx-coms-list [coms]="coms" (printReport)="printReport($event)"></sx-coms-list>
+            </ng-template>
+        </div>
+
+    </md-card>
+    <a md-fab color="accent" class="mat-fab-bottom-right" [routerLink]="['create']">
+        <md-icon>add</md-icon>
+    </a>
+</sx-nav-layout>

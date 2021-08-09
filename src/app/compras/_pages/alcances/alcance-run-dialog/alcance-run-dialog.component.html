@@ -1,0 +1,33 @@
+<form novalidate (ngSubmit)="onSubmit()" [formGroup]="form" class="alcance-run-form">
+  <h4 md-dialog-title>Consulta de Alcances</h4>
+  <md-dialog-content>
+    <div layout="column">
+
+      <div layout="row">
+        <md-form-field>
+          <input mdInput [mdDatepicker]="myDatepicker" placeholder="Fecha inicial" formControlName="fechaInicial">
+          <md-datepicker-toggle mdSuffix [for]="myDatepicker"></md-datepicker-toggle>
+          <md-datepicker #myDatepicker></md-datepicker>
+        </md-form-field>
+        <md-form-field>
+          <input mdInput [mdDatepicker]="myDatepicker2" placeholder="Fecha final" formControlName="fechaFinal">
+          <md-datepicker-toggle mdSuffix [for]="myDatepicker2"></md-datepicker-toggle>
+          <md-datepicker #myDatepicker2></md-datepicker>
+        </md-form-field>
+      </div>
+
+      <div layout="row">
+        <md-form-field>
+          <input type="number" placeholder="Meses" mdInput formControlName="meses">
+        </md-form-field>
+      </div>
+
+    </div>
+
+  </md-dialog-content>
+
+  <md-dialog-actions>
+    <button md-button type="button" (click)="cancelar()">Cancelar</button>
+    <button md-button type="submit" [disabled]="form.invalid">Ejecutar</button>
+  </md-dialog-actions>
+</form>

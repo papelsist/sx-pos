@@ -1,0 +1,17 @@
+<form novalidate (ngSubmit)="doAccept()" [formGroup]="form">
+
+  <h4 md-dialog-title>Dirección de envío</h4>
+  <md-dialog-content>
+    <div layout>
+      <sx-direccion-form [parent]="form"></sx-direccion-form>
+    </div>
+  </md-dialog-content>
+
+  <md-dialog-actions>
+    <button md-button type="submit"  class="accent" [disabled]="form.invalid" >Aceptar</button>
+    <button md-button type="button" (click)="close()" >Cancelar</button>
+</md-dialog-actions>
+  
+</form>  
+  
+  

@@ -1,0 +1,6 @@
+<div *ngIf="invalidMessage !== null ">
+  <div *ngFor="let error of errors">
+      <td-message  #message label="{{error}}" icon="warning" color="red" [opened]="true"> 
+      </td-message>
+  </div> 
+</div>

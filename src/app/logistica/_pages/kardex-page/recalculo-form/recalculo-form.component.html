@@ -1,0 +1,21 @@
+<form [formGroup]="form" novalidate (ngSubmit)="doAccept()">
+    <h4 md-dialog-title>
+      Recalculo de existencia
+    </h4>
+  
+    <div layout="column" class="recalculo-form" >
+
+      <div layout>
+          <sx-producto-field formControlName="producto" flex="80"></sx-producto-field>
+          <md-checkbox formControlName="todos">Todos</md-checkbox>
+      </div>
+      
+  
+    </div>
+  
+    <md-dialog-actions>
+      <button md-button class="accent" type="submit" [disabled]="form.invalid" >Aceptar</button>
+      <button md-button type="button" (click)="close()" >Cancelar</button>
+    </md-dialog-actions>
+  </form>
+  

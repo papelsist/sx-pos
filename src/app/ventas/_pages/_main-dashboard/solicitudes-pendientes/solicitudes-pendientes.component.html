@@ -1,0 +1,23 @@
+<md-card>
+    <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+        <span class="push-left-sm" flex>
+          <span class="md-title">Solicitudes </span>
+        </span>
+        <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Folio " (searchDebounce)="search($event)" flex>
+        </td-search-box>
+        <span>
+          <md-checkbox  [(ngModel)]="autorizadas"  >Autorizadas</md-checkbox>
+        </span>
+        <span> 
+          <button md-icon-button (click)="load()"><md-icon>refresh</md-icon></button>
+        </span>
+    </div>
+
+    <md-divider></md-divider>
+
+    <ng-template tdLoading [tdLoadingUntil]="!procesando" tdLoadingStrategy="overlay" tdLoadingType="linear">
+        <ng-container *ngIf="pendientes$ | async as pendientes">
+            <sx-solicitudes-list [solicitudes]="pendientes"></sx-solicitudes-list>
+        </ng-container>
+    </ng-template>
+</md-card>

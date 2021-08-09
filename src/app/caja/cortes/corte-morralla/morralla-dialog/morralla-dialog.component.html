@@ -1,0 +1,37 @@
+<form novalidate (ngSubmit)="onSubmit()" [formGroup]="form" class="efectivo-form">
+  <h3 md-dialog-title>Registro de gasto </h3>
+
+  <md-dialog-content>
+
+    <div layout="row">
+      <md-form-field>
+        <input type="text" mdInput value="{{fecha | date:'dd/MM/yyyy'}}" placeholder="Fecha" [disabled]="true">
+      </md-form-field>
+      <md-form-field>
+        <input type="text" mdInput value="{{fecha | date:'HH:mm'}}" placeholder="Hora" [disabled]="true">
+      </md-form-field>
+    </div>
+
+    <div layout>
+
+      <md-select placeholder="Tipo" formControlName="tipo" flex>
+        <md-option *ngFor="let tipo of ['ENTRADA','SALIDA']"
+                   [value]="tipo">{{ tipo }}
+        </md-option>
+      </md-select>
+      <md-form-field flex>
+        <input type="text" mdInput placeholder="Importe" formControlName="importe" sxOnlyNumbers>
+      </md-form-field>
+    </div>
+
+    <div layout>
+      <sx-comentario-field [parent]="form" flex ></sx-comentario-field>
+    </div>
+
+  </md-dialog-content>
+
+  <md-dialog-actions>
+    <button md-button type="button" (click)="cancelar()"  >Cancelar</button>
+    <button md-button type="submit" [disabled]="form.invalid" >Salvar</button>
+  </md-dialog-actions>
+</form>

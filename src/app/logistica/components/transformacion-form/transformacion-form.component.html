@@ -1,0 +1,41 @@
+<form novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <md-card class="transformacion-form">
+        <md-card-title> Alta de transformación</md-card-title>
+        <md-divider></md-divider>
+
+        <div layout>
+
+
+            <md-form-field>
+                <input type="text" mdInput placeholder="Fecha" [disabled]="true" [value]=" fecha | date:'dd/MM/yyyy'">
+            </md-form-field>
+
+            <md-select placeholder="Tipo" formControlName="tipo" flex="15">
+                <md-option *ngFor="let tipo of tipos" [value]="tipo.clave" class="tipo-field">{{tipo.clave}} - {{tipo.descripcion}}</md-option>
+            </md-select>
+
+            <sx-comentario-field flex [parent]="form" rows="1"></sx-comentario-field>
+
+
+            <div flex="15" layout layout-align="start center">
+                <md-checkbox flex formControlName="porInventario">Por inventario</md-checkbox>
+            </div>
+        </div>
+
+        <div>
+            <button type="button" md-button (click)="insertar()" [disabled]="form.get('tipo').value===null"> <md-icon>add</md-icon> Agregar partidas</button>
+        </div>
+
+        <div *ngIf=" partidas.value.length === 0" class="empty-partidas text-center">
+            <h4 class="tc-pink-200 text-center">Registre productos a transormar</h4>
+        </div>
+        <sx-transformacion-partidas-list [parent]="form" [partidas]="partidas.value" (delete)="removePartida($event)" #partidasList>
+        </sx-transformacion-partidas-list>
+
+        <md-divider></md-divider>
+        <md-card-actions>
+            <button type="submit" md-button [disabled]="form.invalid"> Salvar </button>
+            <button type="button" md-button (click)="cancel.emit($event)"> Cancelar </button>
+        </md-card-actions>
+    </md-card>
+</form>

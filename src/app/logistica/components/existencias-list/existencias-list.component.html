@@ -1,0 +1,28 @@
+<td-data-table
+  #dataTable
+  [data]="existencias"
+  [columns]="columns"
+  [style.height.px]="550">
+
+  <ng-template tdDataTableTemplate="producto.clave" let-value="value" let-row="row">
+    <a [routerLink]="['edit', row.id]"  >
+        {{value}} 
+    </a>
+  </ng-template>
+  <ng-template tdDataTableTemplate="lastUpdated" let-value="value">
+    <span class="text-md">{{ value | date: 'dd/MM/yyyy: hh:mm'}}</span>
+  </ng-template>
+  <ng-template tdDataTableTemplate="recorteFecha" let-value="value">
+    <span class="text-md">{{ value | date: 'dd/MM/yyyy'}}</span>
+  </ng-template>
+  <ng-template tdDataTableTemplate="cantidad" let-value="value">
+    <span [ngClass]="{'tc-indigo-800':value >0, 'tc-pink-800': value<0}">{{ value | number}}</span>
+  </ng-template>
+  <ng-template tdDataTableTemplate="disponible" let-value="value">
+    <span [ngClass]="{'tc-indigo-800':value >0, 'tc-pink-800': value<0}">{{ value | number}}</span>
+  </ng-template>
+  <ng-template tdDataTableTemplate="recorte" let-value="value">
+    <span [ngClass]="{'tc-indigo-800':value >0, 'tc-pink-800': value<0}">{{ value | number}}</span>
+  </ng-template>
+
+</td-data-table>

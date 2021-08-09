@@ -1,0 +1,54 @@
+<md-card>
+  <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+      <span >
+        <span class="md-title">Devoluciones  pendientes de envío</span>
+      </span>
+      <span *ngIf="!searchBox.searchVisible" class="push-left-sm">
+        
+        <span *ngIf="selectedRows.length && selectable" class="md-body-1">0 item(s) seleccionados</span>
+      </span>
+      <td-search-box #searchBox backIcon="arrow_back" 
+        class="push-right-sm" placeholder="Documento" (searchDebounce)="search($event)" flex>
+      </td-search-box>
+    </div>
+    <md-divider></md-divider>
+    <td-data-table
+      #dataTable
+      [data]="filteredData"
+      [columns]="columns"
+      [selectable]="selectable"
+      [clickable]="false"
+      [multiple]="true"
+      [sortable]="true"
+      [sortBy]="sortBy"
+      [(ngModel)]="selectedRows"
+      [sortOrder]="sortOrder"
+      (sortChange)="sort($event)"
+      [style.height.px]="450">
+      <ng-template tdDataTableTemplate="parcial" let-value="value">
+        <md-icon *ngIf="value">check</md-icon>
+      </ng-template>
+      <ng-template tdDataTableTemplate="venta.fecha" let-value="value">
+        {{ value | date: 'dd/MM/yyyy'}}
+      </ng-template>
+      <ng-template tdDataTableTemplate="venta.lastUpdated" let-value="value">
+        {{ value | date: 'dd/MM/yyyy HH:mm'}}
+      </ng-template>
+      <ng-template tdDataTableTemplate="retraso" let-value="value">
+        {{ getRetraso(value) }} hrs
+      </ng-template>
+    </td-data-table>
+    <div class="md-padding" *ngIf="!dataTable.hasData" layout="row" layout-align="center center">
+      <h3>No hay facturas pendientes.</h3>
+    </div>
+    <td-paging-bar #pagingBar [pageSize]="pageSize" [total]="filteredTotal" (change)="page($event)">
+      <span hide-xs>Regsitros por página:</span>
+      <md-select [style.width.px]="50" [(ngModel)]="pageSize">
+        <md-option *ngFor="let size of [50,100,200,500]" [value]="size">
+          {{size}}
+        </md-option>
+      </md-select>
+      {{pagingBar.range}} <span hide-xs>of {{pagingBar.total}}</span>
+    </td-paging-bar>
+  </md-card>
+  

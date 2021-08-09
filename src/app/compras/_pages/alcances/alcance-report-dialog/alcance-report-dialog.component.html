@@ -1,0 +1,67 @@
+<form novalidate (ngSubmit)="onSubmit()" [formGroup]="form" class="alcance-run-form">
+  <h4 md-dialog-title>Reporte general de Alcance</h4>
+  <md-dialog-content>
+    <div layout="column" class="pad">
+
+      <div layout="row">
+        <md-form-field flex>
+          <input mdInput [mdDatepicker]="myDatepicker" placeholder="Fecha inicial" formControlName="fechaInicial">
+          <md-datepicker-toggle mdSuffix [for]="myDatepicker"></md-datepicker-toggle>
+          <md-datepicker #myDatepicker></md-datepicker>
+        </md-form-field>
+        <md-form-field flex>
+          <input mdInput [mdDatepicker]="myDatepicker2" placeholder="Fecha final" formControlName="fechaFinal">
+          <md-datepicker-toggle mdSuffix [for]="myDatepicker2"></md-datepicker-toggle>
+          <md-datepicker #myDatepicker2></md-datepicker>
+        </md-form-field>
+      </div>
+
+      <div layout>
+        <md-select placeholder="Línea" formControlName="LINEA" flex>
+          <md-option *ngFor="let linea of lineas" [value]="linea">{{ linea }}
+          </md-option>
+        </md-select>
+      </div>
+
+      <div layout>
+        <md-select placeholder="Orden" formControlName="ORDEN" flex>
+          <md-option *ngFor="let orden of ordenes" [value]="orden.clave">{{ orden.descripcion }}
+          </md-option>
+        </md-select>
+        <md-select placeholder="Forma" formControlName="FORMA" flex>
+          <md-option *ngFor="let tipoOrden of ['ASC', 'DESC']" [value]="tipoOrden">{{ tipoOrden }}
+          </md-option>
+        </md-select>
+        <md-form-field flex>
+          <input type="number" placeholder="Meses alcance" mdInput formControlName="MESES">
+        </md-form-field>
+      </div>
+
+      <div layout="row">
+        <md-select placeholder="Filtro" formControlName="FILTRADO" flex>
+          <md-option *ngFor="let filtro of filtros" [value]="filtro">{{ filtro }}
+          </md-option>
+        </md-select>
+        <md-form-field flex>
+          <input type="number" placeholder="Meses a filtrar" mdInput formControlName="MESESF">
+        </md-form-field>
+      </div>
+
+      <div layout>
+        <md-select placeholder="De Linea" formControlName="DELINEA" flex>
+          <md-option *ngFor="let tipo of tipos" [value]="tipo.value">{{ tipo.clave }}
+          </md-option>
+        </md-select>
+
+
+      </div>
+
+    </div>
+
+  </md-dialog-content>
+
+  <md-dialog-actions>
+    <button md-button type="button" (click)="cancelar()">Cancelar</button>
+    <button md-button type="submit" [disabled]="form.invalid">Ejecutar</button>
+  </md-dialog-actions>
+</form>

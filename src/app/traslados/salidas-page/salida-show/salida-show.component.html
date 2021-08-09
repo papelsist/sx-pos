@@ -1,0 +1,62 @@
+<div layout>
+    <md-card flex>
+        <ng-container *ngIf="tps$ | async; let tps">
+            <md-card-title>
+                <span layout>
+          <span flex="40">TPS: {{tps.documento}} ({{tps.fecha | date: 'dd/MM/yyyy'}})</span>
+                <span flex="20">SOL: {{tps.solicitudDeTraslado.documento}} {{tps.solicitudDeTraslado.sucursalSolicita.nombre}}</span>
+                <span flex></span>
+                </span>
+            </md-card-title>
+            <md-card-subtitle>
+                <div layout>
+                    <span flex="40" layout="column">
+            <span class="tc-indigo-500">{{tps.comentario}}</span>
+                    <span>UUID: <span class="tc-pink-800">{{tps?.cfdi?.uuid}}</span> </span>
+                    <span *ngIf="tps.fechaInventario" class="tc-pink-800">INVENTARIADO: {{tps.fechaInventario | date:'dd/MM/yyyy HH:mm'}}</span>
+                    </span>
+                    <span layout="column">
+            <span>Chofer: <span>{{tps?.chofer?.nombre}}</span> </span>
+                    <span class="push-right"> Clasificación vale: {{tps.clasificacionVale}}</span>
+                    </span>
+                    <span flex></span>
+                    <span>Usuario: {{tps.createUser}}</span>
+                </div>
+            </md-card-subtitle>
+
+            <md-divider></md-divider>
+            <td-data-table [data]="tps.partidas" [columns]="columns">
+                <ng-template tdDataTableTemplate="solicitado" let-value="value" let-row="row">
+                    <span>{{value | number:'1.0-0'}}</span>
+                </ng-template>
+                <ng-template tdDataTableTemplate="recibido" let-value="value" let-row="row">
+                    <span>{{value | number:'1.0-0'}}</span>
+                </ng-template>
+            </td-data-table>
+            <md-divider></md-divider>
+
+            <ng-template tdLoading [tdLoadingUntil]="!procesando" tdLoadingStrategy="overlay" tdLoadingType="linear">
+                <md-card-actions>
+                    <a md-button [routerLink]="['/traslados/salidas']">
+                        <md-icon>keyboard_backspace</md-icon> Regresar </a>
+                    <button md-icon-button (click)="print(tps)" mdTooltip="Imprimir documento">
+            <md-icon>print</md-icon>
+          </button>
+
+                    <button md-button (click)="registrarSalida(tps)" color="accent" *ngIf="!tps.fechaInventario">
+               Dar salida <md-icon>flight_takeoff</md-icon>
+          </button>
+                    <ng-container *ngIf="!tps.cfdi && tps.fechaInventario && !tps.cancelado">
+                        <button type="button" md-button mdTooltip="Timbrar" (click)="timbrar(tps)" color="primary">
+                Timbrar <md-icon>cast</md-icon>
+              </button>
+                    </ng-container>
+                    <button md-button type="button" (click)="mostrarXml(tps)" *ngIf="tps.cfdi">
+                <md-icon>dvr</md-icon>  Ver XML
+          </button>
+                </md-card-actions>
+            </ng-template>
+
+        </ng-container>
+    </md-card>
+</div>

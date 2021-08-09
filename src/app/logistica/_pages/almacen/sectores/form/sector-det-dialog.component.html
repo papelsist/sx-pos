@@ -1,0 +1,22 @@
+<form novalidate (ngSubmit)="doAccept()" [formGroup]="form">
+
+  <h4 md-dialog-title>Selector de producto: {{sucursal.nombre}}</h4>
+
+  <div layout="column" class="selector-form" class="exis-form">
+    <!-- <sx-existencia-field
+      [sucursal]="sucursal"
+      placeholder="Producto"
+      formControlName="existencia">
+    </sx-existencia-field> -->
+    <sx-producto-field formControlName="producto"></sx-producto-field>
+    <!-- <sx-comentario-field [parent]="form" [rows]="1"></sx-comentario-field> -->
+    <md-form-field>
+      <input type="number" mdInput placeholder="Indice" formControlName="indice">
+    </md-form-field>
+  </div>
+
+  <md-dialog-actions>
+    <button md-button class="accent" type="submit" [disabled]="form.invalid" >Aceptar</button>
+    <button md-button type="button" (click)="close()" >Cancelar</button>
+  </md-dialog-actions>
+</form>

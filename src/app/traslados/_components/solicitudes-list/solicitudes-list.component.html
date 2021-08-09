@@ -1,0 +1,57 @@
+<md-list >
+  <md-list-item>
+    <md-icon md-list-icon class="tc-pink-800" >vpn_key</md-icon>
+    <span md-line >
+      <span layout layout-padding>
+        <span flex="20" class="tc-indigo-700 text-center"> SOL</span>
+        <span flex="20" >Fecha</span>
+        <span flex >Comentario</span>
+      </span>
+    </span>
+    <span flex></span>
+    <span hide-xs hide-sm hide-md flex-gt-xs="60"  layout-gt-xs="row" layout-align="start center">
+      <span flex class=" tc-blue-500" flex-gt-xs="10" > Atiende</span>
+    </span>
+  </md-list-item>
+  <md-divider></md-divider>
+  <td-virtual-scroll-container #virtualScroll [style.height.px]="350" [data]="solicitudes">
+    <ng-template let-row="row" let-last="last" tdVirtualScrollRow>
+      <md-list-item >
+        <md-icon md-list-icon class="tc-pink-800" >apps</md-icon>
+        <span md-line >
+          <span layout layout-padding>
+            <span flex="20" class="tc-indigo-700">
+              <button [routerLink]="['show', row.id]" md-button class="text-left">
+                  {{row.documento}} 
+              </button>
+              
+            </span>
+            <span flex="20" >{{ row.fecha | date:'dd/MM/yyyy'}}</span>
+            <span flex >{{row.comentario}}</span>
+          </span>
+        </span>
+        <span flex></span>
+        <span hide-xs hide-sm hide-md flex-gt-xs="60" flex-xs="20" layout-gt-xs="row">
+          <div class=" tc-blue-500" flex-gt-xs="50" > {{row.sucursalAtiende.nombre}} </div>
+        </span>
+        <span>
+          <button md-icon-button (click)="print.emit(row)"><md-icon>print</md-icon></button>
+        </span>
+        <span >
+          <button md-icon-button [md-menu-trigger-for]="menu"  >
+          <md-icon [ngClass]="{'tc-blue-600':odd }">more_vert</md-icon>
+          </button>
+          <md-menu x-position="before" #menu="mdMenu">
+            <a [routerLink]="['show', row.id]" md-menu-item [disabled]="false">
+              <md-icon>info</md-icon> Consultar
+            </a>
+            <a [routerLink]="['edit', row.id]" md-menu-item [disabled]="true">
+                <md-icon>edit</md-icon> Editar
+            </a>
+          </md-menu>
+        </span>
+      </md-list-item>
+      <md-divider *ngIf="!last" md-inset></md-divider>
+    </ng-template>
+  </td-virtual-scroll-container>
+</md-list>

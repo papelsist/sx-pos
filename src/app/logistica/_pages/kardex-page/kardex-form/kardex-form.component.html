@@ -1,0 +1,31 @@
+<form [formGroup]="form" novalidate (ngSubmit)="doAccept()">
+    <h4 md-dialog-title>
+      Kardex de producto
+    </h4>
+  
+    <div layout="column" class="kardex-form" >
+
+      <sx-producto-field formControlName="producto"></sx-producto-field>
+      
+      <div layout>
+        <md-form-field flex class="pad">
+          <input mdInput [mdDatepicker]="picker1" placeholder="Fecha Inicial" formControlName="fechaInicial">
+          <md-datepicker-toggle mdSuffix [for]="picker1"></md-datepicker-toggle>
+          <md-datepicker #picker1></md-datepicker>
+        </md-form-field>
+  
+        <md-form-field flex class="pad">
+          <input mdInput [mdDatepicker]="picker2" placeholder="Fecha Final" formControlName="fechaFinal">
+          <md-datepicker-toggle mdSuffix [for]="picker2"></md-datepicker-toggle>
+          <md-datepicker #picker2></md-datepicker>
+        </md-form-field>
+      </div>
+  
+    </div>
+  
+    <md-dialog-actions>
+      <button md-button class="accent" type="submit" [disabled]="form.invalid" >Aceptar</button>
+      <button md-button type="button" (click)="close()" >Cancelar</button>
+    </md-dialog-actions>
+  </form>
+  

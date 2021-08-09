@@ -1,0 +1,18 @@
+<sx-nav-list-layout header="Embarques" modulo="LOGISTICA" 
+[navigation]="navigation">
+<div class="page-document">
+  <router-outlet></router-outlet>
+</div>
+<div class="reportes">
+  <h2 matSubheader>Reportes</h2>
+  
+  <ng-template let-item let-last="last" ngFor [ngForOf]="reportes">
+    <md-list-item (click)="runReport(item.name)">
+      <md-icon md-list-icon>blur_linear</md-icon>
+      <h3 md-line> {{item.title}} </h3>
+    </md-list-item>  
+    <md-divider md-inset *ngIf="!last"></md-divider>
+  </ng-template>
+</div>
+
+</sx-nav-list-layout>

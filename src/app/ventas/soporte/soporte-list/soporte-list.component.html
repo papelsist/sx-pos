@@ -1,0 +1,48 @@
+<td-data-table #dataTable [data]="solicitudes" [columns]="columns" selectable="false">
+
+    <ng-template tdDataTableTemplate="folio" let-value="value" let-row="row" >
+        <a class="tc-indigo-700 cursor-pointer"  (click)="showSolicitud(row)">
+            <span>{{row.folio}}</span>
+        </a>
+    </ng-template>
+
+<!--     <ng-template tdDataTableTemplate="total" let-value="value" let-row="row">
+        {{value | currency: 'USD': 1.2-2}}
+    </ng-template>
+
+    <ng-template tdDataTableTemplate="fechaDeposito" let-value="value">
+        {{ value | date: 'dd/MM/yyyy'}}
+    </ng-template>
+
+    <ng-template tdDataTableTemplate="nombre" let-value="value" let-row="row">
+        <span>{{value}}</span>
+    </ng-template>
+
+    <ng-template tdDataTableTemplate="lastUpdated" let-value="value">
+        {{ value | date: 'dd/MM/yyyy HH:mm'}}
+    </ng-template>
+
+    <ng-template tdDataTableTemplate="comentario" let-value="value" let-row="row">
+        <span flex *ngIf="!row.cobro && !row.cancelacion">{{row.comentario}}</span>
+        <span flex *ngIf="!row.cobro && row.cancelacion" class="tc-pink-700">{{row.cancelacionComentario}}</span>
+        <span flex *ngIf="row.cobro" class="tc-green-800">
+      Aut: {{row.cobro.fecha | date: 'dd/MM/yyyy'}}
+    </span>
+        <span flex *ngIf="row.banco.nombre !== row.cuenta.descripcion && row.cheque " class="tc-green-800">
+     SBC
+    </span>
+    </ng-template>
+
+    <ng-template tdDataTableTemplate="cancelacion" let-value="value" let-row="row">
+        <span flex *ngIf="row.cancelacion"><md-icon class="tc-pink-700">done</md-icon></span>
+    </ng-template>
+
+    <ng-template tdDataTableTemplate="createUser" let-value="value" let-row="row">
+        <span layout="column">
+      <span>{{value}}</span>
+        <span *ngIf="value != row.updateUser" class="tc-pink-700">{{row.updateUser}}</span>
+        </span>
+    </ng-template> -->
+
+
+</td-data-table>

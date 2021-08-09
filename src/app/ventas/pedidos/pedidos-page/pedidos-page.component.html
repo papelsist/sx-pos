@@ -1,0 +1,23 @@
+<sx-nav-list-layout header="Pedidos" modulo="Ventas" headerIcon="shopping_cart" sideNavWidth="250px" [navigation]="navigation">
+    <div toolbar flex layout>
+        <span flex></span>
+        <sx-factura-search></sx-factura-search>
+        <button md-icon-button (click)="addNewCliente()" type="button">
+      <md-icon>person_add</md-icon>
+    </button>
+    </div>
+
+    <router-outlet></router-outlet>
+    <div class="reportes">
+        <h2 matSubheader>Reportes</h2>
+
+        <ng-template let-item let-last="last" ngFor [ngForOf]="reportes">
+            <md-list-item (click)="runReport(item.name)" mdTooltip="{{item.title}}">
+                <md-icon md-list-icon>blur_linear</md-icon>
+                <h3 md-line> {{item.title}} </h3>
+            </md-list-item>
+            <md-divider md-inset *ngIf="!last"></md-divider>
+        </ng-template>
+    </div>
+
+</sx-nav-list-layout>

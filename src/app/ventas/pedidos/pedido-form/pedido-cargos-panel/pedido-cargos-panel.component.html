@@ -1,0 +1,29 @@
+<!-- <td-expansion-panel label="Cargos" [formGroup]="parent" [disabled] = "disabled$ | async"></td-expansion-panel> -->
+<td-expansion-panel label="Cargos" [formGroup]="parent" >
+
+  <md-list class="md-padding">
+    <md-list-item>
+      <h3 mdLine> C. Tarjeta: </h3>
+      <span flex></span>
+      <h3>{{ comisionTarjeta | percent }}</h3>
+    </md-list-item>
+
+    <md-list-item>
+      <h3 mdLine> Imp C.Tarjeta: </h3>
+      <span flex></span>
+      <h3>{{ parent.get('comisionTarjetaImporte').value | currency:'USD': true: '1.2-2'}}</h3>
+    </md-list-item>
+
+    <md-list-item>
+      <h3 mdLine> Cortes: </h3>
+      <span flex></span>
+      <h3>{{ parent.get('corteImporte').value | currency:'USD': true: '1.2-2'}}</h3>
+    </md-list-item>
+    <md-list-item>
+        <h3 mdLine> Maniobra: </h3>
+        <span flex></span>
+        <h3>{{ parent.get('cargosPorManiobra').value | currency:'USD': true: '1.2-2'}}</h3>
+      </md-list-item>
+  </md-list>
+
+</td-expansion-panel>

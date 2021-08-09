@@ -1,0 +1,40 @@
+<td-expansion-panel label="Totales" [expand]="'true'"  >
+  <ng-template td-expansion-panel-header>
+    <md-toolbar color="accent" layout>
+      <span>Totales</span>
+      <span flex></span>
+      <span   > {{venta.moneda}} </span>
+    </md-toolbar>
+  </ng-template>
+  <md-list class="md-padding">
+    <md-list-item>
+      <h3 mdLine> Importe: </h3>
+      <span flex></span>
+      <h3>{{ venta.importe | currency:'USD': true: '1.2-2'}}</h3>
+    </md-list-item>
+
+    <md-list-item>
+      <h3 mdLine> Descuento <span class="span-left"> ({{ venta.descuento/100| percent }}):</span></h3>
+      <span flex></span>
+      <h3>{{ venta.descuentoImporte | currency:'USD': true: '1.2-2'}}</h3>
+    </md-list-item>
+
+    <md-list-item>
+      <h3 mdLine> Sub Total: </h3>
+      <span flex></span>
+      <h3>{{ venta.subtotal | currency:'USD': true: '1.2-2'}}</h3>
+    </md-list-item>
+
+    <md-list-item>
+      <h3 mdLine> Impuesto: </h3>
+      <span flex></span>
+      <h3>{{ venta.impuesto | currency:'USD': true: '1.2-2'}}</h3>
+    </md-list-item>
+
+    <md-list-item>
+      <h3 mdLine> Total: </h3>
+      <span flex></span>
+      <h3>{{ venta.total | currency:'USD': true: '1.2-2'}}</h3>
+    </md-list-item>
+  </md-list>
+</td-expansion-panel>

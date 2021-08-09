@@ -1,0 +1,92 @@
+<td-layout-nav-list #navList color="accent" [opened]="media.registerQuery('gt-sm') | async" [mode]="(media.registerQuery('gt-sm') | async) ? 'side' : 'over'"
+  [sidenavWidth]="(media.registerQuery('gt-xs') | async) ? sideNavWidth : '100%'">
+
+  <div td-sidenav-toolbar-content layout="row" layout-align="start center">
+    <button md-icon-button tdLayoutToggle>
+      <md-icon>menu</md-icon>
+    </button>
+    <md-icon [routerLink]="['/']" class="md-icon-logo cursor-pointer" svgIcon="assets:siipap-rx2"></md-icon>
+  </div>
+
+  <div td-toolbar-content layout="row" layout-align="start center" flex>
+    <button md-icon-button [tdLayoutNavListToggle]="true">
+      <md-icon>keyboard_hide</md-icon>
+    </button>
+    <span flex></span>
+    <md-icon>business</md-icon>
+    <span>Alcances de inventario </span>
+    <sx-sucursal-label></sx-sucursal-label>
+    <span flex></span>
+
+    <span> (SX Compras) </span>
+    <sx-qv-productos-btn></sx-qv-productos-btn>
+    <button md-icon-button>
+      <md-icon>settings</md-icon>
+    </button>
+    <sx-module-selector></sx-module-selector>
+  </div>
+
+  <md-list td-sidenav-content [tdLayoutNavListClose]="!media.query('gt-sm')">
+    <h2 matSubheader>Filtros</h2>
+    <ng-template let-item let-last="last" ngFor [ngForOf]="filtros">
+      <form [formGroup]="searchForm">
+        <md-list-item>
+          <md-form-field>
+            <input mdInput placeholder="{{item.descripcion}}" md-line formControlName="{{item.nombre}}">
+          </md-form-field>
+        </md-list-item>
+      </form>
+    </ng-template>
+    <h2 matSubheader>Totales</h2>
+    <md-list-item>
+      Exis (TON) {{existenciaAcumulada | number:'1.1-1'}}
+    </md-list-item>
+    <md-list-item>
+      Prom Vta (TON) {{promVtaEnToneladas | number:'1.1-1'}}
+    </md-list-item>
+    <md-list-item>
+      Por pedir (TON) {{porPedirToneladas | number:'1.1-1'}}
+    </md-list-item>
+  </md-list>
+
+  <md-card flex *tdLoading="'procesando'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'accent'">
+    <div layout="row" layout-align="start center" layout-padding class="pad-left-sm pad-right-sm">
+      <span class="md-title">Reporte general de alcances </span>
+      <span flex></span>
+      <span>
+        <button md-icon-button [mdMenuTriggerFor]="toolbarMenu">
+          <md-icon>more_vert</md-icon>
+        </button>
+        <md-menu #toolbarMenu="mdMenu">
+          <button (click)="load()" md-menu-item>
+            <md-icon>refresh</md-icon> Recargar
+          </button>
+          <button (click)="ejecutar()" md-menu-item>
+            <md-icon>directions_run</md-icon> Ejecutar
+          </button>
+          <button (click)="generarOrden()" md-menu-item>
+            <md-icon>add_shopping_cart</md-icon> Generar O.Compra
+          </button>
+          <button (click)="generarReporte()" md-menu-item>
+            <md-icon>format_list_numbered</md-icon> Reporte
+          </button>
+        </md-menu>
+      </span>
+    </div>
+    <div class="pad-sm" *ngIf="ultimaEjecucion">
+      <span class="pad-right">
+        Periodo: {{ultimaEjecucion?.fechaInicial | date: 'dd/MM/yyyy'}} - {{ultimaEjecucion?.fechaFinal | date: 'dd/MM/yyyy'}}
+      </span>
+      <span class="pad-right cursor-pointer" (click)="actualizarMeses()">Meses: {{ultimaEjecucion?.meses}}</span>
+    </div>
+    <md-divider></md-divider>
+    <div class="alcance-panel">
+      <sx-alcances-table [rows]="filteredData" [selectedRows]="selectedRows"></sx-alcances-table>
+    </div>
+  </md-card>
+
+  <td-layout-footer color="accent">
+    <sx-page-footer></sx-page-footer>
+  </td-layout-footer>
+
+</td-layout-nav-list>

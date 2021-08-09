@@ -1,0 +1,47 @@
+<div layout *ngIf="venta$ | async; else loading; let venta">
+
+  <md-card flex="70" class="main-view">
+
+    <sx-fac-view-header [venta]="venta" (mostrarXml)="mostrarXml($event)" (cancelar)="cancelar($event)">
+    </sx-fac-view-header>
+    <md-divider></md-divider>
+    <sx-fac-view-partidas [partidas]="venta.partidas"></sx-fac-view-partidas>
+  </md-card>
+
+  <md-card flex>
+    <sx-fac-view-totales [venta]="venta"></sx-fac-view-totales>
+    <md-divider></md-divider>
+    <ng-template tdLoading [tdLoadingUntil]="!procesando" tdLoadingStrategy="overlay" tdLoadingType="linear">
+      <md-card-actions>
+        <a md-button [routerLink]="['../../']"> Regresar </a>
+
+        <button type="button" md-icon-button mdTooltip="Imprimir documento" (click)="print(venta)">
+          <md-icon>print</md-icon>
+        </button>
+
+        <button type="button" md-button mdTooltip="Imprimir remision" (click)="printRemision(venta)" *ngIf="venta.cuentaPorCobrar.uuid === null">
+          Remisión
+        </button>
+
+        <ng-container *ngIf="venta?.cuentaPorCobrar?.cfdi?.uuid">
+
+          <button type="button" md-icon-button mdTooltip="Enviar por correo" (click)="mandarPorCorreo(venta)">
+            <md-icon>email</md-icon>
+          </button>
+        </ng-container>
+        <ng-container *ngIf="!venta.cuentaPorCobrar?.cfdi?.uuid">
+          <button type="button" md-button mdTooltip="Timbrar" *ngIf="venta.tipo === 'CRE'" (click)="timbrar(venta)" color="primary">
+            Timbrar
+            <md-icon>cast</md-icon>
+          </button>
+        </ng-container>
+
+      </md-card-actions>
+    </ng-template>
+  </md-card>
+
+</div>
+
+<ng-template #loading>
+  <h2>Cargando venta</h2>
+</ng-template>

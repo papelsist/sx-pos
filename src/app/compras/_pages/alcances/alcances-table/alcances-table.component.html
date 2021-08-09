@@ -1,0 +1,61 @@
+<td-data-table #dataTable [data]="rows" [columns]="columns" [selectable]="true" sortable="true" [sortBy]="sortBy" [(ngModel)]="selectedRows"
+  [style.height.px]="550">
+
+  <ng-template tdDataTableTemplate="descripcion" let-value="value" let-row="row">
+    <span class="text-md">{{value}}</span>
+  </ng-template>
+  <ng-template tdDataTableTemplate="clave" let-value="value" let-row="row">
+    <span class="text-md">{{value}}</span>
+  </ng-template>
+  <ng-template tdDataTableTemplate="nombre" let-value="value" let-row="row">
+    <span class="text-md">{{value}}</span>
+  </ng-template>
+
+  <ng-template tdDataTableTemplate="fecha" let-value="value" let-row="row">
+    <span>{{value | date: 'dd/MM/yyyy'}}</span>
+  </ng-template>
+
+  <ng-template tdDataTableTemplate="tipo" let-value="value" let-row="row">
+    <span (click)="select.emit(row)" class="cursor-pointer" flex>{{value}}</span>
+  </ng-template>
+
+  <ng-template tdDataTableTemplate="promVta" let-value="value" let-row="row">
+    {{value | number:'1.3-3'}}
+  </ng-template>
+  <ng-template tdDataTableTemplate="alcance" let-value="value" let-row="row">
+    <strong>{{value | number:'1.1-1'}}</strong>
+  </ng-template>
+  <ng-template tdDataTableTemplate="alcanceMasPedido" let-value="value" let-row="row">
+    <strong>{{value | number:'1.1-1'}}</strong>
+  </ng-template>
+  <ng-template tdDataTableTemplate="venta" let-value="value" let-row="row">
+    {{value | number:'1.2-2'}}
+  </ng-template>
+  <ng-template tdDataTableTemplate="existencia" let-value="value" let-row="row">
+    {{value | number:'1.3-3'}}
+  </ng-template>
+
+  <ng-template tdDataTableTemplate="disponible" let-value="value" let-row="row">
+    <span (click)="select.emit(row)" class="cursor-pointer" [ngClass]="{'tc-indigo-800':value > 0}" flex>
+      {{value | currency: 'USD': 1.2-2}}
+    </span>
+  </ng-template>
+
+
+  <ng-template tdDataTableTemplate="porPedir" let-value="value" let-row="row">
+    {{ value | number:'1.3-3'}}
+  </ng-template>
+
+  <ng-template tdDataTableTemplate="linea" let-value="value" let-row="row">
+    <span class="text-sm">{{value}}</span>
+  </ng-template>
+  <ng-template tdDataTableTemplate="marca" let-value="value" let-row="row">
+    <span class="text-sm">{{value}}</span>
+  </ng-template>
+  <ng-template tdDataTableTemplate="clase" let-value="value" let-row="row">
+    <span class="text-sm">{{value}}</span>
+  </ng-template>
+  <ng-template tdDataTableTemplate="proveedor" let-value="value" let-row="row">
+    <span class="text-md">{{value}}</span>
+  </ng-template>
+</td-data-table>

@@ -1,0 +1,51 @@
+<div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
+
+    <md-card flex-gt-sm class="facturas-card">
+        <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+            <span class="push-left-sm" flex>
+         <span class="md-title">Cobranza de facturas COD </span>
+            </span>
+            <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Documento " (searchDebounce)="search($event)" flex>
+            </td-search-box>
+
+        </div>
+        <md-divider></md-divider>
+        <md-card-content class="facturas-panel">
+            <td-data-table #dataTable [data]="data" [columns]="columns" [selectable]="false" [clickable]="false" [multiple]="false" [sortable]="false" [style.height.px]="400">
+                <ng-template tdDataTableTemplate="documento" let-value="value" let-row="row">
+                    <a md-button [routerLink]="['../cobroCod', row.id]" [ngClass]="{'tc-pink-700':row.cod,'tc-indigo-700':!row.cod}">
+                        <span flex>{{row.cuentaPorCobrar.tipo}}</span>
+                        <span flex>{{row.cuentaPorCobrar.documento}} </span>
+                    </a>
+                </ng-template>
+                <ng-template tdDataTableTemplate="fecha" let-value="value" let-row="row">
+                    {{value | date: 'dd/MM/yyyy'}}
+                </ng-template>
+                <ng-template tdDataTableTemplate="total" let-value="value" let-row="row">
+                    <span>{{value | currency: 'USD': 1.2-2}}</span> <span *ngIf="row.moneda === 'USD'"> USD</span>
+                </ng-template>
+
+                <ng-template tdDataTableTemplate="pagos" let-value="value" let-row="row">
+                    <span>{{ row.cuentaPorCobrar.pagos | currency: 'USD': 1.2-2}}</span>
+                </ng-template>
+
+                <ng-template tdDataTableTemplate="updateUser" let-value="value" let-row="row">
+                    <span class="tc-indigo-700"> {{ value }}</span>
+                </ng-template>
+
+                <ng-template tdDataTableTemplate="saldo" let-value="value" let-row="row">
+                    <span>{{ (row.cuentaPorCobrar.saldo) | currency: 'USD': 1.2-2}}</span>
+                </ng-template>
+
+                <ng-template tdDataTableTemplate="cuentaPorCobrar" let-value="value" let-row="row">
+                    <md-icon class="tc-green-700" mdTooltip="{{value.cfdi.uuid}}" *ngIf="value?.cfdi?.uuid">verified_user</md-icon>
+                </ng-template>
+
+                <ng-template tdDataTableTemplate="formaDePago" let-value="value" let-row="row">
+                    {{getFormaDePago(row)}}
+                </ng-template>
+
+            </td-data-table>
+
+        </md-card-content>
+    </md-card>

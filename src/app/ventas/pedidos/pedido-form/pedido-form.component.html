@@ -1,0 +1,127 @@
+<form
+  novalidate
+  [formGroup]="form"
+  layout="row"
+  class="pedido-form"
+  (ngSubmit)="onSave()"
+>
+  <md-card flex="80">
+    <sx-pedido-header
+      [editable]="editable"
+      (addCliente)="onAddNewCliente()"
+      [parent]="form"
+      (insertar)="onInsertPartida()"
+      (descuento)="onDescuento()"
+      (cambiarCfdi)="onCambioDeCfdi($event)"
+      (cambiarTel)="onCambioDeTel($event)"
+      (maniobra)="onManiobra()"
+    >
+    </sx-pedido-header>
+    <md-divider></md-divider>
+
+    <div layout="row" layout-margin>
+      <sx-tipo-field [parent]="form"></sx-tipo-field>
+      <span layout="column" layout-align="center center" class="pad">
+        <md-checkbox
+          labelPosition="before"
+          formControlName="cod"
+          mdTooltip="Contra entrega"
+          >COD</md-checkbox
+        >
+      </span>
+      <sx-modo-field [parent]="form" flex="15"></sx-modo-field>
+      <sx-forma-de-pago
+        [parent]="form"
+        [cod]="cod"
+        flex="15"
+      ></sx-forma-de-pago>
+      <sx-uso-cfdi [parent]="form" flex></sx-uso-cfdi>
+      <sx-usuario-sec-field
+        flex
+        placeholder="Atiende"
+        (usuarioFound)="setUsuario($event)"
+      ></sx-usuario-sec-field>
+      <section flex layout="column">
+        <sx-comprador-field [parent]="form" flex></sx-comprador-field>
+        <md-checkbox
+          class="text-md"
+          (change)="onPuesto($event)"
+          formControlName="isPuesto"
+          >Puesto</md-checkbox
+        >
+      </section>
+    </div>
+    <md-divider></md-divider>
+    <div class="table-wrapper">
+      <sx-pedido-partidas-grid
+        flex
+        [partidas]="partidas.value"
+        [parent]="form"
+        (delete)="onDelete($event)"
+        (edit)="onEditPartida($event)"
+        (cambioDePrecio)="onCambioDePrecio($event)"
+      >
+      </sx-pedido-partidas-grid>
+    </div>
+    <div layout>
+      <sx-validation-panel
+        [parent]="form"
+        [surtido]="pedido ? pedido.surtido : false"
+        flex="80"
+      ></sx-validation-panel>
+      <td-message
+        #message
+        label="Se requiere clave para salvar"
+        icon="warning"
+        *ngIf="usuario === null"
+        color="accent"
+        opened="true"
+      >
+      </td-message>
+      <div class="comentarios" *ngIf="comentarios">
+        <ol>
+          <li class="comentario-item" *ngFor="let c of comentarios">
+            <span>{{ c.tipo }}</span>
+            <span>({{ c.comentario }})</span>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </md-card>
+
+  <div flex="20">
+    <md-card>
+      <td-expansion-panel-group>
+        <sx-pedido-totales-panel [parent]="form"></sx-pedido-totales-panel>
+        <sx-pedido-envio-panel [parent]="form"></sx-pedido-envio-panel>
+        <sx-configuracion-vale [parent]="form"></sx-configuracion-vale>
+        <sx-pedido-comentario-panel
+          [parent]="form"
+        ></sx-pedido-comentario-panel>
+        <sx-pedido-cargos-panel [parent]="form"></sx-pedido-cargos-panel>
+      </td-expansion-panel-group>
+      <md-divider></md-divider>
+      <md-card-actions>
+        <a md-button [routerLink]="['/ventas/pedidos/pendientes']">
+          Cancelar
+        </a>
+
+        <ng-container *ngIf="editable">
+          <button type="submit" md-button [disabled]="form.invalid">
+            Salvar
+          </button>
+          <button
+            type="button"
+            md-button
+            *ngIf="id"
+            mdTooltip="Eliminar pedido"
+            color="warn"
+            (click)="delete.emit(pedido)"
+          >
+            <md-icon>delete</md-icon> Eliminar
+          </button>
+        </ng-container>
+      </md-card-actions>
+    </md-card>
+  </div>
+</form>

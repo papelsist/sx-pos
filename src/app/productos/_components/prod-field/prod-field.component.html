@@ -1,0 +1,18 @@
+<md-form-field class="fill-width">
+  <input  type="text" mdInput  [formControl]="searchControl"
+      placeholder="Seleccione un producto" 
+      [required]="required"
+      [mdAutocomplete]="auto">
+  <md-error>
+    Seleccione un producto
+  </md-error>
+</md-form-field>
+  
+  <md-autocomplete #auto="mdAutocomplete" [displayWith]="displayFn"  (optionSelected)="select($event)">
+    <md-option *ngFor="let producto of productos$ | async " [value]="producto" 
+      [ngClass]="{'tc-red-800': !producto.activo}">
+      ({{producto.clave}}) {{producto.descripcion}}
+    </md-option>
+  </md-autocomplete>
+  
+  

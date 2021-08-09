@@ -1,0 +1,73 @@
+<sx-nav-layout header="Consulta de compra" modulo="Compras">
+    <div>
+
+        <ng-container *ngIf="orden$ | async; let orden ">
+            <md-card>
+                <md-card-title>
+                    <span layout>
+            <span> Orden de compra: {{orden.folio}}</span>
+                    <span flex></span>
+                    <span> {{orden.proveedor.nombre}} </span>
+                    </span>
+
+                </md-card-title>
+                <md-card-subtitle>
+                    <span layout>
+            <span>{{orden.comentario}}</span>
+                    <span flex></span>
+                    <span layout>
+
+              <span class="tc-blue-800"> Fecha {{orden.fecha | date: 'dd/MM/yyyy'}}</span>
+                    <span class="pad-right pad-left" *ngIf="orden.ultimaDepuracion">
+                Depurada: {{orden.ultimaDepuracion | date: 'dd/MM/yyyy'}}
+              </span>
+                    <span class="pad-left tc-blue-800"> Status:
+                <span *ngIf="orden.cerrada && orden.pendiente">CERRADA {{orden.cerrada| date: 'dd/MM/yyyy'}}</span>
+                    <span *ngIf="orden.cerrada && !orden.pendiente">ATENDIDA</span>
+                    <span *ngIf="!orden.cerrada">REVISION</span>
+                    </span>
+                    </span>
+
+                    </span>
+
+                </md-card-subtitle>
+                <md-divider></md-divider>
+                <md-card-content>
+                    <div class="partidas-container">
+                        <td-data-table [selectable]="orden.pendiente" [(ngModel)]="selectedRows" [data]="orden.partidas" [columns]="columns" [style.height.px]="500">
+                        </td-data-table>
+                    </div>
+                </md-card-content>
+                <md-divider></md-divider>
+                <ng-template tdLoading [tdLoadingUntil]="!procesando" tdLoadingStrategy="overlay" tdLoadingType="linear">
+                    <md-card-actions>
+                        <a md-button [routerLink]="['../../']">
+                            <md-icon>keyboard_backspace</md-icon> Regresar </a>
+                        <button md-icon-button mdTooltip="Imprimir documento" (click)="print(orden)">
+              <md-icon>print</md-icon>
+            </button>
+                        <ng-container *ngIf="!orden.cerrada">
+                            <button md-button color="primary" (click)="onCerrar(orden)">
+                <md-icon>block</md-icon> Cerrar
+              </button>
+
+                            <button md-button color="primary" (click)="onEdit(orden)">
+                <md-icon>edit</md-icon> Editar
+              </button>
+                            <button md-button color="warn" (click)="onDelete(orden)">
+                <md-icon>delete</md-icon> Eliminar
+              </button>
+                        </ng-container>
+                        <ng-container *ngIf="orden.cerrada && orden.pendiente">
+                            <button md-button color="accent" [disabled]="selectedRows.length === 0" (click)="onDepurar(orden)">
+                <md-icon>layers_clear</md-icon> Depurar
+              </button>
+                        </ng-container>
+                    </md-card-actions>
+                </ng-template>
+            </md-card>
+
+        </ng-container>
+
+    </div>
+</sx-nav-layout>

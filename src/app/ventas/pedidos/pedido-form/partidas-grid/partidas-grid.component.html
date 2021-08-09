@@ -1,0 +1,71 @@
+<div [formGroup]="parent" class="partidas-grid-container" flex>
+    <div formArrayName="partidas">
+        <div *ngIf="invalid" class="text-center">
+            <h3 class="tc-pink-700">Debe registrar al menos una partida</h3>
+        </div>
+        <table td-data-table class="table" #dataTable>
+            <thead>
+                <tr td-data-table-column-row>
+                    <th td-data-table-column class="renglon">Rng</th>
+                    <th td-data-table-column class="producto text-center">Producto</th>
+                    <th td-data-table-column class="cantidad text-right">Cantidad</th>
+                    <th td-data-table-column class="precio text-center">Precio</th>
+                    <th td-data-table-column class="importe text-center">Importe</th>
+                    <th td-data-table-column class="descuento ">Descuento</th>
+                    <th td-data-table-column class="subtotal ">Sub Total</th>
+                    <th td-data-table-column class="operaciones text-right">
+                        <md-icon>more_vert</md-icon>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr td-data-table-row *ngFor="let row of partidas; index as i">
+                    <td td-data-table-cell class="text-left">{{i + 1}}</td>
+                    <td td-data-table-cell class="producto text-left">
+                        <span class="pad-right-sm">{{row.producto.clave}}</span>
+                        <span flex layout="column">
+              <span>{{row.producto.descripcion}}</span>
+                        <span class="tc-pink-800" *ngIf="row.corte">
+                {{row.corte.tipo}} / {{row.corte.instruccion}} / {{row.corte.cantidad}} * {{row.corte.precio}} = {{row.corte.cantidad * row.corte.precio}}
+              </span>
+                        </span>
+
+                        <span mdTooltip="Precio {{row.producto.modoVenta === 'B' ? 'Bruto': 'Neto'}}" clsss="pad-right" [ngClass]="{'tc-pink-700': row.producto.modoVenta === 'B', 'tc-indigo-700': row.producto.modoVenta === 'N'}">
+              {{row.producto.modoVenta}}
+            </span>
+                        <span class="pad-left">
+              <md-icon *ngIf="row.corte">content_cut</md-icon>
+            </span>
+                    </td>
+                    <td td-data-table-cell numeric="true" [style.width.px]="70" layout>
+                        <md-icon class="tc-pink-700" *ngIf="row.sinExistencia" mdTooltip="Producto sin existencia requiere autorización">warning
+                        </md-icon>
+                        <span class="pad-left">
+              {{row.cantidad}}
+            </span>
+                    </td>
+                    <td td-data-table-cell numeric="true">
+                        <ng-container *ngIf="isEditable(row)">
+                            {{row.precio | currency: 'USD': 1.2-2}}
+                        </ng-container>
+                    </td>
+                    <td td-data-table-cell numeric="true"> {{row.importe | currency: 'USD': 1.2-2}}</td>
+                    <td td-data-table-cell numeric="true"> {{row.descuentoImporte | currency: 'USD': 1.2-2}}</td>
+                    <td td-data-table-cell numeric="false" class="text-center"> {{row.subtotal | currency: 'USD': 1.2-2}}</td>
+                    <td td-data-table-cell numeric="false">
+                        <ng-container>
+                            <md-icon *ngIf="row.conVale">swap_horiz</md-icon>
+                            <button md-icon-button type="button" (click)="edit.emit(i)" *ngIf="isEditable(row)">
+                <md-icon md-icon-button color="accent">edit</md-icon>
+              </button>
+                            <button md-icon-button type="button" (click)="delete.emit(i)" *ngIf="isEliminable(row)">
+                <md-icon md-icon-button color="accent">delete</md-icon>
+              </button>
+                        </ng-container>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

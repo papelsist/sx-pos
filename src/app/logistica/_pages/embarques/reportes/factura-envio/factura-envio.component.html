@@ -1,0 +1,47 @@
+<ng-template tdLoading [tdLoadingUntil]="!loading" tdLoadingStrategy="overlay">
+
+
+
+    <h4 md-dialog-title>Selector de documento de envío</h4>
+
+    <div layout="column" class="selector-form">
+
+
+        <form novalidate (ngSubmit)="buscarDocumento()" [formGroup]="form" *ngIf="!venta">
+            <div layout>
+                <md-select placeholder="Tipo" formControlName="tipo" flex>
+                    <md-option *ngFor="let tipo of tipos" [value]="tipo">{{ tipo }}
+                    </md-option>
+                </md-select>
+                <md-form-field flex>
+                    <input type="text" mdInput placeholder="Documento" formControlName="documento">
+                    <md-error>El documento requerido</md-error>
+                </md-form-field>
+
+                <md-form-field flex>
+                    <input mdInput [mdDatepicker]="picker" placeholder="Fecha" formControlName="fecha">
+                    <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+                    <md-datepicker #picker></md-datepicker>
+                </md-form-field>
+
+                <button md-icon-button type="submit" [disabled]="form.invalid">
+        <md-icon>search</md-icon>
+      </button>
+
+            </div>
+        </form>
+
+        <div *ngIf="error">
+            {{error}}
+        </div>
+
+        <div layout="column" layout-padding *ngIf="venta">
+            <h3> Cliente: {{venta?.cliente.nombre}}</h3>
+            <h3> Total: {{venta?.total}}</h3>
+        </div>
+    </div>
+    <md-dialog-actions>
+        <button md-button class="accent" type="button" [disabled]="!venta" (click)="doAccept()">Aceptar</button>
+        <button md-button type="button" (click)="close()">Cancelar</button>
+    </md-dialog-actions>
+</ng-template>

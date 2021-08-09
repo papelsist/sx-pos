@@ -1,0 +1,38 @@
+<form novalidate (ngSubmit)="doAccept()" [formGroup]="form">
+
+    <h4 md-dialog-title>Existencias de : {{sucursal.nombre}}</h4>
+
+    <div layout="column" class="selector-form" class="add-dialog">
+
+
+        <sx-existencia-field [sucursal]="sucursal" placeholder="Seleccione un producto" formControlName="existencia">
+
+        </sx-existencia-field>
+
+        <div flex layout>
+            <md-form-field flex>
+                <input type="text" mdInput placeholder="Disponible" [disabled]="true" [value]="disponible">
+            </md-form-field>
+            <md-form-field flex>
+                <input type="number" mdInput placeholder="Cantidad" formControlName="cantidad" sxOnlyIntegers>
+                <md-error>
+                    Existencia insuficiente
+                </md-error>
+            </md-form-field>
+        </div>
+
+        <div flex layout>
+            <md-form-field flex>
+                <input type="text" mdInput placeholder="Corte" formControlName="cortesInstruccion">
+            </md-form-field>
+        </div>
+
+
+
+
+    </div>
+    <md-dialog-actions>
+        <button md-button class="accent" type="submit" [disabled]="form.invalid">Aceptar</button>
+        <button md-button type="button" (click)="close()">Cancelar</button>
+    </md-dialog-actions>
+</form>

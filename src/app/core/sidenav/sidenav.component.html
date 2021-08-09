@@ -1,0 +1,6 @@
+<a md-list-item *ngFor="let item of routes"
+  [routerLink]="[item.path]"
+  (click)="select(item.path)">
+  <md-icon svgIcon="{{item?.svgIcon}}">{{item.icon}}</md-icon>{{item.nombre}}
+</a>
+

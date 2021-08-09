@@ -1,0 +1,44 @@
+<ng-template tdLoading [tdLoadingUntil]="!loading" tdLoadingStrategy="overlay">
+  <h4 md-dialog-title>
+    <span *ngIf="!compra">Selector de compra</span>
+    <span *ngIf="compra"> Compra: {{compra.folio}}  {{(compra.proveedor.nombre)}}</span>
+  </h4>
+  
+<div layout="column" class="selector-form" >
+  
+  <form novalidate (ngSubmit)="buscarCompra()" [formGroup]="form" *ngIf="!compra">
+    <div layout>
+      
+      <md-form-field flex>
+        <input type="text" mdInput placeholder="Folio" formControlName="folio">
+        <md-error>El folio requerido</md-error>
+      </md-form-field>
+      
+      <md-form-field >
+        <input type="text" mdInput placeholder="Sucursal" [value]="sucursal.nombre" disabled="true">
+      </md-form-field>
+      <button md-button type="submit">Buscar</button>
+      
+    </div>
+  </form>
+  
+  <div *ngIf="error">
+    {{error}}
+  </div>
+
+  <ng-container *ngIf="compra"> 
+    <!--
+      <td-json-formatter [data]="compra.partidas" [levelsOpen]="1">
+        </td-json-formatter>
+      -->
+    <sx-com-compradet-grid [data]="disponibles" [selectedRows]="selectedRows">
+    </sx-com-compradet-grid>
+    
+  </ng-container>
+  
+</div>
+<md-dialog-actions>
+  <button md-button class="accent" type="button" [disabled]="!compra" (click)="doAccept()">Aceptar</button>
+  <button md-button type="button" (click)="close()" >Cancelar</button>
+</md-dialog-actions>
+</ng-template>

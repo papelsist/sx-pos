@@ -1,0 +1,58 @@
+<!-- <md-list>
+  <td-virtual-scroll-container #virtualScroll [style.height.px]="550" [data]="movimientos">
+    <ng-template let-row="row" let-last="last" tdVirtualScrollRow>
+      <md-list-item >
+        <span md-line >
+          <span layout >
+            <span flex="10">{{ row.documento}} </span>
+            <span flex="30" class="tc-indigo-700">
+                {{ row.fecha | date: 'dd/MM/yyyy HH:mm:ss' }}
+            </span>
+            <span flex="10" class="tc-pink-700">{{ row.importe | currency: 'USD': 1.2-2 }}</span>
+            <span flex="20">{{ row.comentario}}</span>
+            <span flex="20">{{ row.solicitud}}</span>
+          </span>
+        </span>
+        <p md-line>
+          Descripcioón : {{row.descripcion}} 
+          
+        </p>
+      </md-list-item>
+      <md-divider *ngIf="!last" ></md-divider>
+    </ng-template>
+  </td-virtual-scroll-container>
+</md-list>
+     -->
+<td-data-table #dataTable
+  [data]="movimientos"
+  [columns]="columns"
+  [selectable]="true"
+  [clickable]="false"
+  [multiple]="true"
+  [(ngModel)]="selectedRows"
+  [style.height.px]="650">
+
+    <ng-template tdDataTableTemplate="fecha" let-value="value">
+      {{ value | date: 'dd/MM/yyyy HH:mm'}}
+    </ng-template>
+
+    <ng-template tdDataTableTemplate="importe" let-value="value">
+        <span>{{ value | currency: 'USD': 1.2-2}}</span>
+    </ng-template>
+
+    <ng-template tdDataTableTemplate="solicitado" let-value="value" let-row="row" >
+      <md-icon class="tc-pink-800" *ngIf="row.solicitado" >check</md-icon>
+    </ng-template>
+
+    <ng-template tdDataTableTemplate="rembolso" let-value="value" let-row="row" >
+      <md-icon class="tc-pink-800" *ngIf="row.rembolso" >check</md-icon>
+    </ng-template>
+
+    <ng-template tdDataTableTemplate="editar" let-value="value" let-row="row" >
+      <button type="button" (click)="edit.emit(row)" md-icon-button *ngIf="!row.rembolso && !row.solicitado">
+        <md-icon color="accent">edit</md-icon>
+      </button>
+    </ng-template>
+
+  
+</td-data-table>

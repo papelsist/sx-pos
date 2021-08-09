@@ -1,0 +1,33 @@
+.list-header {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+
+  .chofer {
+    width: 300px;
+  }
+}
+
+.list-row {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  a {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .chofer {
+    width: 300px;
+    text-align: start;
+  }
+}
+
+.comentario {
+  font-size: 12px;
+  text-align: start;
+}

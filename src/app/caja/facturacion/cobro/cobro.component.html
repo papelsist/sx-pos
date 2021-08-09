@@ -1,0 +1,11 @@
+<div layout *tdLoading="'saving'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'accent'">
+  <ng-container *ngIf="venta$ | async; else loading; let venta">
+    <sx-cobro-form [venta]="venta" [bonificaciones]="bonificaciones" flex (cancelar)="onCancelar()" (facturar)="onFacturar($event)"
+      (save)="onSave($event)" (aplicarBonificaciones)="onAplicarBonificaciones($event)">
+    </sx-cobro-form>
+  </ng-container>
+</div>
+
+<ng-template #loading>
+  Cargando datos.....
+</ng-template>

@@ -1,0 +1,27 @@
+<div layout="row" >
+  <md-card flex >
+
+    <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+      <span  class="push-left-sm" flex>
+          <span class="md-title">Movimientos de morralla </span>
+      </span>
+      <span >
+        <button md-icon-button [md-menu-trigger-for]="menu"  >
+          <md-icon >more_vert</md-icon>
+        </button>
+        <md-menu x-position="before" #menu="mdMenu">
+          <button   md-menu-item (click)="load()" ><md-icon>refresh</md-icon> Refrescar</button>
+          <button   md-menu-item (click)="addMorralla()"><md-icon>add</md-icon> Agregar</button>
+        </md-menu>
+      </span>
+    </div>
+
+    <md-divider></md-divider>
+    <md-card-content class="facturas-panel">
+      <sx-morralla-list [movimientos]="movimientos" (delete)="onDelete($event)"></sx-morralla-list>
+    </md-card-content>
+  </md-card>
+</div>
+
+
+

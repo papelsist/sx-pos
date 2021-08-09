@@ -1,0 +1,31 @@
+.pedido-det-form {
+    min-height: 450px;
+    width: 700px;
+}
+
+//.form-content {
+//  height: 400px;
+//}
+md-form-field {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+table,
+th,
+td {
+    width: 100%;
+    border-collapse: collapse;
+    border-bottom: 1px solid black;
+}
+
+table {}
+
+th {
+    text-align: left;
+}
+
+th,
+td {
+    padding: 5px;
+}

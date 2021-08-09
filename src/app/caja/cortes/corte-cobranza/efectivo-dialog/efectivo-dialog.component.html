@@ -1,0 +1,59 @@
+<form novalidate (ngSubmit)="onSubmit()" [formGroup]="form" class="efectivo-form">
+  <h3 md-dialog-title>Corte de caja (EFFECTIVO)</h3>
+  <md-divider></md-divider>
+  <md-dialog-content>
+    
+    <div layout="row">
+      <md-form-field flex>
+        <input mdInput placeholder="Fecha" value="{{corte.fecha | date: 'dd/MM/yyyy'}}" [disabled]="true">
+      </md-form-field>
+      <md-form-field flex>
+        <input type="text" mdInput value="{{corte.corte | date:'dd/MM/yyyy HH:mm'}}" placeholder="Corte" [disabled]="true">
+      </md-form-field>
+    </div>
+
+    <div layout="row">
+      <md-form-field>
+        <input type="text" mdInput value="{{corte.pagosRegistrados | currency: 'USD': 1.2-2}}" 
+          placeholder="Pagos registrados" [disabled]="true">
+      </md-form-field>
+      <md-form-field>
+        <input type="text" mdInput value="{{corte.cortesAcumulado | currency: 'USD': 1.2-2}}" 
+            placeholder="Cortes acumulados" [disabled]="true">
+      </md-form-field>
+    </div>
+
+    <div layout="row">
+      <md-form-field>
+        <input type="text" mdInput value="{{corte.cambiosDeCheques | currency: 'USD': 1.2-2}}" 
+          placeholder="Cambios de cheques" [disabled]="true">
+      </md-form-field>
+      <md-form-field>
+        <input type="text" mdInput value="{{disponible | currency: 'USD': 1.2-2}}" 
+            placeholder="Disponible" [disabled]="true">
+      </md-form-field>
+    </div>
+
+    <div layout>
+      <md-form-field flex>
+        <input type="text" mdInput  placeholder="Deposito" formControlName="deposito" sxOnlyNumbers>
+      </md-form-field>
+    </div>
+
+
+    <div layout>
+      <md-checkbox flex formControlName="cierre">Cierre monedas</md-checkbox>
+      <md-checkbox flex formControlName="anticipoCorte"> Anticipo cortes</md-checkbox>
+    </div>
+
+    <div layout>
+      <sx-comentario-field [parent]="form" flex ></sx-comentario-field>
+    </div>
+    
+  </md-dialog-content>
+  
+  <md-dialog-actions>
+      <button md-button type="button" (click)="cancelar()"  >Cancelar</button>
+      <button md-button type="submit" [disabled]="form.invalid" >Salvar</button>
+  </md-dialog-actions>
+</form>

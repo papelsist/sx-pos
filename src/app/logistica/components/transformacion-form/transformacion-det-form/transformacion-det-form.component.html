@@ -1,0 +1,26 @@
+<form novalidate [formGroup]="form" (ngSubmit)="onInsert()">
+    <div layout>
+        <sx-producto-field flex="50" formControlName="origen" placeholder="Origen" #origenField></sx-producto-field>
+        <md-form-field>
+            <input type="text" mdInput placeholder="Existencia" formControlName="existenciaOrigen">
+        </md-form-field>
+        <md-form-field>
+            <input type="text" mdInput placeholder="Salen" formControlName="salen">
+        </md-form-field>
+    </div>
+    <div layout>
+        <sx-producto-field flex="50" formControlName="destino" placeholder="Destino" #destinoField></sx-producto-field>
+        <md-form-field>
+            <input type="text" mdInput placeholder="Existencia">
+        </md-form-field>
+        <md-form-field>
+            <input type="text" mdInput placeholder="Entran" formControlName="entran">
+        </md-form-field>
+    </div>
+
+    <div>
+        <button type="submit" color="accent" md-button [disabled]="form.invalid"> <md-icon>add</md-icon> Agregar</button>
+        <button type="button" md-button> Limpiar </button>
+    </div>
+
+</form>

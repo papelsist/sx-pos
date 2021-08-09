@@ -1,0 +1,51 @@
+<md-list> 
+    <md-list-item >
+        <span md-line >
+          <span layout >
+            <span flex="10">F. Pago </span>
+            <span flex="5">Vta </span>
+            <span flex="10" class="tc-indigo-700">Corte </span>
+            <span flex="10">Acumulado</span>
+            <span flex="10" >Depósito</span>
+            <span flex="10" >Pagos</span>
+            <span flex="10" >Cam Cheq</span>
+            <span flex="10" class="tc-pink-700">
+              Por Depositar
+            </span>
+            <span flex="10" >Anticipado</span>
+            <span flex>Comentario</span>
+          </span>
+        </span>
+        
+      </md-list-item>
+</md-list> 
+<md-divider></md-divider>
+<md-list>
+  <td-virtual-scroll-container #virtualScroll [style.height.px]="550" [data]="cortes">
+    <ng-template let-row="row" let-last="last" tdVirtualScrollRow>
+      <md-list-item >
+        <span md-line >
+          <span layout >
+            <span flex="10">{{ getFormaDePago(row)}} </span>
+            <span flex="5">{{ row.tipoDeVenta}} </span>
+            <span flex="10" class="tc-indigo-700">
+                {{ row.corte | date: 'HH:mm:ss' }}
+            </span>
+            <span flex="10">{{row.cortesAcumulado | currency: 'USD': 1.2-2 }}</span>
+            <span flex="10" >{{ row.deposito | currency: 'USD': 1.2-2 }}</span>
+            <span flex="10" >{{ row.pagosRegistrados | currency: 'USD': 1.2-2 }}</span>
+            <span flex="10" >{{ row.cambiosDeCheques | currency: 'USD': 1.2-2 }}</span>
+            <span flex="10" class="tc-pink-700">
+              {{ (porDepositar(row)) | currency: 'USD': 1.2-2 }}
+            </span>
+            <span flex="10" ><md-icon *ngIf="row.anticipoCorte">check</md-icon></span>
+            <span flex>{{ row.comentario}}</span>
+          </span>
+        </span>
+        
+      </md-list-item>
+      <md-divider *ngIf="!last" ></md-divider>
+    </ng-template>
+  </td-virtual-scroll-container>
+</md-list>
+    

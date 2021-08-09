@@ -1,0 +1,117 @@
+<form novalidate [formGroup]="form" (ngSubmit)="onSave()">
+  <md-card>
+    <div
+      layout="row"
+      layout-align="start center"
+      layout-padding
+      class="pad-left-sm pad-right-sm"
+    >
+      <span class="md-title">{{ title }}</span>
+    </div>
+    <md-divider></md-divider>
+
+    <div layout class="pad-left pad-right" layout-align="center center">
+      <md-form-field flex>
+        <input
+          type="text"
+          mdInput
+          value="{{ fecha | date: 'dd/MM/yyyy' }}"
+          placeholder="Fecha"
+          [disabled]="true"
+        />
+      </md-form-field>
+
+      <md-form-field flex>
+        <input
+          type="text"
+          mdInput
+          value="{{ sucursal.nombre }}"
+          placeholder="Sucursal"
+          [disabled]="true"
+        />
+      </md-form-field>
+    </div>
+
+    <div layout class="pad-left pad-right">
+      <sx-cliente-field formControlName="cliente" flex></sx-cliente-field>
+    </div>
+
+    <div layout class="pad-left pad-right">
+      <sx-forma-de-pago [parent]="form" flex="50"></sx-forma-de-pago>
+      <span flex></span>
+      <span>
+        <md-checkbox>Dólares</md-checkbox>
+      </span>
+    </div>
+
+    <div layout="row" class="pad-sm">
+      <md-form-field flex>
+        <input
+          type="text"
+          mdInput
+          placeholder="Importe"
+          formControlName="importe"
+        />
+      </md-form-field>
+      <md-form-field flex>
+        <input
+          type="text"
+          mdInput
+          placeholder="Impuesto"
+          formControlName="impuesto"
+        />
+      </md-form-field>
+      <md-form-field flex>
+        <input
+          type="text"
+          mdInput
+          placeholder="Total"
+          formControlName="total"
+        />
+      </md-form-field>
+    </div>
+
+    <div layout class="pad-left pad-right">
+      <sx-comentario-field
+        flex
+        [parent]="form"
+        rows="1"
+        class="pad-right"
+      ></sx-comentario-field>
+      <sx-usuario-sec-field
+        flex
+        placeholder="Atiende"
+        (usuarioFound)="setUsuario($event)"
+      ></sx-usuario-sec-field>
+    </div>
+
+    <div layout class="pad-left pad-right">
+      <sx-uso-cfdi [parent]="form" flex="50"></sx-uso-cfdi>
+      <md-form-field flex>
+        <input
+          type="text"
+          mdInput
+          placeholder=""
+          value="{{ usuario?.username }}"
+        />
+      </md-form-field>
+    </div>
+
+    <md-divider></md-divider>
+    <md-card-actions>
+      <button
+        type="submit"
+        md-button
+        [disabled]="form.invalid"
+        *ngIf="!readonly"
+      >
+        Salvar
+      </button>
+      <a md-button [routerLink]="['/ventas/pedidos/pendientes']"> Cancelar </a>
+      <a md-button *ngIf="readonly" [routerLink]="['../../edit', id]">
+        Editar
+        <md-icon>edit</md-icon>
+      </a>
+    </md-card-actions>
+  </md-card>
+</form>

@@ -1,0 +1,32 @@
+<md-card>
+    <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+        <span class="push-left-sm" flex>
+      <span class="md-title">Pedidos pendientes</span>
+        </span>
+        <span class="pad-left">
+      {{filtro.periodo}}
+    </span>
+        <sx-periodo-picker [periodo]="filtro.periodo" (change)="cambiarPeriodo($event)" #periodoPicker></sx-periodo-picker>
+        <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Pedidos " (searchDebounce)="search($event)" flex>
+        </td-search-box>
+        <span>
+      <button md-icon-button [md-menu-trigger-for]="menu">
+        <md-icon>more_vert</md-icon>
+      </button>
+      <md-menu x-position="before" #menu="mdMenu">
+        <button (click)="load()" md-menu-item>
+          <md-icon>refresh</md-icon> Refrescar
+        </button>     
+      </md-menu>
+    </span>
+    </div>
+    <md-divider></md-divider>
+    <ng-template tdLoading [tdLoadingUntil]="!procesando" tdLoadingStrategy="overlay" tdLoadingType="linear">
+        <div *ngIf="pedidos$ | async as pedidos" layout class="pendientes-list-panel">
+            <sx-pendientes-list [pedidos]="pedidos" (edit)="onEdit($event)" (facturar)="mandarFacturar($event)" (print)="print($event)" (generarVale)="OnGenerarVale($event)" (cambioDeCliente)="onCambioDeCliente($event)" (envio)="envio($event)" flex>
+            </sx-pendientes-list>
+
+        </div>
+
+    </ng-template>
+</md-card>

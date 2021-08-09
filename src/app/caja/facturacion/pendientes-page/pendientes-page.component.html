@@ -1,0 +1,123 @@
+<md-card flex-gt-sm class="facturas-card" layout>
+  <div
+    layout="row"
+    layout-align="start center"
+    class="pad-left-sm pad-right-sm"
+  >
+    <span class="push-left-sm" flex>
+      <span class="md-title">Pedidos pendientes de facturar </span>
+    </span>
+    <td-search-box
+      #searchBox
+      backIcon="arrow_back"
+      class="push-right-sm"
+      placeholder="Documento "
+      (searchDebounce)="search($event)"
+      flex
+    >
+    </td-search-box>
+    <span>
+      <button md-icon-button [md-menu-trigger-for]="menu">
+        <md-icon>more_vert</md-icon>
+      </button>
+      <md-menu x-position="before" #menu="mdMenu">
+        <button md-menu-item><md-icon>refresh</md-icon> Refrescar</button>
+      </md-menu>
+    </span>
+  </div>
+  <md-divider></md-divider>
+
+  <td-data-table
+    #dataTable
+    [data]="data"
+    [columns]="columns"
+    [style.height.px]="650"
+  >
+    <ng-template
+      tdDataTableTemplate="documento"
+      let-value="value"
+      let-row="row"
+    >
+      <a
+        md-button
+        [routerLink]="['../cobro', row.id]"
+        [ngClass]="{ 'tc-pink-700': row.cod, 'tc-indigo-700': !row.cod }"
+      >
+        <span flex>{{ row.cod ? 'COD' : row.tipo }}</span>
+        <span flex>{{ value }} </span>
+      </a>
+    </ng-template>
+    <ng-template tdDataTableTemplate="fecha" let-value="value" let-row="row">
+      {{ value | date: 'dd/MM/yyyy' }}
+    </ng-template>
+
+    <ng-template tdDataTableTemplate="nombre" let-value="value" let-row="row">
+      <p class="nombre">{{ value }}</p>
+    </ng-template>
+
+    <ng-template tdDataTableTemplate="total" let-value="value" let-row="row">
+      <span>{{ value | currency: 'USD':1.2 - 2 }}</span>
+      <span *ngIf="row.moneda === 'USD'"> USD</span>
+    </ng-template>
+
+    <ng-template
+      tdDataTableTemplate="lastUpdated"
+      let-value="value"
+      let-row="row"
+    >
+      <span *ngIf="value">{{ value | date: 'dd/MM/yyyy HH:mm' }}</span>
+    </ng-template>
+    <ng-template tdDataTableTemplate="facturar" let-value="value" let-row="row">
+      <span *ngIf="value">{{ value | date: 'dd/MM/yyyy HH:mm' }}</span>
+    </ng-template>
+
+    <ng-template
+      tdDataTableTemplate="updateUser"
+      let-value="value"
+      let-row="row"
+    >
+      <span *ngIf="value" class="tc-indigo-500">{{ value }}</span>
+    </ng-template>
+
+    <ng-template
+      tdDataTableTemplate="facturarUsuario"
+      let-value="value"
+      let-row="row"
+    >
+      <span *ngIf="value" class="tc-indigo-500">{{ value }}</span>
+    </ng-template>
+
+    <ng-template
+      tdDataTableTemplate="formaDePago"
+      let-value="value"
+      let-row="row"
+    >
+      <span *ngIf="value">{{ getFormaDePago(row) }}</span>
+    </ng-template>
+
+    <ng-template tdDataTableTemplate="regresar" let-value="value" let-row="row">
+      <button
+        md-icon-button
+        (click)="regresarAVentas(row)"
+        type="button"
+        mdTooltip="Regresar a pedidos"
+      >
+        <md-icon>arrow_back</md-icon>
+      </button>
+    </ng-template>
+
+    <ng-template tdDataTableTemplate="anticipo" let-value="value" let-row="row">
+      <button
+        *ngIf="row.tipo !== 'ANT'"
+        md-icon-button
+        (click)="pagarConAnticipo(row)"
+        type="button"
+        mdTooltip="Pagar con anticipo"
+      >
+        <md-icon>info</md-icon>
+      </button>
+    </ng-template>
+
+    <!-- Pago con anticipo-->
+  </td-data-table>
+</md-card>

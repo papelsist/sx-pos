@@ -1,0 +1,46 @@
+<form novalidate [formGroup]="form" layout="row" class="pedido-form" (ngSubmit)="onSave()" (keydown.enter)="$event.preventDefault()">
+
+    <md-card flex="80">
+        <sx-pedido-header (addCliente)="onAddNewCliente()" [parent]="form" (insertar)="onInsertPartida()">
+        </sx-pedido-header>
+        <md-divider></md-divider>
+
+        <div layout="row" layout-margin>
+            <sx-tipo-field [parent]="form" flex="10"></sx-tipo-field>
+            <sx-modo-field [parent]="form" flex="15"></sx-modo-field>
+            <sx-forma-de-pago [parent]="form" flex="15"></sx-forma-de-pago>
+            <sx-uso-cfdi [parent]="form" flex></sx-uso-cfdi>
+            <sx-usuario-sec-field flex placeholder="Atiende" (usuarioFound)="setUsuario($event)"></sx-usuario-sec-field>
+            <md-form-field flex="10">
+                <input type="text" mdInput placeholder="Tipo de cambio" formControlName="tipoDeCambio" sxIntegerOnly>
+            </md-form-field>
+            <sx-comprador-field [parent]="form" flex></sx-comprador-field>
+        </div>
+        <md-divider></md-divider>
+
+        <sx-pedido-partidas-grid flex [partidas]="partidas.value" [parent]="form" (delete)="onDelete($event)" (edit)="onEditPartida($event)">
+        </sx-pedido-partidas-grid>
+        <sx-validation-panel [parent]="form" flex="80"></sx-validation-panel>
+    </md-card>
+
+    <div flex="20">
+        <md-card>
+            <td-expansion-panel-group>
+                <sx-pedido-totales-panel [parent]="form"></sx-pedido-totales-panel>
+                <sx-pedido-envio-panel [parent]="form"></sx-pedido-envio-panel>
+                <sx-pedido-comentario-panel [parent]="form"></sx-pedido-comentario-panel>
+                <sx-pedido-cargos-panel [parent]="form"></sx-pedido-cargos-panel>
+
+
+            </td-expansion-panel-group>
+            <md-divider></md-divider>
+            <md-card-actions>
+                <button type="submit" md-button [disabled]="form.invalid"> Salvar </button>
+                <a md-button [routerLink]="['/ventas/pedidos/pendientes']"> Cancelar </a>
+                <button type="button" md-icon-button mdTooltip="Imprimir documento">
+          <md-icon>print</md-icon>
+        </button>
+            </md-card-actions>
+        </md-card>
+    </div>
+</form>

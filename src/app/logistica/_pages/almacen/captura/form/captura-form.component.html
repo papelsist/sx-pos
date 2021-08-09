@@ -1,0 +1,80 @@
+<form novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+  <md-card >
+    <div layout="row" layout-align="start center" layout-padding class="pad-left-sm pad-right-sm">
+
+      <span class="md-title">{{title}}</span>
+
+      <span flex></span>
+      <span>
+        <button type="button" md-icon-button (click)="insertar()" [disabled]="id"
+                mdTooltip="Agregar partidas a la com">
+          <md-icon>add</md-icon>
+        </button>
+      </span>
+    </div>
+
+    <md-divider></md-divider>
+
+
+    <div layout class="pad-left-sm pad-right-sm">
+      <md-form-field flex="10">
+        <input type="text" mdInput [value]="sector?.sectorFolio" placeholder="Sector" [disabled]="true">
+      </md-form-field>
+      <md-form-field flex="10">
+        <input type="text" mdInput [value]="fecha | date:'dd/MM/yyyy'" placeholder="Fecha" [disabled]="true">
+      </md-form-field>
+      <md-form-field flex >
+        <input type="text" mdInput formControlName="capturista" placeholder="Capturó" class="pad-left-sm">
+      </md-form-field>
+      <sx-comentario-field flex [parent]="form" rows="1" ></sx-comentario-field>
+    </div>
+
+    <div layout class="pad-left-sm pad-right-sm">
+      <md-form-field flex>
+        <input type="text" mdInput formControlName="contador1" placeholder="Contó 1">
+      </md-form-field>
+      <md-form-field flex>
+        <input type="text" mdInput formControlName="contador2" placeholder="Contó 2">
+      </md-form-field>
+      <md-form-field flex>
+        <input type="text" mdInput formControlName="auditor1" placeholder="Revisó 1">
+      </md-form-field>
+      <md-form-field flex>
+        <input type="text" mdInput formControlName="auditor2" placeholder="Revisó 2">
+      </md-form-field>
+    </div>
+
+    <div layout>
+
+    </div>
+    <div layout >
+
+    </div>
+
+
+    <div>
+      <sx-captura-form-partidas [disabled]="disabled"
+        [parent]="form" [partidas]="partidas.value" (remove)="onDelete($event)">
+      </sx-captura-form-partidas>
+    </div>
+
+    <div *ngIf=" partidas.value.length === 0" class="empty-partidas text-center">
+      <h4 class="tc-pink-200 text-ceneter">Partidas de la venta para la devolución</h4>
+    </div>
+
+    <md-divider></md-divider>
+    <md-card-actions>
+      <button type="submit" md-button [disabled]="form.invalid" *ngIf="!disabled"> Salvar </button>
+      <a  md-button [routerLink]="['/logistica/almacen/captura']"> Cancelar </a>
+      <button md-icon-button (click)="print()" mdTooltip="Imprimir documento" *ngIf="id" type="button">
+        <md-icon>print</md-icon>
+      </button>
+      <a md-button  *ngIf="id && disabled" [routerLink]="['../../edit', id]">
+        Editar <md-icon>edit</md-icon>
+      </a>
+    </md-card-actions>
+
+  </md-card>
+
+
+</form>

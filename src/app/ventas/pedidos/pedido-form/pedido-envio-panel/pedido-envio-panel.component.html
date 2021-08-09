@@ -1,0 +1,37 @@
+<td-expansion-panel [formGroup]="parent" [disabled]="disabled">
+
+  <ng-template td-expansion-panel-label>
+    <div >
+      <md-icon  [ngClass]="{'tc-indigo-700': parent.get('envio').value}">flight_takeoff</md-icon>
+      <span > Envio</span>
+    </div>
+  </ng-template>
+  
+  <md-list>
+
+    <md-list-item>
+      <md-select  placeholder="Entrega" formControlName="entrega"  floatPlaceholder="never" flex>
+        <md-option *ngFor="let entrega of ['LOCAL','ENVIO','ENVIO_FORANEO','ENVIO_CARGO']" [value]="entrega">
+          {{ entrega }}
+        </md-option>
+      </md-select>
+    </md-list-item>
+  </md-list>
+
+  <md-selection-list>
+    <md-list-item *ngIf="parent.get('id').value === null">
+      <md-checkbox formControlName="mismaDireccion">Misma dirección (Dirección fiscal)</md-checkbox>
+    </md-list-item>
+
+    <md-list-item>
+        <address *ngIf="envio" class="text-sm">
+          {{envio.direccion.calle}} {{envio.direccion.numeroExterior}}<br>
+          {{envio.direccion.colonia}}<br>
+          {{envio.direccion.estado}} / {{envio.direccion.pais}}<br>
+          {{envio.direccion.codigoPostal}}<br>
+        </address>
+    </md-list-item>
+    
+  </md-selection-list>
+
+</td-expansion-panel>

@@ -1,0 +1,45 @@
+<form novalidate [formGroup]="form" (ngSubmit)="onSave()">
+    <md-card class="usuario-form" flex tabindex="0">
+        <md-card-title color="accent"> Alta de movimiento generico de inventario </md-card-title>
+        <md-divider></md-divider>
+        <div class="movimiento-form">
+
+            <div layout layout-margin layout-align="center start">
+
+
+                <md-form-field flex="10">
+                    <input type="text" mdInput placeholder="Fecha" [disabled]="true" [value]=" form.get('fecha').value | date:'dd/MM/yyyy'">
+                </md-form-field>
+
+                <md-select placeholder="Tipo" formControlName="tipo" flex>
+                    <md-option *ngFor="let tipo of tipos" [value]="tipo.clave">{{ tipo.descripcion}} ({{tipo.clave}})</md-option>
+                </md-select>
+
+                <sx-comentario-field [parent]="form" [rows]="1" flex="50"></sx-comentario-field>
+                <md-checkbox formControlName="porInventario">Por inventario</md-checkbox>
+
+            </div>
+
+
+            <sx-movimiento-det-form (insert)="onInsert($event)" [parent]="form"></sx-movimiento-det-form>
+
+
+
+            <sx-movimiento-partidas-list [parent]="form" [partidas]="partidas.value" (delete)="removePartida($event)">
+            </sx-movimiento-partidas-list>
+        </div>
+
+        <md-divider></md-divider>
+
+        <md-card-actions>
+            <button type="submit" md-button color="primary" [disabled]="form.invalid"> Salvar</button>
+            <button type="button" md-button (click)="cancel()"> Cancelar</button>
+            <!-- <button type="button" md-button (click)="reset()"> Limpar</button> -->
+        </md-card-actions>
+    </md-card>
+
+</form>
+
+<!-- <div>
+  <pre>{{form.value | json}}</pre>
+</div> -->

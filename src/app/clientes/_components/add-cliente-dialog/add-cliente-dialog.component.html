@@ -1,0 +1,67 @@
+<form novalidate (ngSubmit)="onSubmit()" [formGroup]="form" class="cliente-form">
+
+  <h3 md-dialog-title>Alta de cliente nuevo</h3>
+
+  <md-dialog-content>
+    <td-steps>
+      <td-step #step1 label="Datos generales" [active]="true">
+        <div layout="column">
+          <ng-template td-step-label>
+            <span>{{generalesLabel}}</span>
+          </ng-template>
+          <md-form-field mdLine class="cliente-full-width">
+            <input type="text" mdInput placeholder="Nombre" formControlName="nombre" sxToUpperCase>
+            <md-error>Nombre invalido</md-error>
+          </md-form-field>
+          <md-form-field class="cliente-full-width">
+            <input type="text" mdInput placeholder="RFC" formControlName="rfc" sxToUpperCase>
+            <md-error *ngIf="form.get('rfc').status === 'PENDING'">Verificando....</md-error>
+            <md-error *ngIf="form.get('rfc').hasError('rfcDuplicado')">RFC YA REGISTRADO</md-error>
+            <md-error *ngIf="form.get('rfc').hasError('minlength') || form.get('rfc').hasError('maxLength') ">
+              RFC incorrecto
+            </md-error>
+          </md-form-field>
+          <md-form-field class="cliente-full-width">
+            <input type="text" mdInput placeholder="Email" formControlName="email">
+            <md-error>Email invalido</md-error>
+          </md-form-field>
+        </div>
+      </td-step>
+
+      <td-step #step2 [state]="['domicilioFiscal']" [disabled]="['false']">
+        <ng-template td-step-label *ngIf="direccion">
+          Dirección
+          <span *ngIf="direccion.calle">: {{direccion.calle}}</span>
+          <span *ngIf="direccion.numeroExterior"> / {{direccion.numeroExterior}}</span>
+        </ng-template>
+        <sx-direccion-form [parent]="form.get('direccion')" [colonias]="colonias"></sx-direccion-form>
+      </td-step>
+
+      <td-step #step3 label="Información de contacto" [state]="['datosDeContacto']" [disabled]="['false']">
+        <sx-add-cliente-contacto [parent]="form"></sx-add-cliente-contacto>
+
+      </td-step>
+
+      <td-step #step4 label="Resumen" [state]="['datosDeContacto']" [disabled]="['false']">
+        Resumen
+
+        <pre>
+            Cliente: {{form.value | json}}
+            Forma valida: {{form.valid}}
+            Direccion valida: {{form.get('direccion').valid}}
+            RFC valido: {{form.get('rfc').valid}}
+            {{form.errors}}
+        </pre>
+      </td-step>
+
+    </td-steps>
+
+
+  </md-dialog-content>
+
+  <md-dialog-actions>
+    <button md-button type="button" (click)="cancelar()">Cancelar</button>
+    <button md-button type="button" (click)="reset()">Limpiar</button>
+    <button md-button type="submit" [disabled]="form.invalid">Salvar</button>
+  </md-dialog-actions>
+</form>

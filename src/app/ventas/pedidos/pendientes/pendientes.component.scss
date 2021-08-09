@@ -1,0 +1,14 @@
+.pendientes-list-panel {
+  overflow: scroll;
+  height: 100%;
+}
+:host ::ng-deep div.td-data-table-cell-content-wrapper {
+  font-size: 13px;
+}
+:host ::ng-deep td div.td-data-table-cell-content-wrapper {
+  padding-left: 7px;
+}
+
+.td-data-table-cell-content-wrapper {
+  padding-left: 6px;
+}

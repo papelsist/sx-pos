@@ -1,0 +1,70 @@
+<form novalidate [formGroup]="form" (ngSubmit)="onSubmit()" >
+  <md-card>
+    
+    <div layout="row" layout-align="start center" layout-padding class="md-title">
+      <span  flex layout>
+        <span class="tc-pink-700" >COM: {{com.documento}}</span>
+        <span class="pad-left tc-pink-700">({{com.fecha | date: 'dd/MM/yyyy'}})</span>
+      </span>
+      <span >{{com.proveedor.nombre}}</span>
+      <span flex></span>
+      <span class="md-title " >
+        Compra: {{compra.folio }} ({{compra.fecha | date: 'dd/MM/yyyy'}}) 
+      </span>
+    </div> 
+  
+  <md-divider></md-divider>
+
+  <div layout layout-margin>
+
+    <!-- <md-form-field flex="10">
+      <input type="text" mdInput [value]="sucursal.nombre" placeholder="Sucursal" [disabled]="true">
+    </md-form-field> -->
+    
+    <!-- <md-form-field flex="10">
+      <input type="text" mdInput placeholder="Fecha" [disabled]="true" [value]=" fecha | date:'dd/MM/yyyy'">
+    </md-form-field> -->
+    <md-form-field flex="10">
+      <input type="text" mdInput formControlName="remision" placeholder="Remisión">
+    </md-form-field>
+
+    <md-form-field flex="10">
+      <input mdInput [mdDatepicker]="picker" placeholder="R. Fecha" formControlName="fechaRemision">
+      <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+      <md-datepicker #picker></md-datepicker>
+    </md-form-field>
+
+    <sx-comentario-field flex [parent]="form" rows="1" ></sx-comentario-field>
+  </div>
+  <md-divider></md-divider>
+  <div layout="row" layout-align="center stretch">
+    <td-data-table flex="90" 
+      #dataTable
+      [data]="partidas"
+      [columns]="columns"
+      selectable="false" [style.height.px]="550">
+      
+      <ng-template tdDataTableTemplate="cantidad" let-value="value"  let-row="row">
+        <a  md-button class="mat-accent" (click)="editar(row)" >{{value | number}}</a>
+      </ng-template>
+      <ng-template tdDataTableTemplate="quitar" let-value="value"  let-row="row">
+        <button md-icon-button type="button" (click)="onDelete(row)">
+          <md-icon md-icon-button color="accent" >delete</md-icon>
+        </button>
+      </ng-template>
+    </td-data-table>
+  </div>
+    <!--
+    <div *ngIf=" partidas.value.length === 0" class="empty-partidas text-center">
+      <h4 class="tc-pink-200 text-ceneter">Partidas de la venta para la devolución</h4>
+    </div>
+  -->
+    <md-divider></md-divider>
+    <md-card-actions>
+      <a md-button [routerLink]="['/compras/recepciones/show',com.id]"><md-icon>keyboard_backspace</md-icon> Regresar</a>
+      <button type="submit" md-button [disabled]="form.invalid"> Actualizar </button>
+    </md-card-actions>
+    
+  </md-card>
+    
+</form>

@@ -1,0 +1,61 @@
+<form novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+  <md-card>
+      <div layout="row" layout-align="start center" layout-padding class="pad-left-sm pad-right-sm">
+
+        <span class="md-title">Alta de devolucion</span>
+        
+        <span flex></span>
+        <span class="md-title tc-pink-700" *ngIf="venta">
+            Venta: {{venta?.tipo}}  {{venta?.documento }} ({{venta?.cliente?.nombre}}) 
+        </span>
+        
+        <span flex></span> 
+        
+        <span>
+          <button type="button" md-icon-button (click)="insertar()" mdTooltip="Agregar partidas a la devolucion"> 
+            <md-icon>add</md-icon> 
+          </button>
+        </span>
+      </div> 
+    
+    <md-divider></md-divider>
+
+    <div  layout layout-margin>
+
+      <md-form-field flex="10">
+        <input type="text" mdInput [value]="sucursal.nombre" placeholder="Sucursal" [disabled]="true">
+      </md-form-field>
+      
+      <md-form-field flex="10">
+        <input type="text" mdInput placeholder="Fecha" [disabled]="true" [value]=" fecha | date:'dd/MM/yyyy'">
+      </md-form-field>
+      
+      <sx-comentario-field flex [parent]="form" rows="1" ></sx-comentario-field>
+    </div>
+
+    <div>
+      
+      
+      
+      <sx-devolucion-partidas [parent]="form" [partidas]="partidas.value"  
+        (edit)="editarPartida($event)"
+        (remove)="onDelete($event)"
+        #partidasList>
+      </sx-devolucion-partidas>
+      <div layout layout-margin>
+      </div>
+    </div>
+
+    <div *ngIf=" partidas.value.length === 0" class="empty-partidas text-center">
+      <h4 class="tc-pink-200 text-ceneter">Partidas de la venta para la devolución</h4>
+    </div>
+
+    <md-divider></md-divider>
+    <md-card-actions>
+      <button type="submit" md-button [disabled]="form.invalid"> Salvar </button>
+      <a  md-button [routerLink]="['../']"> Cancelar </a>
+    </md-card-actions>
+    
+  </md-card>
+  
+</form>

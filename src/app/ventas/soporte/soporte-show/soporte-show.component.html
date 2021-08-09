@@ -1,0 +1,60 @@
+<form novalidate [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="solicitud">
+  <md-card>
+      <div layout="row" layout-align="start center" layout-padding class="pad-left-sm pad-right-sm">
+          <span class="md-title">Solicitud de Modificacion</span>
+          <span flex></span>
+      </div>
+      <div layout class="pad-left-sm pad-right-sm">
+          <md-form-field>
+              <input type="text" mdInput value="{{solicitud.sucursal}}" formControlName="sucursal" placeholder="Sucursal">
+          </md-form-field>
+          <md-form-field>
+            <input type="text" mdInput value="{{solicitud.fecha | date:'dd/MM/yyyy'}}"  placeholder="Fecha" [disabled]="true">
+          </md-form-field>
+          <md-form-field>
+              <input type="text" mdInput value="{{solicitud.modulo}}" formControlName="modulo" placeholder="Modulo" >
+          </md-form-field> 
+          <md-form-field>
+              <input type="text" mdInput value="{{solicitud.documento}}" formControlName="documento" placeholder="Documento" >
+          </md-form-field>
+      </div>
+      <div layout class="pad-left-sm pad-right-sm">
+          <md-form-field class="full-width">
+            <textarea mdInput value="{{solicitud.descripcion}}" formControlName="descripcion" placeholder="Descripcion"></textarea>
+          </md-form-field>
+      </div>
+      <div layout class="pad-left-sm pad-right-sm">
+          <md-form-field class="full-width">
+            <textarea mdInput value="{{solicitud.comentario}}" formControlName="comentario" placeholder="Comentario"></textarea>
+          </md-form-field>
+      </div>
+      <div layout class="pad-left-sm pad-right-sm">
+        <md-form-field>
+            <input type="text" mdInput value="{{solicitud.usuario}}" formControlName="usuario" placeholder="Solicito">
+        </md-form-field>
+         <md-form-field >
+            <input type="text" mdInput value="{{solicitud.estado}}" formControlName="estado" placeholder="Estado">
+        </md-form-field> 
+        <md-form-field>
+            <input type="text" mdInput value="{{solicitud.autorizo}}" formControlName="autorizo" placeholder="Autorizo">
+        </md-form-field>
+        <md-form-field>
+            <input type="text" mdInput value="{{solicitud.atendio}}" formControlName="atendio" placeholder="Atendio">
+        </md-form-field>
+      </div>
+      <div layout class="pad-left-sm pad-right-sm" >
+            <md-form-field class="full-width">
+              <textarea mdInput formControlName="comentarioAutorizacion" value="{{solicitud.comentarioAutorizacion}}" placeholder="Comentario Aut."></textarea>
+            </md-form-field>
+        </div>
+    <div layout class="pad-left-sm pad-right-sm" >
+        <md-form-field class="full-width">
+            <textarea mdInput formControlName="comentarioAtencion" value="{{solicitud.comentarioAtencion}}" placeholder="Comentario Aten."></textarea>
+        </md-form-field>
+    </div>
+
+    <md-card-actions >
+        <a md-button (click)="close()"> Cerrar</a>
+    </md-card-actions>
+  </md-card>
+</form>

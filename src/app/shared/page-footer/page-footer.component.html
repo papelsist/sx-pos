@@ -1,0 +1,10 @@
+<div layout="row" layout-align="start center">
+  <span class="md-caption" mdTooltip="Facturar"
+    >Copyright &copy; 2017 Luxsoft Mex. All rights reserved</span
+  >
+  <span flex></span>
+  <span mdTooltip="API: {{ apiUrl }}" mdTooltipPosition="left"
+    >Usuario: {{ (authentication$ | async).username }}</span
+  >
+  <span class="pad-left">Ver: {{ version }}</span>
+</div>

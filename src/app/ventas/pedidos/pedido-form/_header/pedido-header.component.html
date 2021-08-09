@@ -1,0 +1,137 @@
+<div layout="column" [formGroup]="parent">
+    <div layout class="row1">
+        <md-form-field class="pad-right " *ngIf="parent.get('id').value" flex="60">
+            <input type="text" mdInput placeholder="Cliente" class="tc-indigo-700" value="{{parent.get('cliente').value.nombre}}" [disabled]="true">
+        </md-form-field>
+        <sx-cliente-field flex="60" formControlName="cliente" *ngIf="!parent.get('id').value"></sx-cliente-field>
+
+        <div layout layout-align="center center" class="pad-left" *ngIf="parent.get('id').value">
+            <span class="pad-right">Pedido: </span>
+            <span class="tc-indigo-800">{{parent.get('tipo').value}} - {{parent.get('documento').value}}</span>
+        </div>
+
+        <span flex></span>
+
+        <span *ngIf="editable">
+      <button md-icon-button (click)="insertar.emit()" type="button" mdTooltip="Agregar partida">
+        <md-icon>add</md-icon>
+      </button>
+      <button md-icon-button [matMenuTriggerFor]="toolbarMenu" type="button">
+        <md-icon>more_vert</md-icon>
+      </button>
+      <md-menu #toolbarMenu="mdMenu">
+        <button md-menu-item (click)="addCliente.emit()" type="button">
+          <md-icon>person_add</md-icon>
+          <span>Agregar cliente</span>
+        </button>
+
+        <button md-menu-item (click)="descuento.emit()" mdTooltip="Descuento especial" type="button">
+          <md-icon>keyboard_arrow_right</md-icon>
+          <span>Descuento especial</span>
+        </button>
+
+        <button md-menu-item (click)="maniobra.emit()" mdTooltip="Agregar maniobra" type="button">
+          <md-icon>keyboard_arrow_right</md-icon>
+          <span>Agregar maniobra</span>
+        </button>
+
+        <button md-menu-item (click)="toggleVentaIne()" type="button">
+          <md-icon>blur_on</md-icon>
+          <span>Venta INE</span>
+          <md-icon color="primary" *ngIf="parent.get('ventaIne').value">check</md-icon>
+        </button>
+
+        </md-menu>
+        </span>
+
+    </div>
+
+    <div class="row2" layout *ngIf="cliente?.rfc === 'XAXX010101000' ">
+        <md-form-field flex="50" class="pad-right">
+            <input type="text" mdInput placeholder="Nombre" formControlName="nombre">
+        </md-form-field>
+        <md-form-field flex="50" class="pad-right">
+            <input type="text" mdInput placeholder="Socio" formControlName="socio">
+        </md-form-field>
+        <span flex></span>
+    </div>
+
+    <div class="row2" layout *ngIf="cliente?.clave === 'U050008' ">
+        <!--<md-form-field flex="50" class="pad-right">
+      <input type="text" mdInput placeholder="Socio" formControlName="socio">
+    </md-form-field>-->
+        <sx-socio-field formControlName="socio" flex="50"></sx-socio-field>
+        <span flex></span>
+    </div>
+
+    <div layout class="row2">
+
+        <address *ngIf="cliente?.direccion; let direccion" class="text-md">
+      {{direccion.calle}} {{direccion.numeroExterior}} {{direccion.numeroInterior}}
+      <br> {{direccion.colonia}}
+      <br> {{direccion.estado}} / {{direccion.pais}}
+      <br> {{direccion.codigoPostal}}
+      <br>
+    </address>
+
+        <div layout="column" class="pad-left-md text-md" flex="30">
+            <span layout class="pad-top-xs">
+        <span flex="20">RFC:</span>
+            <span class="tc-indigo-700" flex>{{cliente?.rfc}}</span>
+            </span>
+            <div layout class="pad-top-xs">
+                <span flex="20">TELS:</span> 
+                <a *ngIf="cliente?.telefonos != '' "(click)="cambiarTel.emit(cliente)" md-button>
+                  <span  class="tc-indigo-700 " flex>{{cliente?.telefonos?.join('/')}}</span>
+                </a>   
+                <a  *ngIf="cliente?.telefonos == '' " (click)="cambiarTel.emit(cliente)" md-button>
+                  <span  class="tc-indigo-700 " flex>Sin Teléfono</span>
+                </a>             
+            </div>
+            <div layout class="pad-top-xs ">
+                <span flex="20">CFDI Mail:</span>
+                <a  (click)="cambiarCfdi.emit(cliente)" md-button>
+                    <span [ngClass]="{'tc-green-700': cliente?.cfdiValidado,'tc-pink-700': !!cliente?.cfdiValidado}" flex>
+            {{cliente?.cfdiMail}}
+          </span>
+                </a>
+            </div>
+        </div>
+
+        <div layout="column" flex="40">
+            <span class="text-right pad-left"> Crédito: {{cliente?.credito? 'SI': 'NO'}}</span>
+            <span class="text-right pad-left text-md" *ngIf="cliente?.credito && cliente?.credito?.postfechado">
+        Cliente con Postfechado
+      </span>
+            <span *ngIf="parent.get('chequePostFechado')?.value"> VTA POSFECHADO</span>
+            <span class="pad-top-sm pad-bottom-sm tc-pink-800 text-md " *ngIf="isDescuentoEspecial()">
+        DESCTO ESPECIAL DEL {{descuentoOriginal | percent}} al {{descuentoNormal | percent}}
+      </span>
+        </div>
+
+        <span class="pad-left pad-right" flex layout="column">
+      <div layout *ngIf="comprador">
+        <span>Comprador: </span>
+        <span class="tc-pink-700">{{comprador}}</span>
+    </div>
+    <div layout>
+        <span class="pad-left pad-right">Creado: </span>
+        <span>{{parent.get('createUser')?.value}}</span>
+    </div>
+
+    <div layout>
+        <span class="pad-left pad-right">Modificado: </span>
+        <span>{{parent.get('usuario').value?.username}}</span>
+    </div>
+
+    </span>
+
+
+    <span flex></span>
+    <div layout layout-align="center center" class="pad-left" *ngIf="kilos > 0">
+        <span>Kilos: </span>
+        <span class="text-right pad-left">{{kilos}}</span>
+    </div>
+
+</div>
+</div>

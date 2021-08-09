@@ -1,0 +1,64 @@
+<md-card>
+  <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+    <span class="push-left-sm" flex>
+      <span class="md-title">Ventas INE pendientes de facturar</span>
+    </span>
+    <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Pedidos " (searchDebounce)="search($event)"
+      flex>
+    </td-search-box>
+  </div>
+  <md-divider></md-divider>
+  <md-card-content>
+    <ng-container *ngIf="pedidos$ | async as pedidos">
+      <td-data-table #dataTable [data]="pedidos" [columns]="columns" selectable="false">
+
+        <ng-template tdDataTableTemplate="documento" let-value="value" let-row="row">
+          <a [routerLink]="['.', row.id]" class="tc-indigo-700 cursor-pointer">
+            {{row.documento}}
+          </a>
+        </ng-template>
+
+        <ng-template tdDataTableTemplate="fecha" let-value="value">
+          {{ value | date: 'dd/MM/yyyy'}}
+        </ng-template>
+
+        <ng-template tdDataTableTemplate="nombre" let-value="value" let-row="row">
+          <span>{{value}}</span>
+        </ng-template>
+
+        <ng-template tdDataTableTemplate="lastUpdated" let-value="value">
+          {{ value | date: 'dd/MM/yyyy HH:mm'}}
+        </ng-template>
+
+        <ng-template tdDataTableTemplate="clasificacionVale" let-value="value" let-row="row">
+          <span *ngIf="value != 'SIN_VALE'">{{value}}</span>
+        </ng-template>
+
+
+        <ng-template tdDataTableTemplate="total" let-value="value" let-row="row">
+          <span layout="column">
+            <span class="tc-indigo-800">{{value | currency: 'USD': 1.2-2}}</span>
+            <span class="text-sm tc-pink-700">{{getFormaDePago(row)}}</span>
+          </span>
+        </ng-template>
+
+        <ng-template tdDataTableTemplate="createUser" let-value="value" let-row="row">
+          <span layout="column">
+            <span>{{value}}</span>
+            <span *ngIf="value != row.updateUser" class="tc-pink-700">{{row.updateUser}}</span>
+          </span>
+        </ng-template>
+
+        <ng-template tdDataTableTemplate="operaciones" let-value="value" let-row="row">
+          <span layout>
+            <button md-icon-button [routerLink]="['.', row.id]">
+              <md-icon>edit</md-icon>
+            </button>
+          </span>
+        </ng-template>
+
+      </td-data-table>
+    </ng-container>
+  </md-card-content>
+
+</md-card>

@@ -1,0 +1,26 @@
+<div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
+
+    <md-card flex-gt-sm>
+        <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+            <span class="push-left-sm" flex>
+            <span class="md-title">Cotizaciones Cajas</span>
+            </span>
+            <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Cotizacion " (searchDebounce)="search($event)" flex>
+            </td-search-box>
+            <button md-icon-button (click)="load()"><md-icon>refresh</md-icon></button>
+        </div>
+        <md-divider></md-divider>
+        <md-card-content class="page-grid">
+            <ng-template tdLoading [tdLoadingUntil]="!procesando" tdLoadingStrategy="overlay">
+                <ng-container *ngIf="cotizaciones$ | async as cotizaciones">
+                    <sx-cotizaciones-grid [cotizaciones]="cotizaciones" (print)="print($event)" (load)="load()">
+                    </sx-cotizaciones-grid>
+                </ng-container>
+            </ng-template>
+        </md-card-content>
+    </md-card>
+</div>
+
+<a md-fab color="accent" class="mat-fab-bottom-right" [routerLink]="['create']">
+    <md-icon>add</md-icon>
+</a>

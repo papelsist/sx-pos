@@ -1,0 +1,9 @@
+<ng-container [formGroup]="parent">
+
+  <md-select placeholder="Moneda" [formControlName]="monedaProperty" class="moneda-field">
+    <md-option *ngFor="let moneda of monedas" [value]="moneda.clave">
+      {{moneda.descripcion}}
+    </md-option>
+  </md-select>
+
+</ng-container>

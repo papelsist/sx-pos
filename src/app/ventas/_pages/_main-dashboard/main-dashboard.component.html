@@ -1,0 +1,67 @@
+<td-layout-nav logo="assets:siipap-rx2" navigationRoute="/">
+
+    <button md-icon-button td-menu-button tdLayoutToggle> 
+      <md-icon>menu</md-icon>
+  </button>
+
+    <div td-toolbar-content layout="row" layout-align="start center" flex>
+        <span flex></span>
+        <span> Ventas Dashboard </span>
+        <span flex></span>
+        <span> SX-POS (VENTAS)</span>
+        <button md-icon-button><md-icon >layers</md-icon></button>
+        <button md-icon-button><md-icon >settings</md-icon></button>
+        <sx-module-selector></sx-module-selector>
+    </div>
+
+    <div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
+        <div flex-gt-sm="60">
+
+            <sx-pedidos-pendientes [user]="(user$ | async).username"></sx-pedidos-pendientes>
+
+            <div layout="row">
+                <div flex="33" layout="column">
+                    <md-card class="md-card-colored" flex>
+                        <md-card-title>Favoritos</md-card-title>
+                        <md-card-subtitle>Saldos de cuentas</md-card-subtitle>
+                        <md-divider></md-divider>
+                    </md-card>
+                </div>
+                <div flex="33" layout="column">
+                    <md-card class="md-card-colored" flex>
+                        <md-card-title>Favoritos</md-card-title>
+                        <md-card-subtitle>Saldos de cuentas</md-card-subtitle>
+                        <md-divider></md-divider>
+                    </md-card>
+                </div>
+                <div flex="33" layout="column">
+                    <md-card class="md-card-colored" flex>
+                        <md-card-title>Favoritos</md-card-title>
+                        <md-card-subtitle>Saldos de cuentas</md-card-subtitle>
+                        <md-divider></md-divider>
+                    </md-card>
+                </div>
+            </div>
+
+        </div>
+        <div flex-gt-sm="40">
+
+
+            <sx-solicitudes-pendientes [user]="(user$ | async).username"></sx-solicitudes-pendientes>
+
+
+            <md-card>
+                <md-card-title>Alertas</md-card-title>
+                <md-card-subtitle>Lo siguientes temas requieren de su atención</md-card-subtitle>
+                <md-divider></md-divider>
+            </md-card>
+
+
+        </div>
+    </div>
+
+    <td-layout-footer color="primary">
+        <sx-page-footer></sx-page-footer>
+    </td-layout-footer>
+
+</td-layout-nav>

@@ -1,0 +1,12 @@
+<md-form-field class="fill">
+    <input type="text" mdInput [formControl]="searchControl" (blur)="onBlur()" [placeholder]="placeholder" #inputField [required]="required" [mdAutocomplete]="auto">
+    <md-error>
+        Seleccione una linea
+    </md-error>
+</md-form-field>
+
+<md-autocomplete #auto="mdAutocomplete" [displayWith]="displayFn" flex>
+    <md-option *ngFor="let linea of lineas$ | async " [value]="linea">
+        {{linea.linea}}
+    </md-option>
+</md-autocomplete>

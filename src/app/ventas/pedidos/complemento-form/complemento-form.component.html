@@ -1,0 +1,111 @@
+<form novalidate [formGroup]="form" (ngSubmit)="onSubmit()" layout (keydown.enter)="$event.preventDefault()">
+  <md-card>
+    <md-card-title>Complemento INE Venta: {{venta.tipo}} - {{venta.documento}}</md-card-title>
+    <md-divider></md-divider>
+    <md-card-content>
+
+      <div layout>
+        <md-form-field flex>
+          <input mdInput type="text" placeholder="Cliente" value="{{venta.nombre}}">
+        </md-form-field>
+      </div>
+
+      <div layout>
+        <md-form-field flex>
+          <input mdInput type="text" placeholder="Total" value="{{venta.total | currency:'USD':1.2-2}}">
+        </md-form-field>
+      </div>
+
+      <div layout>
+        <md-select placeholder="Tipo de proceso" formControlName="tipoDeProceso" flex>
+          <md-option *ngFor="let tipo of ['Ordinario', 'Precampaña', 'Campaña']" [value]="tipo">{{ tipo }}
+          </md-option>
+        </md-select>
+        <md-select placeholder="Tipo de comite" formControlName="tipoDeComite" flex class="pad-left">
+          <md-option [value]="null"></md-option>
+          <md-option *ngFor="let tipo of ['Ejecutivo Nacional','Ejecutivo Estatal','Directivo Estatal']" [value]="tipo">{{ tipo }}
+          </md-option>
+        </md-select>
+      </div>
+
+      <div layout class="pad-top">
+        <md-form-field flex="50">
+          <input mdInput placeholder="Contabilidad" type="number" formControlName="contabilidad">
+        </md-form-field>
+      </div>
+
+      <md-divider></md-divider>
+    </md-card-content>
+    <md-card-actions>
+      <button md-button type="button">Cancelar</button>
+      <button md-button type="submit" [disabled]="form.invalid || form.pristine"> Salvar</button>
+    </md-card-actions>
+  </md-card>
+
+  <md-card>
+    <div layout="row" layout-align="start center" class="pad">
+      <span class="push-left-sm" flex>
+        <span class="md-title">Entidades</span>
+      </span>
+    </div>
+    <md-divider></md-divider>
+    <div layout [formGroup]="entidadForm" layout layout-padding>
+      <md-select placeholder="Clave" class="pad-right" formControlName="clave" flex>
+        <md-option></md-option>
+        <md-option *ngFor="let entidad of tiposDeEntidades" [value]="entidad">{{ entidad }}
+        </md-option>
+      </md-select>
+      <md-select placeholder="Ambito" class="pad-right" formControlName="ambito" flex>
+        <md-option></md-option>
+        <md-option *ngFor="let amb of ['Local','Federal']" [value]="amb">{{ amb }}
+        </md-option>
+      </md-select>
+      <button md-icon-button type="button" (click)="agregarEntidad()" [disabled]="entidadForm.invalid">
+        <md-icon>add</md-icon>
+      </button>
+    </div>
+    <div class="entidades-panel">
+
+      <md-divider></md-divider>
+      <md-nav-list formArrayName="partidas">
+        <a md-list-item *ngFor="let row of partidas.value; index as i" [formGroupName]="i" (click)="selectEntidad(i)">
+          <h3 mdLine>{{row.clave}}
+            <span class="pad-left" *ngIf="row.ambito">Ambito: {{row.ambito}}</span>
+          </h3>
+          <button md-icon-button type="button" (click)="eliminarEntidad(i)"><md-icon>delete</md-icon></button>
+        </a>
+        
+      </md-nav-list>
+    </div>
+  </md-card>
+
+  <md-card *ngIf="currentEntidad">
+    <div layout="row" layout-align="start center" class="pad">
+      <span class="push-left-sm" flex>
+        <span class="md-title">Contabilidades: {{currentEntidad.clave}}</span>
+      </span>
+    </div>
+    <md-divider></md-divider>
+    <div layout class="cantablidades-panel" layout-padding>
+      <md-form-field flex>
+        <input type="number" mdInput placeholder="Contabilidad ID" (keyup.enter)="agregarContabilidad(input.value, $event)" #input
+          [formControl]="contabilidadControl">
+      </md-form-field>
+    </div>
+
+    <md-list>
+      <md-list-item *ngFor="let item of currentEntidad.contabilidad; let i = index">
+        <span mdLine layout>
+          <span>{{i+1 }}</span>
+          <span>Id: </span>
+          <span>{{item}}</span>
+        </span>
+        <button md-icon-button type="button" (click)=deleteContabilidad(i)>
+          <md-icon>delete</md-icon>
+        </button>
+        <md-divider inset></md-divider>
+      </md-list-item>
+    </md-list>
+  </md-card>
+
+</form>

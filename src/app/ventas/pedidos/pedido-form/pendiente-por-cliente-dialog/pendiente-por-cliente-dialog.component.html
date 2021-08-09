@@ -1,0 +1,24 @@
+<span md-dialog-title>
+  <span>Cliente con pedidos pendientes</span>
+  <p>{{cliente}} </p>
+</span>
+
+<md-dialog-content>
+  <div class="pendientes-panel">
+    <td-data-table [data]="pedidos" [columns]="columns" [style.height.px]="250">
+      <ng-template tdDataTableTemplate="total" let-value="value" let-row="row">
+        {{value | currency: 'USD': 1.2-2}}
+      </ng-template>
+      <ng-template tdDataTableTemplate="fecha" let-value="value" let-row="row">
+        {{value | date: 'dd/MM/yyyy'}}
+      </ng-template>
+      <ng-template tdDataTableTemplate="documento" let-value="value" let-row="row">
+        <a (click)="goTo(row)" class="cursor-pointer tc-pink-700" >{{value}}</a>
+      </ng-template>
+    </td-data-table>
+  </div>
+</md-dialog-content>
+
+<md-dialog-actions>
+  <button md-button type="button" (click)="close()">Cerrar</button>
+</md-dialog-actions>

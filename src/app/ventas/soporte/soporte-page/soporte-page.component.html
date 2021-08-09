@@ -1,0 +1,62 @@
+<!-- <div layout>
+  <md-card flex >
+    <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+      <span  flex>
+        <span class="md-title">Solicitudes De Modificacion </span>
+      </span>
+     <span>
+
+        <span class="md-title">Periodo:  {{filtro.periodo}}</span>
+       
+        <sx-periodo-picker [periodo]="filtro.periodo" (change)="cambiarPeriodo($event)" #periodoPicker></sx-periodo-picker>
+        <a type="button" md-icon-button [routerLink]="['create']"
+           mdTooltip="Registrar una nueva solicitud">
+          <md-icon>add</md-icon>
+        </a>
+      
+        <button md-icon-button (click)="load()"><md-icon>refresh</md-icon></button> 
+      </span> 
+    </div>
+
+    <md-divider></md-divider>
+    <md-card-content class="page-grid">
+       <ng-template tdLoading [tdLoadingUntil]="!procesando" tdLoadingStrategy="overlay" tdLoadingType="linear">
+          <ng-container *ngIf="pendientes$ | async as pendientes">
+              <sx-soporte-list [solicitudes]="pendientes"></sx-soporte-list>
+          </ng-container>
+      </ng-template> 
+    </md-card-content>
+  </md-card>
+</div>
+
+ -->
+
+ <md-card>
+  <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+    <span  flex>
+      <span class="md-title">Solicitudes De Modificacion </span>
+    </span>
+   <span>
+
+      <span class="md-title">Periodo:  {{filtro.periodo}}</span>
+     
+      <sx-periodo-picker [periodo]="filtro.periodo" (change)="cambiarPeriodo($event)" #periodoPicker></sx-periodo-picker>
+      <a type="button" md-icon-button [routerLink]="['create']"
+         mdTooltip="Registrar una nueva solicitud">
+        <md-icon>add</md-icon>
+      </a>
+    
+      <button md-icon-button (click)="load()"><md-icon>refresh</md-icon></button> 
+    </span> 
+  </div>
+  <md-divider></md-divider>
+  <ng-template tdLoading [tdLoadingUntil]="!procesando" tdLoadingStrategy="overlay" tdLoadingType="linear">
+    <ng-container *ngIf="pendientes$ | async as pendientes" class="pendientes-list-panel">
+      <sx-soporte-list [solicitudes]="pendientes"></sx-soporte-list>
+    </ng-container>
+  </ng-template>
+</md-card>
+
+<!-- <a md-fab color="accent" class="mat-fab-bottom-right" [routerLink]="['../create']">
+  <md-icon>add</md-icon>
+</a> -->

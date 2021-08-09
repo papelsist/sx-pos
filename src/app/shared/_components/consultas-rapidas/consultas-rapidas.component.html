@@ -1,0 +1,11 @@
+<button md-icon-button [mdMenuTriggerFor]="toolbarMenu"><md-icon>apps</md-icon></button>
+<md-menu #toolbarMenu="mdMenu">
+  <button
+    md-menu-item *ngFor="let consulta of consultas$ | async"
+    mdTooltip="{{consulta.descripcion}}"
+    color="warn"
+    [routerLink]="[consulta.path]">
+    <md-icon class="tc-pink-700">{{consulta.icon}}</md-icon>
+    <span>{{consulta.nombre}}</span>
+  </button>
+</md-menu>

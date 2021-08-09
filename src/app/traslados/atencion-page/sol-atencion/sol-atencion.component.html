@@ -1,0 +1,57 @@
+<div layout>
+    <md-card flex>
+        <ng-container *ngIf="sol$ | async; let sol">
+            <md-card-title>
+                <span layout>
+          <span flex="40">SOL: {{sol.documento}} ({{sol.fecha | date: 'dd/MM/yyyy'}})</span>
+                <span flex="20">Atiende: {{sol.sucursalAtiende.nombre}} </span>
+                <span flex></span>
+                </span>
+            </md-card-title>
+            <md-card-subtitle>
+                <div layout>
+                    <span flex="40">{{sol.comentario}}</span>
+                    <span *ngIf="sol.atender"> Atendido: {{sol.atender | date:'dd/MM/yyyy HH:mm'}}</span>
+
+                    <span flex="20" class="push-right"> Clasificación vale: {{sol.clasificacionVale}}</span>
+                    <span flex></span>
+                    <span>Usuario: {{sol.createUser}}</span>
+                </div>
+            </md-card-subtitle>
+
+            <md-divider></md-divider>
+            <td-data-table [data]="sol.partidas" [columns]="columns">
+                <ng-template tdDataTableTemplate="solicitado" let-value="value" let-row="row">
+                    <span>{{value | number:'1.0-0'}}</span>
+                </ng-template>
+
+                <!--<ng-template tdDataTableTemplate="recibido" let-value="value" let-row="row">
+            <span>{{value | number:'1.0-0'}}</span>
+          </ng-template>-->
+
+                <ng-template tdDataTableTemplate="recibido" let-value="value" let-row="row">
+                    <div [style.min-width.px]="100">
+                        <input type="text" value="{{value}}" (blur)="modificarRecibido(row, ifield.value)" #ifield sxOnlyNumbers [style.width.%]="90">
+                    </div>
+                </ng-template>
+
+            </td-data-table>
+            <md-divider></md-divider>
+
+            <ng-template tdLoading [tdLoadingUntil]="!procesando" tdLoadingStrategy="overlay" tdLoadingType="linear">
+                <md-card-actions>
+                    <a md-button [routerLink]="['/traslados/atencion']">
+                        <md-icon>keyboard_backspace</md-icon> Regresar </a>
+                    <button md-icon-button (click)="print(sol)" mdTooltip="Imprimir documento">
+            <md-icon>print</md-icon>
+          </button>
+
+                    <button md-button color="accent" (click)="atender(sol)" *ngIf="!sol.noAtender">
+            <md-icon >check</md-icon> Atender
+          </button>
+                </md-card-actions>
+            </ng-template>
+
+        </ng-container>
+    </md-card>
+</div>

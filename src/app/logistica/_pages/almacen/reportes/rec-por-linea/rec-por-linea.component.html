@@ -1,0 +1,38 @@
+<form [formGroup]="form" novalidate (ngSubmit)="doAccept()" class="rec-form">
+    <h4 md-dialog-title>
+        Recorridos por línea
+    </h4>
+    <div layout>
+        <md-select placeholder="Estado" formControlName="estado" flex>
+            <md-option *ngFor="let estado of estados" [value]="estado">{{ estado }}
+            </md-option>
+        </md-select>
+
+    </div>
+    <div layout>
+
+        <md-select placeholder="Tipo" formControlName="tipo" flex>
+            <md-option *ngFor="let tipo of tipos" [value]="tipo">{{ tipo }}
+            </md-option>
+        </md-select>
+    </div>
+    <div layout>
+        <md-select placeholder="Existencia" formControlName="existencia" flex>
+            <md-option *ngFor="let tipo of existencia" [value]="tipo">{{ tipo }}
+            </md-option>
+        </md-select>
+    </div>
+
+    <div layout>
+        <sx-lineas-field formControlName="linea" flex></sx-lineas-field>
+    </div>
+
+    <div layout>
+        <sx-clases-field formControlName="clase" flex></sx-clases-field>
+    </div>
+
+    <md-dialog-actions>
+        <button md-button class="accent" type="submit" [disabled]="form.invalid">Aceptar</button>
+        <button md-button type="button" (click)="close()">Cancelar</button>
+    </md-dialog-actions>
+</form>

@@ -1,0 +1,70 @@
+<td-data-table
+  #dataTable
+  [data]="pedidos"
+  [columns]="columns"
+  selectable="false"
+>
+  <ng-template tdDataTableTemplate="documento" let-value="value" let-row="row">
+    <a class="tc-indigo-700 cursor-pointer">
+      <span>{{ row.tipo }}</span> {{ row.documento }}
+    </a>
+  </ng-template>
+
+  <ng-template tdDataTableTemplate="fecha" let-value="value">
+    {{ value | date: "dd/MM/yyyy" }}
+  </ng-template>
+
+  <ng-template tdDataTableTemplate="nombre" let-value="value" let-row="row">
+    <a (click)="showDetails(row)" class="tc-indigo-700 cursor-pointer">
+      <span>{{ value }}</span>
+    </a>
+  </ng-template>
+
+  <ng-template tdDataTableTemplate="total" let-value="value" let-row="row">
+    <span layout="column">
+      <span class="tc-indigo-800">{{ value | currency: "USD":1.2 - 2 }}</span>
+      <span class="text-sm tc-pink-700">{{ getFormaDePago(row) }}</span>
+    </span>
+  </ng-template>
+
+  <ng-template
+    tdDataTableTemplate="operaciones"
+    let-value="value"
+    let-row="row"
+  >
+    <span>
+      <button md-icon-button [md-menu-trigger-for]="menu">
+        <md-icon>more_vert</md-icon>
+      </button>
+      <md-menu x-position="before" #menu="mdMenu">
+        <button
+          md-menu-item
+          *ngIf="!row.noFacturable"
+          (click)="onFacturar(row)"
+          mdTooltip="Mandar facturar"
+        >
+          <md-icon>assignment</md-icon> Mandar Facturar
+        </button>
+        <button
+          md-menu-item
+          type="button"
+          mdTooltip="Configurar envío"
+          (click)="envio.emit(row)"
+        >
+          <md-icon [ngClass]="{ 'tc-green-500': row.envio }"
+            >flight_takeoff</md-icon
+          >
+          Envio
+        </button>
+        <button
+          md-menu-item
+          type="button"
+          mdTooltip="Imprimir pedido"
+          (click)="print.emit(row.id)"
+        >
+          <md-icon>print</md-icon> Imprimir
+        </button>
+      </md-menu>
+    </span>
+  </ng-template>
+</td-data-table>

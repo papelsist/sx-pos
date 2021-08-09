@@ -1,0 +1,39 @@
+<div layout="row" >
+  <md-card flex >
+
+    <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+      <span  class="push-left-sm" flex>
+          <span class="md-title">Cortes de caja (COBRANZA) </span>
+          <button md-button (click)="cambiarFecha(fecha)"> {{fecha | date: 'dd/MM/yyyy'}}</button>
+      </span>
+      <span >
+        <button md-icon-button [md-menu-trigger-for]="menu"  >
+          <md-icon >more_vert</md-icon>
+        </button>
+        <md-menu x-position="before" #menu="mdMenu">
+          <button   md-menu-item (click)="load()" ><md-icon>refresh</md-icon> Refrescar</button>
+          <button   md-menu-item (click)="efectivo()"><md-icon>attach_money</md-icon> Efectivo</button>
+          <button   md-menu-item (click)="cheques('CON')"><md-icon>account_balance_wallet</md-icon> Cheques (CON)</button>
+          <button   md-menu-item (click)="cheques('COD')"><md-icon>account_balance_wallet</md-icon> Cheques (COD)</button>
+          <button   md-menu-item (click)="tarjeta()"><md-icon>credit_card</md-icon> Tarjeta</button>
+          <button   md-menu-item (click)="depositos('CON')"><md-icon>local_atm</md-icon> Depositos (CON)</button>
+          <button   md-menu-item (click)="depositos('COD')"><md-icon>local_atm</md-icon> Depositos (COD)</button>
+          <button   md-menu-item (click)="transferencia('CON')"><md-icon>local_atm</md-icon> Transferencia (CON)</button>
+          <button   md-menu-item (click)="transferencia('COD')"><md-icon>local_atm</md-icon> Transferencia (COD)</button>
+          <button   md-menu-item (click)="cambioDeCheque()"><md-icon>swap_horiz</md-icon> Cambio de cheque</button>
+        </md-menu>
+      </span>
+    </div>
+
+    <md-divider></md-divider>
+    <md-card-content class="facturas-panel">
+      <ng-template tdLoading [tdLoadingUntil]="!procesando" tdLoadingStrategy="overlay" tdLoadingType="linear">
+        <sx-corte-cobranza-list [cortes]="cortes"></sx-corte-cobranza-list>
+      </ng-template>
+
+    </md-card-content>
+  </md-card>
+</div>
+
+
+

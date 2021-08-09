@@ -1,0 +1,22 @@
+
+  <md-divider></md-divider>
+  <td-data-table
+    #dataTable
+    [data]="filteredData"
+    [columns]="columns"
+    sortable="true"
+    [sortBy]="sortBy"
+    [style.height.px]="450">
+  </td-data-table>
+  <div class="md-padding" *ngIf="!dataTable.hasData" layout="row" layout-align="center center">
+    <h3>No hay partidas disponibles.</h3>
+  </div>
+  <td-paging-bar #pagingBar [pageSize]="pageSize" [total]="filteredTotal" (change)="page($event)">
+    <span hide-xs>Registros por página:</span>
+    <md-select [style.width.px]="50" [(ngModel)]="pageSize">
+      <md-option *ngFor="let size of [50,100,200,500]" [value]="size">
+        {{size}}
+      </md-option>
+    </md-select>
+    {{pagingBar.range}} <span hide-xs>of {{pagingBar.total}}</span>
+  </td-paging-bar>

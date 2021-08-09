@@ -1,0 +1,66 @@
+<form novalidate [formGroup]="form" (ngSubmit)="onSubmit() ">
+
+  <h3 md-dialog-title>Partida de  {{tipo}} {{sucursal.nombre}}</h3>
+  <md-dialog-content layout="column" class="det-form">
+    <div layout >
+      <sx-existencia-field [conExistencia]="false"
+        formControlName="origen" flex  placeholder="Origen" [sucursal]="sucursal"></sx-existencia-field>
+    </div>
+    <div layout >
+      <md-form-field hintLabel="Esistencia actual del producto a transformar" flex>
+        <input type="text" mdInput placeholder="Disponible" [value]="disponible | number:'1.3-3'" [disabled]="true">
+      </md-form-field>
+      <span flex="5">  </span>
+      <md-form-field hintLabel="Cantidad de hojas que salen" flex>
+        <input type="text" mdInput placeholder="Salen" formControlName="salida">
+        <md-error>Cantidad incorrecta</md-error>
+        <md-error *ngIf="form.hasError('sinDisponibleSuficiente')">Debe ser igual a la salida</md-error>
+      </md-form-field>
+    </div>
+
+    <div layout >
+      <sx-existencia-field formControlName="destino" flex  placeholder="Destino" [sucursal]="sucursal"  [conExistencia]="false"></sx-existencia-field>
+    </div>
+
+    <div layout >
+      <md-form-field hintLabel="Disponibilidad del producto destino" flex>
+        <input type="text" mdInput placeholder="Existencia" [value]="existenciaDestino" [disabled]="true">
+      </md-form-field>
+      <span flex="5">  </span>
+      <md-form-field hintLabel="Cantidad de hojas que entran" flex>
+        <input type="text" mdInput placeholder="Entran" formControlName="entrada">
+        <md-error> Cantidad de entra incorrecta</md-error>
+        <md-error *ngIf="form.hasError('cantidadRecIncorrecta')">Debe ser igual a la salida</md-error>
+      </md-form-field>
+    </div>
+
+    <div layout *ngIf="tipo ==='TRS'">
+      <md-form-field hintLabel="" flex="10">
+        <input type="text" mdInput placeholder="Cortes" formControlName="cortes">
+        <md-error>Cantidad de cortes incorrecta</md-error>
+      </md-form-field>
+      <span flex="5">  </span>
+      <md-form-field hintLabel="" flex>
+        <input type="text" mdInput placeholder="Instruccion de corte" formControlName="instruccion">
+      </md-form-field>
+    </div>
+
+    <div layout formGroupName="autorizacion">
+      <md-form-field flex>
+        <input type="text" mdInput placeholder="Autorización" formControlName="clave">
+      </md-form-field>
+      <span flex="5">  </span>
+      <md-form-field flex>
+        <input type="text" mdInput placeholder="Usuario" formControlName="usuario">
+      </md-form-field>
+    </div>
+    <div layout>
+      <sx-comentario-field [parent]="form" flex></sx-comentario-field>
+    </div>
+
+  </md-dialog-content>
+  <md-dialog-actions>
+    <button md-button type="submit" [disabled]="form.invalid">Aceptar</button>
+    <button md-button type="button" (click)="close()" >Cancelar</button>
+  </md-dialog-actions>
+</form>

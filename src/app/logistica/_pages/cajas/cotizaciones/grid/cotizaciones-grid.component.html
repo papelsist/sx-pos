@@ -1,0 +1,75 @@
+<md-list>
+    <md-list-item>
+        <md-icon md-list-icon class="tc-pink-800">vpn_key</md-icon>
+        <span md-line>
+        <span layout layout-padding>
+          <span flex="10" class="tc-indigo-700">Cotizacion</span>
+        <!-- 
+          <span flex>Cliente</span>
+          <span flex>Clave</span>
+          <span flex>Cantidad</span> 
+        -->
+        <span flex="10">Clave Caja</span>
+        <span flex="40">Desc. Caja</span>
+        <span flex="20">Piezas</span>
+        <span flex="10">Cerrada</span>
+        </span>
+        </span>
+        <span flex></span>
+        <span>
+        <button md-icon-button>
+          <md-icon >more_vert</md-icon>
+        </button>
+      </span>
+    </md-list-item>
+
+    <md-divider></md-divider>
+
+    <td-virtual-scroll-container #virtualScroll [style.height.px]="350" [data]="cotizaciones">
+        <ng-template let-row="row" let-last="last" tdVirtualScrollRow>
+            <md-list-item>
+                <md-icon md-list-icon class="tc-pink-800">apps</md-icon>
+                <span md-line>
+            <span layout layout-padding>
+              <span flex="10" class="tc-indigo-700">
+                <a md-button [routerLink]="['show', row.id]">{{row.folio}} </a>
+              </span>
+                <!-- <span flex>{{row.folio}}</span> -->
+                <!--    <span flex>{{row.producto.clave}}</span>
+                <span flex>{{row.producto.descripcion}}</span>
+                <span flex>{{row.metrosLineales}}</span> -->
+                <span flex="15">{{row.claveCaja}}</span>
+                <span flex="40">{{row.descripcionCaja}}</span>
+                <span flex="20">{{row.piezas}}</span>
+                <span flex="10" *ngIf="row.cerrada"><md-icon>lock</md-icon> </span>
+                <span flex="10" *ngIf="!row.cerrada"><md-icon>lock_open</md-icon></span>
+                </span>
+                </span>
+                <span flex></span>
+                <span>
+            <button md-icon-button [md-menu-trigger-for]="menu"  >
+            <md-icon [ngClass]="{'tc-blue-600': odd }">more_vert</md-icon>
+            </button>
+            <md-menu x-position="before" #menu="mdMenu">
+              <a [routerLink]="['show', row.id]"  md-menu-item [disabled]="false">
+                <md-icon>info</md-icon> Consultar
+              </a>
+              <!-- <a [routerLink]="['edit', row.id]" md-menu-item [disabled]="false">
+                  <md-icon>edit</md-icon> Editar
+              </a> -->
+              <a  md-menu-item [disabled]="false" (click)="print.emit(row)">
+                  <md-icon>print</md-icon> Imprimir
+              </a>
+              <a  md-menu-item [disabled]="false" *ngIf="!row.cerrada" (click)="cerrar(row)">
+                <md-icon>lock</md-icon> Cerrar
+            </a>
+            </md-menu>
+          </span>
+            </md-list-item>
+            <md-divider *ngIf="!last" md-inset></md-divider>
+        </ng-template>
+    </td-virtual-scroll-container>
+
+
+
+</md-list>

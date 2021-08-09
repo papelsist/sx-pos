@@ -1,0 +1,34 @@
+<div layout="column" layout-fill>
+
+  <md-toolbar color="primary" class="md-whiteframe-z1">
+    <span>Login</span>
+  </md-toolbar>
+
+  <div class="md-content" layout-padding flex
+       *tdLoading="'login-pending'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'accent'">
+    <div layout-gt-xs="row" layout-align-gt-xs="center start" class="margin">
+      <div flex-gt-xs="40">
+        <md-card tdMediaToggle="gt-xs" [mediaClasses]="['push-top-lg']" >
+          <md-card-title class="text-lg"><md-icon class="fill-teal-700" >desktop_mac</md-icon> Accesso a SIIPAP-SX </md-card-title>
+          <md-card-subtitle class="text-lg">Ingrese al sistema con su cuenta corporativa</md-card-subtitle>
+          <md-divider></md-divider>
+          <md-card-content>
+            <sx-login-form (login)="onLogin($event)"></sx-login-form>
+          </md-card-content>
+
+          <td-message *ngIf="error$ | async; let error "
+            #messageDemo color="warn"
+            class="pad-sm"
+            label="{{error.message}}">
+            <button td-message-actions md-icon-button (click)="messageDemo.close()"><md-icon>cancel</md-icon></button>
+          </td-message>
+
+
+        </md-card>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>

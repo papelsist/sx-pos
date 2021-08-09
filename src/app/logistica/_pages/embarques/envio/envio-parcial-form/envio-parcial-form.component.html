@@ -1,0 +1,35 @@
+<form novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+  <md-card >
+    <div layout="row" layout-align="start center" layout-padding class="pad-left-sm pad-right-sm">
+      <span class="pad-left">Envio parcial</span>
+      <span class="pad-left tc-pink-700">{{embarque?.documento}}</span>
+      <span class="pad-left">Chofer: </span><span class="pad tc-indigo-700">{{embarque?.chofer?.nombre}}</span>
+      <span flex></span>
+      <span>
+          <button type="button" md-icon-button (click)="insertar()" mdTooltip="Agregar partidas el envio parcial">
+            <md-icon>add</md-icon>
+          </button>
+      </span>
+    </div>
+    <div layout>
+      <span class="pad-right pad-left">Documento: {{envio?.documento}}</span>
+      <span class="pad-right">Fecha: {{envio?.fechaDocumento | date:'dd/MM/yyyy'}}</span>
+      <span>Tipo: {{envio?.tipoDocumento}}</span>
+    </div>
+    <md-divider></md-divider>
+      <sx-envio-parcial-partidas [parent]="form" [partidas]="partidas.value"
+                                 (remove)="onDelete($event)"
+      (edit)="onEdit($event)">
+
+      </sx-envio-parcial-partidas>
+
+
+    <md-divider></md-divider>
+    <md-card-actions>
+      <button type="submit" md-button [disabled]="form.invalid" > Salvar </button>
+      <a  md-button [routerLink]="['/logistica/embarques/embarques']"> Cancelar </a>
+    </md-card-actions>
+
+  </md-card>
+</form>
+

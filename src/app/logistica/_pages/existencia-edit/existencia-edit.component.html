@@ -1,0 +1,90 @@
+<div layout layout-align="center">
+
+  <md-card flex="80">
+    <div class="mat-title text-lg tc-indigo-800 pad-top-md pad-left" >
+      <span>{{existencia.producto.descripcion}} </span>
+      <span class="left-pad">({{existencia.producto.clave}})</span>
+    </div>
+    <md-divider></md-divider>
+    <div layout class="pad-left pad-right">
+      <md-form-field >
+        <input mdInput placeholder="Precio contado" [disabled]="true" class="text-lg tc-indigo-800"
+          [value]="existencia.producto.precioContado | currency: 'USD': 1.2-2">
+      </md-form-field>
+      <md-form-field >
+        <input mdInput placeholder="Precio crédito" [disabled]="true" class="text-lg tc-indigo-800"
+          [value]="existencia.producto.precioCredito | currency: 'USD': 1.2-2">
+      </md-form-field>
+      <!-- <md-form-field [style.width.px]="70" class="tc-black-800">
+        <input mdInput placeholder="Ancho" [disabled]="true" [value]="existencia.producto.largo" >
+      </md-form-field>
+      <md-form-field [style.width.px]="70">
+        <input mdInput placeholder="Largo" [disabled]="true" [value]="existencia.producto.ancho" >
+      </md-form-field> -->
+      <md-form-field >
+        <input mdInput placeholder="T.Precio" [disabled]="true" [value]="existencia.producto.modoVenta === 'B' ? 'Bruto': 'Neto'">
+      </md-form-field>
+      <md-form-field >
+        <input mdInput placeholder="Presentación" [disabled]="true" [value]="existencia.producto.presentacion">
+      </md-form-field>
+    </div>
+    <div layout class="pad-left pad-right">
+      <md-form-field >
+        <input mdInput placeholder="Recorte" [disabled]="true" [value]="existencia.recorte">
+      </md-form-field>
+      <md-form-field >
+        <input mdInput placeholder="Recorte comentario" [disabled]="true" [value]="existencia.recorteComentario">
+      </md-form-field>
+      <md-form-field >
+        <input mdInput placeholder="Recorte fecha" [disabled]="true" [value]="existencia.recorteFecha | date:'dd/MM/yyyy'">
+      </md-form-field>
+    </div>
+    <md-divider></md-divider>
+    <div layout layout-padding layout-align="center center">
+      <span layout flex>
+        <span>Disponibilidad: </span>
+        <span  [ngClass]="{'tc-indigo-800':existencia.cantidad >0, 'tc-pink-800': existencia.cantidad<0}" class="text-center" flex>
+          {{existencia.disponible | number}} 
+        </span>
+      </span>
+      
+      <span layout flex>
+        <span>Total: </span>
+        <span  [ngClass]="{'tc-indigo-800':existencia.disponible >0, 'tc-pink-800': existencia.disponible<0}" class="text-center" flex> 
+          {{total | number}} </span>
+      </span>
+    </div>
+    <div layout layout-align="center" layout-margin>
+      <span flex class="text-center text-md tc-green-500"> Disponibilidad en otras sucursales</span>
+    </div>
+    <md-divider></md-divider>
+    <ng-container *ngIf="existencias$ | async as existencias">
+      <td-data-table
+        #dataTable
+        [data]="existencias"
+        [columns]="columns"[style.height.px]="250">
+        <ng-template tdDataTableTemplate="lastUpdated" let-value="value">
+          <span class="text-md">{{ value | date: 'dd/MM/yyyy: hh:mm'}}</span>
+        </ng-template>
+        <ng-template tdDataTableTemplate="cantidad" let-value="value">
+          <span [ngClass]="{'tc-indigo-800':value >0, 'tc-pink-800': value<0}">{{ value | number}}</span>
+        </ng-template>
+        <ng-template tdDataTableTemplate="disponible" let-value="value">
+          <span [ngClass]="{'tc-indigo-800':value >0, 'tc-pink-800': value<0}">{{ value | number}}</span>
+        </ng-template>
+        <ng-template tdDataTableTemplate="recorte" let-value="value">
+          <span [ngClass]="{'tc-indigo-800':value >0, 'tc-pink-800': value<0}">{{ value | number}}</span>
+        </ng-template>
+        <ng-template tdDataTableTemplate="sucursal.nombre" let-value="value">
+          <span [ngClass]="{'tc-indigo-800':value === existencia.sucursal.nombre}">{{ value}}</span>
+        </ng-template>
+      </td-data-table>
+    </ng-container>
+
+    <md-divider></md-divider>
+    <md-card-actions>
+      <button md-button [routerLink]="['../../']" >Regresar <md-icon>back</md-icon></button>
+      <button md-button color="primary" (click)="editRecorte()">Editar <md-icon>edit</md-icon></button>
+    </md-card-actions>
+  </md-card>
+</div>

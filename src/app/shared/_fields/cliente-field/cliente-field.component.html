@@ -1,0 +1,18 @@
+<md-form-field  class="fill">
+  <input type="text" mdInput [formControl]="searchControl" (blur)="onBlur()"
+     [placeholder]="placeholder" #inputField
+     [required]="required"
+     [mdAutocomplete]="auto">
+  <md-icon mdSuffix>search</md-icon>
+  <md-error>
+    Seleccione un cliente
+  </md-error>
+</md-form-field>
+
+<md-autocomplete #auto="mdAutocomplete" [displayWith]="displayFn" >
+  <md-option *ngFor="let producto of productos$ | async " [value]="producto" 
+    [ngClass]="{'tc-red-800': !producto.activo}">
+     {{producto.nombre}} ({{producto.rfc}}) 
+  </md-option>
+</md-autocomplete>
+

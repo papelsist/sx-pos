@@ -1,0 +1,111 @@
+<form novalidate (ngSubmit)="onSubmit()" [formGroup]="form" class="cheque-form">
+  <h4 md-dialog-title>Corte de caja (CHEQUE)</h4>
+  <md-dialog-content>
+      <div layout class="pad-left pad-right">
+        <div layout="column">
+
+          <div layout="row">
+            <md-form-field flex>
+              <input mdInput placeholder="Fecha" value="{{corte.fecha | date: 'dd/MM/yyyy'}}" [disabled]="true">
+            </md-form-field>
+            <md-form-field>
+              <input type="text" mdInput value="{{corte.corte | date:'dd/MM/yyyy HH:mm'}}" placeholder="Corte" [disabled]="true">
+            </md-form-field>
+          </div>
+      
+          <div layout="row">
+            <md-form-field>
+              <input type="text" mdInput value="{{corte.pagosRegistrados | currency: 'USD': 1.2-2}}" 
+                placeholder="Pagos registrados" [disabled]="true">
+            </md-form-field>
+            <md-form-field>
+              <input type="text" mdInput value="{{corte.cortesAcumulado | currency: 'USD': 1.2-2}}" 
+                  placeholder="Cortes acumulados" [disabled]="true">
+            </md-form-field>
+          </div>
+      
+          <div layout="row">
+            <md-form-field>
+              <input type="text" mdInput value="{{corte.cambiosDeCheques | currency: 'USD': 1.2-2}}" 
+                placeholder="Cambios de cheques" [disabled]="true">
+            </md-form-field>
+            <md-form-field>
+              <input type="text" mdInput value="{{disponible | currency: 'USD': 1.2-2}}" 
+                  placeholder="Disponible" [disabled]="true">
+            </md-form-field>
+          </div>
+      
+          <div layout>
+            <md-select placeholder="Tipo de venta" formControlName="tipoDeVenta" flex>
+              <md-option *ngFor="let tipo of ['CON','COD']"
+                  [value]="tipo">{{ tipo }}
+              </md-option>
+            </md-select>
+            <md-form-field flex>
+                <input type="text" mdInput value="{{disponible | currency: 'USD': 1.2-2}}" 
+                placeholder="Deposito" [disabled]="true">
+            </md-form-field>
+          </div>
+        </div>
+
+        <div layout="column" class="pad-left pad-right">
+  
+          <div layout>
+            <md-form-field flex>
+                <input type="text" mdInput value="{{cheques.chequesMismo}}" 
+                placeholder="Cheques mismo banco" [disabled]="true">
+            </md-form-field>
+            <md-form-field flex>
+                <input type="text" mdInput value="{{cheques.importeMismo | currency: 'USD': 1.2-2}}" 
+                placeholder="" [disabled]="true">
+            </md-form-field>
+          </div>
+    
+          <div layout>
+            <md-form-field flex>
+                <input type="text" mdInput value="{{cheques.chequesOtros}}" 
+                placeholder="Cheques otros bancos" [disabled]="true">
+            </md-form-field>
+            <md-form-field flex>
+                <input type="text" mdInput value="{{cheques.importeOtros | currency: 'USD': 1.2-2}}" 
+                placeholder="$" [disabled]="true">
+            </md-form-field>
+          </div>
+    
+          <div layout>
+            <md-form-field flex>
+                <input type="text" mdInput value="{{cheques.fichasMismo}}" 
+                placeholder="Fichas mismo banco" [disabled]="true">
+            </md-form-field>
+            <md-form-field flex>
+                <input type="text" mdInput value="{{cheques.fichasMismoImporte | currency: 'USD': 1.2-2}}" 
+                placeholder="" [disabled]="true">
+            </md-form-field>
+          </div>
+    
+          <div layout>
+            <md-form-field flex>
+                <input type="text" mdInput value="{{cheques.fichasOtros}}" 
+                placeholder="Fichas otros bancos" [disabled]="true">
+            </md-form-field>
+            <md-form-field flex>
+                <input type="text" mdInput value="{{ cheques.fichasOtrosImporte | currency: 'USD': 1.2-2}}" 
+                placeholder="$" [disabled]="true">
+            </md-form-field>
+          </div>
+        </div>
+
+      </div>
+      
+      <div layout>
+        <sx-comentario-field [parent]="form" flex ></sx-comentario-field>
+      </div>
+    </md-dialog-content>
+    
+
+    <md-dialog-actions>
+        <button md-button type="button" (click)="cancelar()"  >Cancelar</button>
+        <button md-button type="submit" [disabled]="form.invalid" >Salvar</button>
+    </md-dialog-actions>
+  </form>
+  

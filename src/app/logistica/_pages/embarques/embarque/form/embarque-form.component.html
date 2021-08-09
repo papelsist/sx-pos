@@ -1,0 +1,62 @@
+<form novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <md-card>
+        <div layout="row" layout-align="start center" layout-padding class="pad-left-sm pad-right-sm">
+            <span class="md-title">{{title}}</span>
+            <span flex></span>
+            <span>
+        <button type="button" md-icon-button (click)="insertar()" [disabled]="readonly"
+                mdTooltip="Agregar partidas a al embarque">
+          <md-icon>add</md-icon>
+        </button>
+      </span>
+        </div>
+
+        <md-divider></md-divider>
+        <md-card-content>
+            <div layout class="pad-left-sm pad-right-sm">
+
+                <md-form-field flex>
+                    <input type="text" mdInput value="{{fecha | date:'dd/MM/yyyy'}}" placeholder="Fecha" [disabled]="true">
+                </md-form-field>
+
+                <md-form-field flex>
+                    <input type="text" mdInput value="{{sucursal.nombre}}" placeholder="Sucursal" [disabled]="true">
+                </md-form-field>
+
+            </div>
+
+            <div layout class="pad-left-sm pad-right-sm">
+
+                <sx-chofer-field formControlName="chofer" #chofer flex></sx-chofer-field>
+
+
+                <sx-comentario-field flex [parent]="form" rows="1"></sx-comentario-field>
+            </div>
+
+            <div layout class="pad-left-sm pad-right-sm">
+                <md-form-field *ngIf="isPatin" flex>
+                    <input type="text" mdInput placeholder="Empleado" required minlength="5" [formControl]="form.controls['empleado']">
+                </md-form-field>
+            </div>
+        </md-card-content>
+
+
+
+
+        <md-divider></md-divider>
+        <md-card-actions>
+            <button type="submit" md-button [disabled]="form.invalid" *ngIf="!readonly"> Salvar </button>
+            <a md-button [routerLink]="['/logistica/embarques']"> Cancelar </a>
+            <!--<button md-icon-button (click)="print.emit(form.value)" mdTooltip="Imprimir documento" *ngIf="id">-->
+            <!--<md-icon>print</md-icon>-->
+            <!--</button>-->
+            <a md-button *ngIf="id && readonly" [routerLink]="['../../edit', id]">
+        Editar <md-icon>edit</md-icon>
+      </a>
+        </md-card-actions>
+
+    </md-card>
+
+
+
+</form>

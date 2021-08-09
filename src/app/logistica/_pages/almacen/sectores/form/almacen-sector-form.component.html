@@ -1,0 +1,63 @@
+<form novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+  <md-card >
+    <div layout="row" layout-align="start center" layout-padding class="pad-left-sm pad-right-sm">
+
+      <span class="md-title">{{title}}</span>
+
+      <span flex></span>
+      <span>
+        <button type="button" md-icon-button (click)="insertar()" [disabled]="disabled"
+                mdTooltip="Agregar partidas a la com">
+          <md-icon>add</md-icon>
+        </button>
+      </span>
+    </div>
+
+    <md-divider></md-divider>
+
+
+    <div layout class="pad-left-sm pad-right-sm">
+
+      <md-form-field flex="10">
+        <input type="text" mdInput formControlName="sectorFolio" placeholder="Sector">
+      </md-form-field>
+
+      <md-form-field flex>
+        <input type="text" mdInput formControlName="responsable1" placeholder="Responsable 1">
+      </md-form-field>
+      <md-form-field flex>
+        <input type="text" mdInput formControlName="responsable2" placeholder="Responsable 2">
+      </md-form-field>
+      <sx-comentario-field flex [parent]="form" rows="1" ></sx-comentario-field>
+    </div>
+    
+    <div>
+      <sx-sector-form-partidas [disabled]="disabled"
+        [parent]="form" [partidas]="partidas.value" (remove)="onDelete($event)">
+      </sx-sector-form-partidas>
+    </div>
+
+    
+
+    <md-divider></md-divider>
+    <ng-template tdLoading [tdLoadingUntil]="!procesando" tdLoadingStrategy="overlay" tdLoadingType="linear">
+      <md-card-actions>
+        <button type="submit" md-button [disabled]="form.invalid" *ngIf="!disabled"> Salvar </button>
+        <a  md-button [routerLink]="['/logistica/almacen/sectores']"> Cancelar </a>
+        <button type="button" md-icon-button (click)="print(id)" mdTooltip="Imprimir documento" *ngIf="id">
+          <md-icon>print</md-icon>
+        </button>
+        <a md-button  *ngIf="id && disabled" [routerLink]="['../../edit', id]">
+          Editar <md-icon>edit</md-icon>
+        </a>
+        <button type="button" md-button (click)="delete.emit(sector)"  *ngIf="id" color="warn">
+            <md-icon>delete</md-icon> Eliminar
+          </button>
+      </md-card-actions>
+    </ng-template>
+
+  </md-card>
+
+
+
+</form>

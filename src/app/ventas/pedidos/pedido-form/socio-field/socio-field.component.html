@@ -1,0 +1,16 @@
+<md-form-field  class="fill" [style.width.%]="100">
+  <input type="text" mdInput [formControl]="searchControl" (blur)="onBlur()"
+         [placeholder]="placeholder" #inputField
+         [required]="required"
+         [mdAutocomplete]="auto">
+  <md-error>
+    No existe el socio
+  </md-error>
+</md-form-field>
+
+<md-autocomplete #auto="mdAutocomplete" [displayWith]="displayFn" >
+  <md-option *ngFor="let socio of socios$ | async " [value]="socio">
+     {{socio.nombre}} ({{socio.clave}})
+  </md-option>
+</md-autocomplete>
+

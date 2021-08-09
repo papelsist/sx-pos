@@ -1,0 +1,71 @@
+<form [formGroup]="form" novalidate (ngSubmit)="doAccept()" class="rec-form">
+    <h4 md-dialog-title>
+       Reporte Conteo
+    </h4>
+    <div layout class="mat-form-field--inline">
+        <md-form-field flex>
+                <input type="number" mdInput  formControlName="sectorIni"  placeholder="Sector Inicial">
+        </md-form-field>
+        <md-form-field flex>
+                <input type="number" mdInput  formControlName="sectorFin"  placeholder="Sector Final">
+        </md-form-field>
+    </div>
+    <div layout class="mat-form-field--inline">
+        <md-form-field flex>
+                <input type="number" mdInput  formControlName="difDe"  placeholder="Diferencia De">
+        </md-form-field>
+        <md-form-field flex>
+                <input type="number" mdInput  formControlName="difA"  placeholder="Diferencia A">
+        </md-form-field>
+    </div>
+    <div layout>
+        <md-select placeholder="Activos" formControlName="activo" flex>
+            <md-option *ngFor="let activo of activos" [value]="activo">{{ activo }}
+            </md-option>
+        </md-select>
+    </div>
+    <div layout>
+        <md-select placeholder="De Linea" formControlName="deLinea" flex>
+            <md-option *ngFor="let deLinea of isDeLinea" [value]="deLinea">{{ deLinea }}
+            </md-option>
+        </md-select>
+    </div>
+    <div layout>
+        <md-select placeholder="Filtro" formControlName="filtro" flex>
+            <md-option *ngFor="let filtro of filtros" [value]="filtro">{{ filtro }}
+            </md-option>
+        </md-select>
+    </div>
+    <div layout>
+        <md-select placeholder="Ordenado" formControlName="ordenado" flex>
+            <md-option *ngFor="let orden of ordenador" [value]="orden">{{ orden }}
+            </md-option>
+        </md-select>
+    </div>
+   <!--  <div layout>
+
+        <md-select placeholder="Tipo" formControlName="tipo" flex>
+            <md-option *ngFor="let tipo of tipos" [value]="tipo">{{ tipo }}
+            </md-option>
+        </md-select>
+    </div>
+    <div layout>
+        <md-select placeholder="Existencia" formControlName="existencia" flex>
+            <md-option *ngFor="let tipo of existencia" [value]="tipo">{{ tipo }}
+            </md-option>
+        </md-select>
+    </div>
+
+    <div layout>
+        <sx-lineas-field formControlName="linea" flex></sx-lineas-field>
+    </div>
+
+    <div layout>
+        <sx-clases-field formControlName="clase" flex></sx-clases-field>
+    </div> -->
+
+    <md-dialog-actions>
+        <button md-button class="accent" type="submit" [disabled]="form.invalid">Aceptar</button>
+        <button md-button type="button" (click)="close()">Cancelar</button>
+    </md-dialog-actions>
+</form>

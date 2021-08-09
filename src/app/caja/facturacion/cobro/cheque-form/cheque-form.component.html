@@ -1,0 +1,26 @@
+<form novalidate (ngSubmit)="onSubmit()" [formGroup]="form" class="cheque-form">
+  <h3 md-dialog-title>Datos de cobro {{cobro.formaDePago}}</h3>
+  <md-divider></md-divider>
+  <md-dialog-content>
+
+    <div layout>
+      <sx-bancos-field [parent]="form" propertyName="bancoOrigen"  flex></sx-bancos-field>
+      <md-form-field flex>
+        <input type="text" mdInput  placeholder="Número de cheque" formControlName="numero" sxOnlyNumbers>
+      </md-form-field>
+    </div>
+
+    <div layout>
+      <md-form-field flex>
+        <input type="text" mdInput  placeholder="Cuenta" formControlName="numeroDeCuenta" sxOnlyNumbers>
+      </md-form-field>
+    </div>
+
+
+  </md-dialog-content>
+
+  <md-dialog-actions>
+    <button md-button type="button" (click)="cancelar()"  >Cancelar</button>
+    <button md-button type="submit" [disabled]="form.invalid" >Aceptar</button>
+  </md-dialog-actions>
+</form>

@@ -1,0 +1,40 @@
+<td-layout #layout mode="over" opened="false" [sidenavWidth]="sidenavWidth">
+
+    <div td-sidenav-content></div>
+
+    <td-navigation-drawer color="accent" logo="assets:siipap-rx2" [navigationRoute]="navigationRoute" [name]="drawerTitle" email="admin@gmail.com" flex>
+
+        <md-nav-list>
+            <a md-list-item *ngFor="let item of navigation" [routerLink]="[item.path]" (click)="layout.close()">
+                <md-icon>{{item.icon}}</md-icon>{{item.title}}
+            </a>
+        </md-nav-list>
+
+        <div td-navigation-drawer-menu>
+            <sx-global-user-nav-list></sx-global-user-nav-list>
+        </div>
+
+    </td-navigation-drawer>
+
+    <sx-nav-list-layout header="Traslados" modulo="SX-Traslados" [navigation]="navigation">
+        <div class="page-document">
+            <router-outlet></router-outlet>
+        </div>
+        <div class="reportes">
+            <h2 matSubheader>Reportes</h2>
+
+            <ng-template let-item let-last="last" ngFor [ngForOf]="reportes">
+                <md-list-item (click)="runReport(item.name)">
+                    <md-icon md-list-icon>blur_linear</md-icon>
+                    <h3 md-line> {{item.title}} </h3>
+                </md-list-item>
+                <md-divider md-inset *ngIf="!last"></md-divider>
+            </ng-template>
+        </div>
+    </sx-nav-list-layout>
+
+
+
+
+
+</td-layout>

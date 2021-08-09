@@ -1,0 +1,23 @@
+<md-list>
+  <td-virtual-scroll-container #virtualScroll [style.height.px]="550" [data]="movimientos">
+    <ng-template let-row="row" let-last="last" tdVirtualScrollRow>
+      <md-list-item >
+        <span md-line >
+          <span layout >
+            <span flex="10">{{ row.documento}} </span>
+            <span flex="30" class="tc-indigo-700">
+                {{ row.fecha | date: 'dd/MM/yyyy HH:mm:ss' }}
+            </span>
+            <span flex="10" class="tc-pink-700">{{ row.importe | currency: 'USD': 1.2-2 }}</span>
+            <span flex="20">{{ row.tipo}}</span>
+            <span flex="20">{{ row.comentario}}</span>
+          </span>
+        </span>
+       <!-- <button md-icon-button (click)="delete.emit(row)">
+          <md-icon color="accent">delete</md-icon>
+        </button>-->
+      </md-list-item>
+      <md-divider *ngIf="!last" ></md-divider>
+    </ng-template>
+  </td-virtual-scroll-container>
+</md-list>

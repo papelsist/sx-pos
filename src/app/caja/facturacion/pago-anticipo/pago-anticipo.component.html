@@ -1,0 +1,23 @@
+<form novalidate (ngSubmit)="onSubmit()" [formGroup]="form" class="cheque-form">
+  <h4 md-dialog-title>Pagar con anticipo</h4>
+  <p>Cliente: {{ cliente }}</p>
+  <md-dialog-content>
+    <div layout>
+      <md-select
+        placeholder="Anticipos disponibles"
+        formControlName="anticipo"
+        flex
+      >
+        <md-option *ngFor="let ant of anticipos" [value]="ant.id"
+          >ANT {{ ant.cxcDocumento }} Total:{{ ant.total }} Disponible:
+          {{ ant.disponible | currency: ant.moneda }}
+        </md-option>
+      </md-select>
+    </div>
+  </md-dialog-content>
+
+  <md-dialog-actions>
+    <button md-button type="button" (click)="cancelar()">Cancelar</button>
+    <button md-button type="submit" [disabled]="form.invalid">Pagar</button>
+  </md-dialog-actions>
+</form>

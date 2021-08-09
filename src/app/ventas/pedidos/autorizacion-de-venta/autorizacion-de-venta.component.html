@@ -1,0 +1,42 @@
+<form [formGroup]="form" novalidate (ngSubmit)="doAccept()" [style.width.px]="400">
+  <h4 md-dialog-title>
+    {{data.title}}
+  </h4>
+
+  <div layout>
+
+    <md-form-field flex>
+      <input type="text" mdInput placeholder="Tipo" formControlName="tipo">
+    </md-form-field>
+    <md-form-field flex>
+      <input mdInput [mdDatepicker]="picker" placeholder="Fecha" formControlName="fecha">
+      <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+      <md-datepicker #picker></md-datepicker>
+    </md-form-field>
+  </div>
+  <div layout>
+    <md-form-field flex>
+      <input type="text" mdInput placeholder="Solicita" formControlName="solicito">
+    </md-form-field>
+    <sx-usuario-sec-field placeholder="Autoriza" (usuarioFound)="setUsuario($event)"></sx-usuario-sec-field>
+    <!-- <span>{{form.get('usuario').errors | json}}</span> -->
+  </div>
+  <div layout>
+    <md-form-field flex>
+      <input type="text" mdInput placeholder="" value="{{form.get('usuario').value?.username}}" [disabled]="true">
+    </md-form-field>
+  </div>
+  <td-message #message label="Usuario no autorizado para esta operación" icon="warning" color="red" [opened]="form.get('usuario').hasError('noAutorizado')">
+  </td-message>
+  <div layout>
+    <md-form-field flex>
+      <input type="text" mdInput placeholder="Comentario" formControlName="comentario">
+    </md-form-field>
+  </div>
+
+  <md-dialog-actions>
+    <button md-button class="accent" type="submit" [disabled]="form.invalid">Aceptar</button>
+    <button md-button type="button" (click)="close()">Cancelar</button>
+  </md-dialog-actions>
+
+</form>

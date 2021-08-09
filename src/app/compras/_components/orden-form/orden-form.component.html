@@ -1,0 +1,46 @@
+<form novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+  <md-card>
+    <div layout="row" layout-align="start center" layout-padding class="pad-left-sm pad-right-sm">
+      <span class="md-title">
+        <span *ngIf="!compra">Alta de orden de compra</span>
+        <span *ngIf="compra">Compra {{compra.folio}}</span>
+      </span>
+      <span flex></span>
+      <span>
+        <sx-orden-add-partida-btn [parent]="form" (add)="insertar()"></sx-orden-add-partida-btn>
+      </span>
+    </div>
+    <md-divider></md-divider>
+
+    <div layout layout-margin>
+
+      <md-form-field flex="10">
+        <input type="text" mdInput placeholder="Fecha" [disabled]="true" [value]=" fecha | date:'dd/MM/yyyy'">
+      </md-form-field>
+
+      <sx-proveedor-field formControlName="proveedor" flex></sx-proveedor-field>
+
+      <sx-comentario-field flex [parent]="form" rows="1"></sx-comentario-field>
+
+    </div>
+
+
+    <div class="ocompra-partidas-list" layout>
+      <sx-orden-partidas-list flex [parent]="form" [partidas]="partidas.value" (delete)="onDelete($event)" (edit)="onEdit($event)">
+      </sx-orden-partidas-list>
+    </div>
+
+    <div *ngIf=" partidas.value.length === 0" class="empty-partidas text-center">
+      <h4 class="tc-pink-200 text-ceneter">Registre las partidas de la compra</h4>
+    </div>
+
+    <md-divider></md-divider>
+    <md-card-actions>
+      <button type="submit" md-button [disabled]="form.invalid || form.pristine"> Salvar </button>
+      <a md-button [routerLink]="['../']"> Cancelar </a>
+    </md-card-actions>
+
+  </md-card>
+
+
+</form>

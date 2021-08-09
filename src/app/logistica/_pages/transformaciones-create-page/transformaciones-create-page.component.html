@@ -1,0 +1,8 @@
+<div layout>
+    <sx-transformacion-form 
+        (save)="onSave($event)" flex="80"  
+        (cancel)="onCancel()"
+        [sucursal]="sucursal$ | async">
+    </sx-transformacion-form>  
+</div>
+

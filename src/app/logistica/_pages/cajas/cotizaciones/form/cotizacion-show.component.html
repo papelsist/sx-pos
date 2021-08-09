@@ -1,0 +1,68 @@
+<form novalidate [formGroup]="form">
+    <md-card class="form-card" layout flex tabindex="0">
+        <md-card-title color="accent"> Consultar Cotizacion Caja </md-card-title>
+        <md-divider></md-divider>
+        <span flex></span>
+        <ng-container *ngIf="cotizacion$ | async as cotizacion">
+            <div layout class="pad-left-sm pad-right-sm cotizacion-form ">
+                <md-form-field class="field">
+                    <input type="text" class="uppercase" mdInput placeholder="Clave Caja" formControlName="claveCaja" value="{{cotizacion.claveCaja}}">
+                </md-form-field>
+                <md-form-field flex="70" class="field">
+                    <input type="text" class="uppercase" mdInput placeholder="Descripcion Caja" formControlName="descripcionCaja" value="{{cotizacion.descripcionCaja}}">
+                </md-form-field>
+                <md-form-field class="field">
+                    <input type="number" mdInput placeholder="Piezas" value="{{cotizacion.piezas}}" disabled>
+                </md-form-field>
+            </div>
+            <div layout class="pad-left-sm pad-right-sm cotizacion-form ">
+                <md-form-field class="field">
+                    <input type="text" mdInput placeholder="Precio Pieza Contado" formControlName="precioPiezaContado" value="{{cotizacion.precioPiezaContado}}">
+                </md-form-field>
+                <md-form-field class="field">
+                    <input type="text" mdInput placeholder="Precio Pieza Crédito" formControlName="precioPiezaCredito" value="{{cotizacion.precioPiezaCredito}}">
+                </md-form-field>
+            </div>
+            <div layout class="pad-left-sm pad-right-sm cotizacion-form ">
+                <md-form-field class="field">
+                    <input type="text" mdInput placeholder="Ancho cm." formControlName="ancho" value="{{cotizacion.ancho}}">
+                </md-form-field>
+                <md-form-field class="field">
+                    <input type="text" mdInput placeholder="Largo cm." formControlName="largo" value="{{cotizacion.largo}}">
+                </md-form-field>
+                <md-form-field class="field">
+                    <input type="text" mdInput placeholder="Alto cm." formControlName="alto" value="{{cotizacion.altura}}">
+                </md-form-field>
+            </div>
+            <div layout class="pad-left-sm pad-right-sm cotizacion-form ">
+                <md-form-field class="field">
+                    <input type="text" mdInput placeholder="ECT" formControlName="resistenciaECT" value="{{cotizacion.resistenciaECT}}">
+                </md-form-field>
+                <md-form-field class="field">
+                    <input type="text" mdInput placeholder="Flauta" formControlName="flauta" value="{{cotizacion.flauta}}">
+                </md-form-field>
+            </div>
+            <div layout class="pad-left-sm pad-right-sm cotizacion-form">
+                <md-form-field class="field" flex="70">
+                    <input type="text" mdInput placeholder="Producto" formControlName="producto" value="{{cotizacion.productoDescripcion}}">
+                </md-form-field>
+                <md-form-field class="field" flex>
+                    <input type="number" mdInput placeholder="Metros Lineales" formControlName="metrosLineales" value="{{cotizacion.metrosLineales}}">
+                </md-form-field>
+            </div>
+            <div layout class="pad-left-sm pad-right-sm cotizacion-form ">
+                <md-form-field class="field">
+                    <input type="text" mdInput placeholder="Precio Contado" value="{{cotizacion.productoPrecioContado | currency:'USD': true: '1.2-2'}}" disabled>
+                </md-form-field>
+                <md-form-field>
+                    <input type="text" mdInput placeholder="Precio Crédito" value="{{cotizacion.productoPrecioCredito | currency:'USD': true: '1.2-2'}}" disabled>
+                </md-form-field>
+            </div>
+        </ng-container>
+        <md-card-actions>
+            <a md-button [routerLink]="['/logistica/cajas/cotizaciones']">
+                <md-icon>keyboard_backspace</md-icon> Regresar
+            </a>
+        </md-card-actions>
+    </md-card>
+</form>

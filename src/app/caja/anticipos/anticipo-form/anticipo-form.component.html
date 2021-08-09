@@ -1,0 +1,90 @@
+<md-card>
+  <md-card-title-group layout>
+    <md-card-title>Anticipo
+      <span class="pad-right pad-left" *ngIf="cobro" class="tc-indigo-800">
+      </span>
+      <span flex></span>
+      <span class="pad-right" *ngIf="cobro">({{cobro.fecha | date: 'dd/MM/yyyy'}})</span>
+    </md-card-title>
+    <span flex></span>
+  </md-card-title-group>
+  <md-divider></md-divider>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+    <div layout="column" class="pad-left pad-right">
+      <div layout flex>
+        <sx-cliente-field formControlName="cliente" flex></sx-cliente-field>
+        <div class="pad-left">
+          <md-select placeholder="Cartera" formControlName="tipo">
+            <md-option *ngFor="let tipo of ['COD']" [value]="tipo">
+              {{tipo}}
+            </md-option>
+          </md-select>
+        </div>
+      </div>
+
+
+      <div layout flex>
+        <!-- <md-form-field flex>
+          <ng-container>
+          <input mdInput [mdDatepicker]="datePicker" placeholder="Fecha" formControlName="fecha">
+          <md-datepicker #datePicker></md-datepicker>
+          <md-datepicker-toggle [for]="datePicker" mdSuffix></md-datepicker-toggle>
+        </md-form-field> -->
+
+        <md-select placeholder="Fomra de pago" formControlName="formaDePago" flex class="pad-left pad-right">
+          <md-option *ngFor="let tipo of ['EFECTIVO', 'CHEQUE',  'TARJETA_DEBITO', 'TARJETA_CREDITO']" [value]="tipo">
+            {{tipo}}
+          </md-option>
+        </md-select>
+
+        <md-form-field flex [style.width.px]="200">
+          <input type="number" formControlName="importe" sxOnlyNumbers placeholder="Importe" mdInput>
+        </md-form-field>
+      </div>
+
+      <div layout *ngIf="cobro?.cheque as cheque">
+        <md-form-field flex class="pad-right">
+          <input mdInput placeholder="Banco Origen" [value]="cobro.bancoOrigen" [disabled]="true">
+        </md-form-field>
+        <md-form-field flex class="pad-right">
+          <input mdInput placeholder="Número de cheque" [value]="cheque.numero" [disabled]="true">
+        </md-form-field>
+        <md-form-field flex>
+          <input mdInput placeholder="Cuenta " [value]="cheque.numeroDeCuenta" [disabled]="true">
+        </md-form-field>
+
+      </div>
+
+      <div layout>
+        <md-form-field flex>
+          <textarea mdInput placeholder="Comentario" formControlName="comentario" mdTextareaAutosize mdAutosizeMinRows="1">
+            </textarea>
+        </md-form-field>
+        <md-form-field *ngIf="cobro" class="pad-left">
+          <input mdInput placeholder="Aplicado" [value]="cobro.aplicado | currency: 'USD':1.2-2" [disabled]="true">
+        </md-form-field>
+        <md-form-field *ngIf="cobro" class="pad-left">
+          <input mdInput placeholder="Disponible" [value]="cobro.disponible | currency: 'USD':1.2-2" [disabled]="true">
+        </md-form-field>
+      </div>
+
+    </div>
+    <md-divider></md-divider>
+
+    <md-card-actions>
+      <button md-button color="primary" *ngIf="isEditable()" [disabled]="form.invalid || form.pristine">Salvar
+      </button>
+      <button type="button" md-button (click)="cancel.emit('cancel')"> Cancelar</button>
+      <button type="button" md-button (click)="delete.emit(cobro)" *ngIf="canDelete()" color="warn">
+        <md-icon>delete</md-icon>Eliminar
+      </button>
+
+      <button type="button" md-button (click)="print.emit(cobro)" *ngIf="cobro" color="primary">
+        <md-icon>print</md-icon>Imprimir
+      </button>
+    </md-card-actions>
+  </form>
+
+</md-card>

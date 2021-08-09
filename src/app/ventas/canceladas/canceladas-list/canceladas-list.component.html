@@ -1,0 +1,32 @@
+<td-data-table
+#dataTable
+[data]="facturas"
+[columns]="columns"
+[selectable]="false"
+[clickable]="false"
+[multiple]="false"
+[sortable]="false" class="fill">
+<ng-template tdDataTableTemplate="documento" let-value="value" let-row="row">
+  <span flex>{{value}} </span>
+</ng-template>
+<ng-template tdDataTableTemplate="fecha" let-value="value" let-row="row">
+  {{value | date: 'dd/MM/yyyy'}}
+</ng-template>
+<ng-template tdDataTableTemplate="total" let-value="value" let-row="row">
+  <span>{{value | currency: 'USD': 1.2-2}}</span> <span *ngIf="row.moneda === 'USD'"> USD</span>
+</ng-template>
+
+<ng-template tdDataTableTemplate="saldo" let-value="value" let-row="row">
+  <span>{{row.cuentaPorCobrar.saldo | currency: 'USD': 1.2-2}}</span>
+</ng-template>
+
+<ng-template tdDataTableTemplate="cuentaPorCobrar" let-value="value" let-row="row">
+  <md-icon class="tc-green-700" mdTooltip="{{value.cfdi.uuid}}" *ngIf="value?.cfdi?.uuid">verified_user</md-icon>
+</ng-template>
+
+<ng-template tdDataTableTemplate="formaDePago" let-value="value" let-row="row">
+  {{getFormaDePago(row)}}
+</ng-template>
+
+</td-data-table>
+

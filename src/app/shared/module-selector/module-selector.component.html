@@ -1,0 +1,11 @@
+<button md-icon-button [mdMenuTriggerFor]="toolbarMenu"><md-icon>more_vert</md-icon></button>
+<md-menu #toolbarMenu="mdMenu">
+  <button 
+    md-menu-item *ngFor="let modulo of modulos$ | async" 
+   
+    color="warn"
+    [routerLink]="[modulo.path]">
+    <md-icon class="tc-pink-700">{{modulo.icon}}</md-icon>
+    <span>{{modulo.nombre}}</span>
+  </button>
+</md-menu>

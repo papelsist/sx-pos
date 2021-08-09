@@ -1,0 +1,43 @@
+<div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
+  
+  <md-card flex-gt-sm>
+
+    <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+      
+      <span  class="push-left-sm" flex>
+          <span class="md-title">Movimientos genéricos de inventario</span>
+      </span>
+      
+      <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" 
+        placeholder="Documento " (searchDebounce)="search($event)" flex>
+      </td-search-box>
+
+      <span>
+        <button md-icon-button [mdMenuTriggerFor]="toolbarMenu"><md-icon>more_vert</md-icon></button>
+        <md-menu #toolbarMenu="mdMenu">
+          <button md-menu-item (click)="load()">
+            <md-icon>refresh</md-icon>
+            <span>Cargar</span>
+          </button>
+        </md-menu>
+      </span>
+
+    </div>  
+
+    <md-divider></md-divider>
+    <md-card-content class="will-load">
+      <ng-container *ngIf="movimientos$ | async as movimientos">
+          <sx-movimientos-list [movimientos]="movimientos" ></sx-movimientos-list>
+      </ng-container>
+    </md-card-content>
+  </md-card>
+    
+  <!-- <div flex-gt-sm="50" *ngIf=" selected !== undefined" class="will-load">
+    <sx-movimiento-view [movimiento]="selected" >
+    </sx-movimiento-view>
+  </div> -->
+      
+</div>
+<a md-fab color="accent" class="mat-fab-bottom-right" [routerLink]="['create']">
+  <md-icon>add</md-icon>
+</a>

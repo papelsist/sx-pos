@@ -1,0 +1,63 @@
+<md-list>
+  <md-list-item>
+    <md-icon md-list-icon class="tc-pink-800">vpn_key</md-icon>
+    <div class="list-header">
+      <span class="tc-indigo-700" flex> Embarque</span>
+      <span class="chofer">Chofer </span>
+      <span flex>Fecha </span>
+      <span flex>Comentario </span>
+      <span flex>Creo</span>
+      <span flex>Actualizo</span>
+      <span flex>Salida </span>
+    </div>
+  </md-list-item>
+  <md-divider></md-divider>
+  <td-virtual-scroll-container
+    #virtualScroll
+    [style.height.px]="550"
+    [data]="embrques"
+  >
+    <ng-template let-row="row" let-last="last" tdVirtualScrollRow>
+      <md-list-item>
+        <md-icon md-list-icon class="tc-pink-800">apps</md-icon>
+        <div class="list-row">
+          <a
+            md-button
+            [routerLink]="['edit', row.id]"
+            class="tc-indigo-700"
+            flex
+            >{{ row.documento }}
+          </a>
+          <span *ngIf="!row.empleado" class="chofer"
+            >{{ row.chofer.nombre }}
+          </span>
+          <span *ngIf="row.empleado" class="chofer">{{ row.empleado }} </span>
+          <span flex>{{ row.dateCreated | date: 'dd/MM/yyyy' }} </span>
+          <span flex class="comentario">{{ row.comentario }} </span>
+          <span flex>{{ row.createUser }} </span>
+          <span flex>{{ row.updateUser }} </span>
+          <div flex>
+            <button
+              md-icon-button
+              flex
+              (click)="eliminar(row)"
+              *ngIf="row.numeroDePartidas === 0"
+            >
+              <md-icon class="pad tc-pink-700">delete</md-icon>
+            </button>
+
+            <button
+              md-icon-button
+              (click)="marcarSalida(row)"
+              mdTooltip="Regisrar salida de embarque"
+              *ngIf="!row.salida"
+            >
+              <md-icon class="pad">flight_takeoff</md-icon>
+            </button>
+          </div>
+        </div>
+      </md-list-item>
+      <md-divider *ngIf="!last" md-inset></md-divider>
+    </ng-template>
+  </td-virtual-scroll-container>
+</md-list>

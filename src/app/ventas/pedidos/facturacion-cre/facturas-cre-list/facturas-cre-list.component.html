@@ -1,0 +1,48 @@
+
+<md-list >
+  <td-virtual-scroll-container #virtualScroll [style.height.px]="550" [data]="pedidos">
+    <ng-template let-row="row" let-last="last" tdVirtualScrollRow>
+      <md-list-item >
+        <span md-line >
+          <span layout layout-margin>
+            <span>
+                <button md-button class="tc-indigo-700" flex>
+                  {{row.tipo}} {{row.documento}}
+                </button>
+            </span>
+            <span flex="30">{{ row.cliente.nombre}} </span>
+            <span flex="10">{{ row.fecha | date: 'dd/MM/yyyy' }} </span>
+            <span flex="10">{{ row.dateCreated | amTimeAgo }} </span>
+            <span flex="10" class="text-right" layout>
+              <span flex="10" class="tc-indigo-700" *ngIf="row.tipo === 'ANT'"> (ANTICIPO) </span>
+              <span flex *ngIf="row.moneda!=='MXN'" class="tc-pink-700"> {{row.moneda}}</span>
+              <span flex>{{ row.total | currency: 'USD': 1.2-2 }}</span>
+
+            </span>
+            <span flex="10" class="tc-indigo-700" *ngIf="row.tipoDeCambio > 1"> (T.C: {{row.tipoDeCambio | number: '1.4-4'}})</span>
+            <span flex="10" class="tc-indigo-700" *ngIf="row.tipo === 'ANT'"> {{row.comentario}}</span>
+            <span flex></span>
+            <span layout>
+              <button  md-icon-button
+                       (click)="facturar.emit(row)"
+                       mdTooltip="Facturar" >
+                <md-icon >assignment</md-icon>
+              </button>
+              <button  md-icon-button
+                       (click)="cancelar.emit(row)"
+                       type="button"
+                       mdTooltip="Regresar a pedidos" >
+                <md-icon >arrow_back</md-icon>
+              </button>
+            </span>
+          </span>
+        </span>
+
+        <span flex></span>
+
+      </md-list-item>
+      <md-divider *ngIf="!last" md-inset></md-divider>
+    </ng-template>
+  </td-virtual-scroll-container>
+
+</md-list>
