@@ -1,0 +1,27 @@
+<div [formGroup]="parent" [style.width.px]="900">
+    <div formArrayName="partidas">
+        <table td-data-table class="text-30">
+            <thead>
+                <tr td-data-table-column-row>
+                    <th td-data-table-column>Rng</th>
+                    <th td-data-table-column>Producto</th>
+                    <th td-data-table-column>Descripción</th>
+                    <th td-data-table-column>Cantidad</th>
+                    <!--<th td-data-table-column>Quitar</th>-->
+                </tr>
+            </thead>
+            <tbody>
+                <tr td-data-table-row *ngFor="let row of partidas; index as i">
+                    <td td-data-table-cell>{{i + 1}}</td>
+                    <td td-data-table-cell>{{row.producto.clave}}</td>
+                    <td td-data-table-cell>{{row.producto.descripcion}}</td>
+                    <td td-data-table-cell>
+                        <input type="number" *ngIf="!disabled" value="{{row.cantidad}}" (blur)="modificar(row, ifield.value)" #ifield>
+                        <span *ngIf="disabled">{{row.cantidad}}</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

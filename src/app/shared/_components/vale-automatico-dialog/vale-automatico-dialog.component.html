@@ -1,54 +1,33 @@
-<form [formGroup]="form" novalidate (ngSubmit)="doAccept()" [style.width.px]="900">
-    <div layout="row" layout-align="start center" layout-padding class="pad-left-sm pad-right-sm">
-        <span class="md-title">{{title}}</span>
-        <span flex></span>
-    </div>
-    <md-divider></md-divider>
+<form [formGroup]="form" (ngSubmit)="doAccept()" [style.width.px]="900">
+    <md-card [style.width.px]="900">
+        <div layout="row" layout-align="start center" layout-padding class="pad-left-sm pad-right-sm">
+            <span class="md-title">{{title}}</span>
+            <span flex></span>
+        </div>
+        <md-divider></md-divider>
+        <div layout class="pad-left-sm pad-right-sm">
+            <md-form-field flex="30">
+                <input type="text" mdInput formControlName="sucursalVale" name="sucursalVale" id="sucursalVale" placeholder="Sucursal Vale">
+            </md-form-field>
+            <md-form-field flex="30 ">
+                <input type="text " mdInput [value]="pedido.documento " placeholder="Pedido " [disabled]="true ">
+            </md-form-field>
 
-    <div layout class="pad-left-sm pad-right-sm">
-        <md-form-field flex="30">
-            <input type="text" mdInput [value]="pedido.sucursalVale?.nombre" formControlName="sucursalVale" name=" sucursalVale " placeholder="Sucursal Vale">
-        </md-form-field>
-        <!-- <md-form-field flex="30 ">
-            <input type="text " mdInput [value]="pedido.documento " placeholder="Pedido " [disabled]="true ">
-        </md-form-field>
-        <md-form-field flex="60 ">
-            <input type="text " mdInput [value]="pedido.cliente?.nombre " placeholder="Cliente " [disabled]="true ">
-        </md-form-field> -->
+        </div>
+        <div layout class="pad-left-sm pad-right-sm">
+            <md-form-field flex="60 ">
+                <input type="text " mdInput [value]="pedido.cliente?.nombre " placeholder="Cliente " [disabled]="true ">
+            </md-form-field>
+        </div>
+        <div layout class="pad-left-sm pad-right-sm">
+            <sx-comentario-field flex [parent]="form " rows="1 "></sx-comentario-field>
+        </div>
 
-    </div>
-    <div layout class="pad-left-sm pad-right-sm ">
-        <sx-comentario-field flex [parent]="form " rows="1 "></sx-comentario-field>
-    </div>
-
-    <!--     <div layout>
-
-    </div>
-    <div layout>
-
-    </div>
-    <table td-data-table class="text-30 ">
-        <thead>
-            <tr td-data-table-column-row>
-                <th td-data-table-column>Clave</th>
-                <th td-data-table-column>Descripcion</th>
-                <th td-data-table-column>Cantidad</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr td-data-table-row *ngFor="let row of partidas$ | async ">
-                <td td-data-table-cell>{{row.producto.clave}}</td>
-                <td td-data-table-cell>{{row.producto.descripcion}}</td>
-                <td td-data-table-cell>
-                    <input type="text " *ngIf="!disabled " value="{{row.cantidad}} " (blur)="modificar(row, ifield.value) " #ifield>
-                    <span *ngIf="disabled ">{{row.cantidad}}</span>
-                </td>
-            </tr>
-        </tbody>
-    </table> -->
-
-    <md-divider></md-divider>
-    <md-card-actions>
-        <button type="submit " md-button [disabled]="form.invalid " *ngIf="!disabled "> Salvar </button>
-    </md-card-actions>
+        <div>
+            <sx-grid-vale-partidas [disabled]="disabled" [parent]="form" (partidasUpdate)="actualizarPartidas($event)" [partidas]="partidas$ | async">
+            </sx-grid-vale-partidas>
+        </div>
+        <button type="submit" md-button [disabled]="form.invalid " *ngIf="!disabled "> Salvar </button>
+        <button type="button" (click)="close()" md-button [disabled]="form.invalid " *ngIf="!disabled "> Cancelar </button>
+    </md-card>
 </form>

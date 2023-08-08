@@ -49,6 +49,7 @@ import { LineasFieldComponent } from './_fields/lineas-field/lineas-field.compon
 import { ClasesFieldComponent } from './_fields/clases-field/clases-field.component';
 import { ChoferesFieldComponent } from './_fields/choferes-field/choferes-field.component';
 import { ValeAutomaticoDialogComponent } from './_components/vale-automatico-dialog/vale-automatico-dialog.component';
+import { ValeGridPartidasComponent } from './_components/vale-automatico-dialog/partidas/partidas-grid.component';
 
 
 const FLEX_LAYOUT_MODULES: any[] = [FlexLayoutModule];
@@ -70,6 +71,7 @@ const COMPONENTS: any[] = [
   PeriodoPickerComponent,
   UsuarioDialogComponent,
   ValeAutomaticoDialogComponent,
+  ValeGridPartidasComponent
 ];
 
 @NgModule({

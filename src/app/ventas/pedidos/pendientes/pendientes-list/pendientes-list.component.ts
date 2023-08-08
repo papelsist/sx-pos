@@ -187,14 +187,14 @@ export class PendientesListComponent implements OnInit {
 
   generarValeExistenciaVenta(pedido: Venta) {
     if (pedido.clasificacionVale === 'EXISTENCIA_VENTA') {
-        console.log('Pedido desde pendientes list', pedido);
           const dialogRef = this.dialog.open(ValeAutomaticoDialogComponent, {
             data: {
               pedido: pedido
             },
+          }).afterClosed().subscribe((res) => {
+           this.generarVale.emit(res)
           });
     }
-
   }
 
 

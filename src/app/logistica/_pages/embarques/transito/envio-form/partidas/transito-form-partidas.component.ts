@@ -18,6 +18,7 @@ export class TransitoFormPartidasComponent implements OnInit {
   @Output() arrivo = new EventEmitter<number>();
   @Output() recepcion = new EventEmitter<number>();
   @Output() remove = new EventEmitter<number>();
+  @Output() completo = new EventEmitter<number>();
 
   constructor() { }
 
@@ -33,5 +34,11 @@ export class TransitoFormPartidasComponent implements OnInit {
     this.remove.emit(index);
   }
 
-  
+  onChange(index: number) {
+      console.log('Cambio ', index);
+      this.completo.emit(index)
+  }
+
+
+
 }

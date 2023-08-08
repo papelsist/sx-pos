@@ -8,6 +8,7 @@ import {MdDialog} from '@angular/material';
 import { FacturaEnvioComponent } from './reportes/factura-envio/factura-envio.component';
 import { EnvioPasanComponent } from './reportes/envio-pasan/envio-pasan.component';
 import { AuthService } from '../../../_auth/services/auth.service';
+import { ValidacionEntregasComponent } from './reportes/validacion-entregas/validacion-entregas.component';
 
 
 
@@ -54,6 +55,14 @@ export class EmbarquesPageComponent implements OnInit {
       icon: 'blur_linear',
       action: 'reporteFacturaEnvio()'
     }
+    ,
+    {
+      name: 'validacionEntregas',
+      title: 'Validacion Entregas',
+      description: 'Revision entrega Facturas',
+      icon: 'blur_linear',
+      action: 'reporteValidacionEntregas()'
+    }
   ];
 
   constructor(
@@ -87,6 +96,9 @@ export class EmbarquesPageComponent implements OnInit {
     }
     if (report === 'envioPasan') {
       this.reporteEnvioPasan();
+    }
+    if (report === 'validacionEntregas') {
+      this.reporteValidacionEntregas();
     }
   }
 
@@ -130,6 +142,22 @@ export class EmbarquesPageComponent implements OnInit {
         });
       }
      });
+    }
+
+    reporteValidacionEntregas() {
+      console.log('Imprimiendo el reporte de validacion entregas');
+      const dialogRef = this.dialog.open(ValidacionEntregasComponent, {});
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.service.reporteValidacionEntregas(result).subscribe(res => {
+            const blob = new Blob([res], {
+            type: 'application/pdf'
+          })
+          const fileURL = window.URL.createObjectURL(blob);
+          window.open(fileURL, '_blank');
+          })
+        }
+      })
     }
 
     reporteEnvioPasan() {

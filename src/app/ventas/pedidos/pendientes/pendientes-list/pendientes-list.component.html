@@ -222,12 +222,12 @@
          md-icon-button
         (click)="generarValeExistenciaVenta(row)"
         mdTooltip="Generar vale tipo: {{ row.clasificacionVale }}"
-        *ngIf="row.clasificacionVale !== 'SIN_VALE'"
+        *ngIf="row.clasificacionVale === 'EXISTENCIA_VENTA'"
         class="tc-pink-800"
       >
         <md-icon>swap_horiz</md-icon>
       </button>
-      <!-- -->
+     
       <button
          md-icon-button
         (click)="quitarConVale.emit(row)"

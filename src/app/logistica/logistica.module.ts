@@ -54,6 +54,7 @@ import { ValidacionConteoComponent } from './_pages/almacen/reportes/validacion-
 import { CajasService } from './services/cajas/cajas.service';
 import { EnvioPasanComponent } from './_pages/embarques/reportes/envio-pasan/envio-pasan.component';
 import { PedidosModule } from '../ventas/pedidos/pedidos.module';
+import { ValidacionEntregasComponent } from './_pages/embarques/reportes/validacion-entregas/validacion-entregas.component';
 
 
 
@@ -221,6 +222,7 @@ const COMPONENTS = [
     DiscrepanciasComponent,
     EnvioPasanComponent,
     CapturaMostradorPageComponent,
+    ValidacionEntregasComponent,
   ], exports: [
     ChoferFieldComponent
   ],
@@ -243,7 +245,8 @@ const COMPONENTS = [
     ValidacionConteoComponent,
     FacturaEnvioComponent,
     DiscrepanciasComponent,
-    EnvioPasanComponent
+    EnvioPasanComponent,
+    ValidacionEntregasComponent
   ],
   providers: [MovimientosService, TransformacionesService,
     DevolucionesService,

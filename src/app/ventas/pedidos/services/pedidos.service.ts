@@ -134,10 +134,7 @@ export class PedidosService {
     return this.http.post(url, autorizacion);
   }
 
-  generarValeAutomatico(venta: Venta) {
-    const url = `${this.apiUrl}/generarValeAutomatico/${venta.id}`;
-    return this.http.put(url, {});
-  }
+
 
   pendientesDeFacturar(tipo: string) {
     const params = new HttpParams()
@@ -390,6 +387,17 @@ export class PedidosService {
   getPartidas(id: string) {
     const url = `${this.apiUrl}/getPartidas/${id}`;
     return this.http.get<any>(url);
+  }
+
+  generarValeAutomatico(venta: Venta) {
+    const url = `${this.apiUrl}/generarValeAutomatico/${venta.id}`;
+    return this.http.put(url, {});
+  }
+
+  generarValeExistencia(entityVale: any) {
+    const url = `${this.apiUrl}/generarValeExistencia`;
+    const resp = this.http.put<any>(url, entityVale);
+    return  resp
   }
 
   getPartidasVale(id: string) {

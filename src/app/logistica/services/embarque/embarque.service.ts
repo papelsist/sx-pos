@@ -228,6 +228,27 @@ export class EmbarqueService {
     );
   }
 
+  reporteValidacionEntregas(reportParams: {}) {
+    reportParams['sucursal'] = this.sucursal.id;
+    console.log('Ejecutando reporte de Validacion de Entregas: ', reportParams);
+    const url = `${this.apiUrl}/reporteValidacionEntregas`;
+    let params = new HttpParams()
+    if (reportParams) {
+      _.forIn(reportParams, (value, key) => {
+        params = params.set(key, value.toString());
+      });
+    }
+    const headers = new HttpHeaders().set('Content-type' , 'application/pdf');
+    return this.http.get(
+      url, {
+        headers: headers,
+        params: params,
+        responseType: 'blob'
+      }
+    );
+
+  }
+
   getEnvio(id: string): Observable<Envio> {
     // const url = environment.apiUrl + '/embarques/envios';
     const endpoint = `embarques/envios/${id}`;

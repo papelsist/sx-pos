@@ -1,53 +1,58 @@
 <div [formGroup]="parent">
-  <div formArrayName="partidas">
-    <table td-data-table>
-      <thead>
-        <tr td-data-table-column-row>
-          <th td-data-table-column>Rng</th>
-          <th td-data-table-column>Tipo</th>
-          <th td-data-table-column>Docto</th>
-          <th td-data-table-column>Nombre</th>
-          <th td-data-table-column>Arribo</th>
-          <th td-data-table-column>Recepción</th>
-          <th td-data-table-column>Recibió</th>
-          <th td-data-table-column>Quitar</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr td-data-table-row *ngFor="let row of partidas; index as i" [formGroupName]="i">
-          <td td-data-table-cell>{{i + 1}}</td>
-          <td td-data-table-cell>{{row.tipoDocumento}}</td>
-          <td td-data-table-cell>{{row.documento}}</td>
-          <td td-data-table-cell>{{row.nombre}}</td>
-          <td td-data-table-cell>
-            <button md-icon-button type="button" (click)="onArribo(i)" [disabled]="row.arribo !== undefined" tabindex="-1" *ngIf="!row.arribo">
+    <div formArrayName="partidas">
+        <table td-data-table>
+            <thead>
+                <tr td-data-table-column-row>
+                    <th td-data-table-column>Rng</th>
+                    <th td-data-table-column>Tipo</th>
+                    <th td-data-table-column>Docto</th>
+                    <th td-data-table-column>Nombre</th>
+                    <th td-data-table-column>Arribo</th>
+                    <th td-data-table-column>Recepción</th>
+                    <th td-data-table-column>Recibió</th>
+                    <th td-data-table-column>Completo</th>
+                    <th td-data-table-column>Quitar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr td-data-table-row *ngFor="let row of partidas; index as i" [formGroupName]="i">
+                    <td td-data-table-cell>{{i + 1}}</td>
+                    <td td-data-table-cell>{{row.tipoDocumento}}</td>
+                    <td td-data-table-cell>{{row.documento}}</td>
+                    <td td-data-table-cell>{{row.nombre}}</td>
+                    <td td-data-table-cell>
+                        <button md-icon-button type="button" (click)="onArribo(i)" [disabled]="row.arribo !== undefined" tabindex="-1" *ngIf="!row.arribo">
               <md-icon *ngIf="!disabled" md-icon-button color="accent">flight_land</md-icon>
             </button>
-            <span *ngIf="row.arribo">{{row.arribo | date:'dd/MM/yyyy hh:mm'}}</span>
-          </td>
-          <td td-data-table-cell>
+                        <span *ngIf="row.arribo">{{row.arribo | date:'dd/MM/yyyy hh:mm'}}</span>
+                    </td>
+                    <td td-data-table-cell>
 
-            <button md-icon-button type="button" (click)="onRecepcion(i)" [disabled]="row.arribo === undefined" tabindex="-1" *ngIf="!row.recepcion">
+                        <button md-icon-button type="button" (click)="onRecepcion(i)" [disabled]="row.arribo === undefined" tabindex="-1" *ngIf="!row.recepcion">
               <md-icon *ngIf="!disabled" md-icon-button color="primary">file_download</md-icon> {{row.arrivo}}
             </button>
-            <span layout="column">
-              <span *ngIf="row.recepcion">{{row.recepcion | date:'short'}}</span>
+                        <span layout="column">
+                        <span *ngIf="row.recepcion">{{row.recepcion | date:'short'}}</span>
 
-            </span>
-          </td>
-          <td td-data-table-cell>
-            <span *ngIf="row.recepcion">{{row.recibio}}</span>
-          </td>
-          <td td-data-table-cell>
-            <button md-icon-button type="button" (click)="onDelete(i)" [disabled]="disabled" tabindex="-1" *ngIf="!row.recepcion">
-              <md-icon *ngIf="!disabled" md-icon-button color="accent">delete</md-icon>
-            </button>
-          </td>
+                        </span>
+                    </td>
+                    <td td-data-table-cell>
+                        <span *ngIf="row.recepcion">{{row.recibio}}</span>
+                    </td>
+                    <td td-data-table-cell>
+                        <md-checkbox flex [disabled]="row.completo" [checked]="row.completo" (change)="onChange(i)"></md-checkbox>
+                        <span *ngIf="row.completo">{{row.reportoNombre}}</span>
+                    </td>
+                    <td td-data-table-cell *ngIf="!row.completo">
+                        <button md-icon-button type="button" (click)="onDelete(i)" [disabled]="disabled" tabindex="-1" *ngIf="!row.recepcion">
+                        <md-icon *ngIf="!disabled " md-icon-button color="accent">delete</md-icon>
+                      </button>
+                    </td>
 
-        </tr>
+                </tr>
 
-      </tbody>
-    </table>
-  </div>
+            </tbody>
+        </table>
+    </div>
 
 </div>

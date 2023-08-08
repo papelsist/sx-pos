@@ -413,7 +413,17 @@ export class PendientesComponent implements OnInit {
           this.load();
           pedido = res;
       },
-      (error) => console.log(error)
+      (error) => {
+        this._dialogService
+            .openConfirm({
+              title: 'Vale Automático',
+              message: `No se puede quitar la instruccion de vale porque ya existe un vale asociado !`,
+              acceptButton: 'Aceptar',
+              cancelButton: 'Cancelar',
+            })
+            .afterClosed()
+        console.log(error)
+      }
     )
   }
 
@@ -441,29 +451,33 @@ export class PendientesComponent implements OnInit {
     console.error('Error: ', error);
   }
 
-  OnGenerarVale(pedido: Venta) {
-    if (pedido.clasificacionVale === 'EXISTENCIA_VENTA') {
-      console.log('Generando Vale OutPut');
-      /* this._dialogService
-        .openConfirm({
-          message: `Generar vale ${pedido.tipo} - ${pedido.documento} (${pedido.total})`,
-          viewContainerRef: this._viewContainerRef,
-          title: 'Vale de traslado ',
-          cancelButton: 'Cancelar',
-          acceptButton: 'Aceptar',
-        })
-        .afterClosed()
-        .subscribe((accept: boolean) => {
-          if (accept) {
-            this.service.generarValeAutomatico(pedido).subscribe(
-              (res) => {
-                // console.log('Vale para pedido generado exitosamente', res);
-                this.load();
-              },
-              (error) => this.handleError(error)
-            );
+  OnGenerarVale(entityVale) {
+    if (entityVale && entityVale.clasificacionVale === 'EXISTENCIA_VENTA') {
+      this.service.generarValeExistencia(entityVale).subscribe(
+        (resp) => {
+          console.log('DATA', resp)
+          if ( resp.id ) {
+            this._dialogService
+            .openConfirm({
+              title: 'Vale Creado',
+              message: `Se genero la solicitud de traslado ${resp.documento}!`,
+              acceptButton: 'Aceptar',
+            })
+            .afterClosed()
           }
-        }); */
+        },
+        (error) => {
+          this._dialogService
+            .openConfirm({
+              title: 'Vale Automático',
+              message: `Esta venta ya tiene un vale asociado, No se puede generar otro vale !`,
+              acceptButton: 'Aceptar',
+              cancelButton: 'Cancelar',
+            })
+            .afterClosed()
+
+        }
+      )
     }
   }
 

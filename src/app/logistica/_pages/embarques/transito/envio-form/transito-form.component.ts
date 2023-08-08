@@ -29,6 +29,9 @@ import { Sucursal } from 'app/models';
 import { Embarque } from 'app/logistica/models/embarque';
 import { Envio } from 'app/logistica/models/envio';
 
+import { AuthService } from 'app/_auth/services/auth.service';
+import { User } from '@siipapx/_auth/models/user';
+
 @Component({
   selector: 'sx-transito-form',
   templateUrl: './transito-form.component.html',
@@ -50,7 +53,8 @@ export class TransitoFormComponent implements OnInit, OnChanges {
     public dialog: MdDialog,
     private cd: ChangeDetectorRef,
     private _dialogService: TdDialogService,
-    private _viewContainerRef: ViewContainerRef
+    private _viewContainerRef: ViewContainerRef,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -113,7 +117,14 @@ export class TransitoFormComponent implements OnInit, OnChanges {
     const envio = this.partidas.at(index).value;
     envio.arribo = new Date().toISOString();
     this.cd.detectChanges();
-    console.log('Registrando arribo de envio: ', envio);
+  }
+
+  onCompleto(index: number) {
+    const auth = this.authService.getAuthentication()
+    const envio = this.partidas.at(index).value;
+    envio.completo = true
+    envio.reportoNombre = auth.username
+    this.cd.detectChanges();
   }
 
   onRecepcion(index: number) {

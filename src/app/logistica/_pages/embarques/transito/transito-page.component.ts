@@ -56,9 +56,9 @@ export class TransitoPageComponent implements OnInit {
   }
 
   onRegreso(embarque: Embarque) {
-    if(!embarque.regreso) {
+    if (!embarque.regreso) {
       this._dialogService.openConfirm({
-        message: 'Registrar regreso del embarue?' + embarque.documento,
+        message: 'Registrar regreso del embarque?' + embarque.documento,
         viewContainerRef: this._viewContainerRef,
         title: 'Embarques',
         cancelButton: 'Cancelar',
